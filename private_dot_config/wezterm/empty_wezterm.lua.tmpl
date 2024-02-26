@@ -1,0 +1,6 @@
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   include ".wezterm.lua.macos" -}}
+{{- else -}}
+{{-   include ".wezterm.lua.linux" -}}
+{{- end -}}
+
