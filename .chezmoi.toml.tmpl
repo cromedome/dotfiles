@@ -1,0 +1,13 @@
+encryption = "age"
+[age]
+    identity = "~/.age/key.txt"
+    recipient = "age1sc2q37desa0h7hdwll0l7wmxyvwc7wzk30262573w22z2euc7qmqq7k8kz"
+
+[merge]
+    command = "nvim"
+    args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
+
+[git]
+    autoCommit = true
+    commitMessageTemplate = "{{ promptString \"Commit message\" }}"
+
