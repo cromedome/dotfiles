@@ -1,0 +1,38 @@
+#!/bin/sh
+
+sudo pkg install \
+    neovim \
+    age \
+    stow \
+    zsh \
+    exa \
+    pv \
+    ncftp \
+    lynx \
+    w3m \
+    tree \
+    htop \
+    bzip \
+    unzip \
+    ctags \
+    tmux \
+    source-highlight \
+    tig \
+    curl \
+    wget \
+    nmap \
+    lsof \
+    mosh \
+    fd-find \
+    bat \
+    ncdu \
+    diff-so-fancy \
+    ripgrep \
+    z \
+    fzf \
+    colordiff \
+    gmake \
+    iftop \
+    pwgen \
+    doggo \
+    direnv

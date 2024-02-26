@@ -1,0 +1,75 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$directory\
+[](bold fg:color_dark_grey bg:color_green)\
+$git_branch\
+$git_status\
+[](bold fg:color_green bg:color_dark_blue)\
+$perl\
+[](bold fg:color_dark_blue bg:color_black) """
+
+palette = 'nord'
+
+[palettes.nord]
+color_blue = '#819FC1'
+color_green = '#A4BE8F'
+color_white = '#E5E9F0'
+color_red = '#BF616A'
+color_dark_grey = '#585858'
+color_light_grey = '#BCBCBC'
+color_dark_blue = '#819FC1'
+color_black = '#2E3440'
+
+[os]
+disabled = false
+style = "bg:color_green fg:color_dark_grey"
+
+[os.symbols]
+Windows = "󰍲 "
+Ubuntu = "󰕈 "
+Mint = "󰣭 "
+Macos = "󰀵 "
+Linux = "󰌽 "
+Debian = "󰣚 "
+FreeBSD = " "
+NetBSD = "󰈿 "
+
+[username]
+show_always = true
+style_user = "bold bg:color_blue fg:color_white"
+style_root = "bold bg:color_blue fg:color_white"
+format = '[ $user]($style)'
+
+[hostname]
+ssh_only = false
+style = "bold bg:color_blue fg:color_white"
+format = '[@]($style)[$hostname ]($style)'
+disabled = false
+
+[directory]
+style = "fg:color_light_grey bg:color_dark_grey"
+read_only_style = "bg:color_dark_grey"
+format = "[ $read_only]($read_only_style)[$path ]($style)"
+truncation_length = 1
+truncation_symbol = "  …/"
+fish_style_pwd_dir_length = 1
+home_symbol = " "
+
+[git_branch]
+symbol = ""
+style = "bold bg:color_green"
+format = '[[ $symbol $branch ](bold fg:color_dark_grey bg:color_green)]($style)'
+
+[git_status]
+style = "bg:color_green"
+format = '[[($all_status$ahead_behind )](bold fg:color_dark_grey bg:color_green)]($style)'
+
+[perl]
+symbol = " "
+style = "bold fg:color_dark_grey bg:color_dark_blue"
+format = '([ $symbol ($version )]($style))'
+
+[line_break]
+disabled = false
+

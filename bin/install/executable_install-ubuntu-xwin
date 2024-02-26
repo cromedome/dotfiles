@@ -1,0 +1,13 @@
+#!/bin/bash
+
+sudo apt install \
+    autofs \
+    xsel \
+    xclip \
+    xcape \
+    xkbset \
+    fonts-hack-otf \
+    fonts-hack-ttf \
+    fonts-powerline \
+    fonts-firacode \
+    scrot

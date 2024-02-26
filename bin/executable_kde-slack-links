@@ -1,0 +1,13 @@
+#!/bin/bash
+
+while sleep .1; do
+        line=$(ps ax | grep slack | grep -v grep | grep magic | awk '{ print $NF }')
+        WD=$(echo $line | cut -d '/' -f 3 | tr [:lower:] [:upper:])
+        LN=$(echo $line | cut -d '/' -f 5)
+        if [ "$WD" != "" ]; then
+                echo "got $line"
+                line2="slack://$WD/magic-login/$LN"
+                echo "Attempting to open $line2"
+                /usr/lib/slack/slack --enable-crashpad $line2
+        fi
+done | grep -v "^$"

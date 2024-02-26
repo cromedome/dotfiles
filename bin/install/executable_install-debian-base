@@ -1,0 +1,23 @@
+#!/bin/bash
+
+sudo apt install \
+    net-tools \
+    debsums \
+    vim-nox \
+    git \
+    zsh \
+    ufw \
+    age \
+    python3-pip \
+    build-essential
+
+# Needed for dev:
+    #libpcre3-dev \
+    #zlib1g-dev \
+    #libxml2-dev \
+    #libexpat1-dev \
+    #libpng-dev \
+    #libjpeg-dev \
+    #libtiff-dev \
+    #libssl-dev \
+

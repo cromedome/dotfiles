@@ -1,0 +1,3 @@
+#!/bin/sh
+for i in ~/.ssh/*.pub; do ssh-keygen -l -f "$i"; done
+

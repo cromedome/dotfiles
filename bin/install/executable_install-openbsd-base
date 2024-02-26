@@ -1,0 +1,40 @@
+#!/bin/sh
+
+doas pkg_add \
+    ssh-copy-id \
+    exa \
+    age \
+    wget \
+    tree \
+    htop \
+    nmap \
+    pv \
+    tig \
+    lynx \
+    w3m \
+    ncftp \
+    zsh \
+    ctags \
+    unzip \
+    bzip2 \
+    bat \
+    source-highlight \
+    neovim \
+    ncdu \
+    py3-pip \
+    lzlib \
+    fzf \
+    colordiff \
+    ripgrep \
+    libxml \
+    png \
+    tiff \
+    jpeg \
+    rsync \
+    pwgen \
+    gmake \
+    iftop \
+    dog \
+    direnv \
+    jq \
+    mosh

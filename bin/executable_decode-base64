@@ -1,0 +1,14 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+use MIME::Base64;
+
+my $input;
+while (<>) {
+    chomp $_;
+    $input .= $_;
+}
+
+print MIME::Base64::decode_base64( $input );

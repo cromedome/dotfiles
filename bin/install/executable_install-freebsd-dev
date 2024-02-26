@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# TODO: jq, node, npm
+sudo pkg install \
+    py39-pip \
+    libxml2 \
+    expat \
+    pcre \
+    lzlib \
+    jpeg-turbo \
+    tiff \
+    jq

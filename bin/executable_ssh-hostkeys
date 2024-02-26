@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+
+#  +---------------------------------------------------------------------------------------------------+
+#  | Title        : ssh-hostkeys                                                                       |
+#  |                                                                                                   |
+#  | Description  : Prints server host keys in several formats                                         |
+#  |                                                                                                   |
+#  | Author       : Sven Wick <sven.wick@gmx.de>                                                       |
+#  | Contributors : Geert Stappers <https://github.com/stappersg>                                      |
+#  | URL          : https://github.com/vaporup/ssh-tools                                               |
+#  |                                                                                                   |
+#  | Based On     : https://unix.stackexchange.com/questions/126908/get-ssh-server-key-fingerprint     |
+#  +---------------------------------------------------------------------------------------------------+
+
+# shellcheck disable=SC2207
+
+#
+# Usage/Help message
+#
+
+function usage() {
+
+cat << EOF
+
+    Usage: ${0##*/} [OPTIONS] hostname
+
+    OPTIONS:
+        -4             Use IPv4 only
+        -6             Use IPv6 only
+        -h             Show this message
+        -T timeout     Time to wait for a response, in seconds
+        -p port        Port to connect to on the remote host.
+
+EOF
+
+}
+
+if [[ -z $1 || $1 == "--help" ]]; then
+    usage
+    exit 1
+fi
+
+#
+# Command line Options
+#
+
+SSH_FLAGS=()
+
+# shellcheck disable=SC2249
+while getopts ":46hp:T:" opt; do
+    case ${opt} in
+        4 )
+            SSH_FLAGS+=("-4")
+        ;;
+        6 )
+            SSH_FLAGS+=("-6")
+        ;;
+        h )
+            usage
+            exit 1
+        ;;
+        p )
+            [[ ${OPTARG} =~ ^[0-9]+$ ]] && SSH_FLAGS+=("-p") && SSH_FLAGS+=("${OPTARG}")
+        ;;
+        T )
+            SSH_FLAGS+=("-T") && SSH_FLAGS+=("${OPTARG}")
+        ;;
+        \? )
+            echo "Invalid option: ${OPTARG}" 1>&2
+            usage
+            exit 1
+        ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+remote_host=$1
+
+the_hostkeys=$( mktemp /tmp/ssh-hostkeys.XXXXXX )
+trap 'rm -f $the_hostkeys' EXIT
+
+ssh-keyscan "${SSH_FLAGS[@]}" "${remote_host}" > "${the_hostkeys}" 2>/dev/null
+
+fingerprint_hashes=( md5 sha256 )
+
+function get_fingerprints () {
+
+  hash_type=$1
+
+  ssh-keygen -E "${hash_type}" -qlf "${the_hostkeys}" | while IFS= read -r line; do
+
+    key_data=( $(printf '%s\n' "${line}") )
+    key_size=${key_data[0]}
+    key_hash=${key_data[1]}
+    #key_remote_host=${key_data[2]}
+    key_type=${key_data[3]}
+    key_hash_type="${key_hash%%:*}"
+    key_hash_data="${key_hash#*:}"
+
+    printf "%10s%6s%8s %s\n" "${key_type}" "${key_size}" "${key_hash_type}" "${key_hash_data}"
+
+  done
+
+}
+
+for fingerprint_hash in "${fingerprint_hashes[@]}"; do
+
+  get_fingerprints "${fingerprint_hash}"
+
+done | sort

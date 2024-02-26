@@ -1,0 +1,25 @@
+#!/bin/bash
+
+git fetch origin pull/$1/head:$2
+if [ $? -eq 0 ]; then
+    git checkout $2
+    git rebase main
+    if [ $? -eq 0 ]; then
+        dzil test --author --release -j16
+        if [ $? -eq 0 ]; then
+            echo "$0: Tests complete. You may edit Changes and CONTRIBUTORS now."
+        else
+            echo "$0: Test failed. Please evaluate, review, send feedback. Exiting."
+            exit 1
+        fi
+    else
+        echo "$0: failed to rebase PR from main. Exiting."
+        exit 1
+    fi
+else
+    echo "$0: failed to checkout PR. Exiting."
+    exit 1
+fi
+
+exit 0;
+

@@ -1,0 +1,25 @@
+#!/usr/bin/env perl
+
+use strict;
+use Data::Dumper;
+
+#    36  [TRDC:11809] error @2019-09-24 14:05:00> Route exception: DBIx::Class::Storage::DBI::_dbh_execute(): DBI Exception: DBD::Pg::st execute failed: ERROR:  invalid input syntax for integer: "" [for Statement "INSERT INTO linedata_assembled_slat ( aluminum_ase, barrel_attachment_slats, bottom_bar_cope_fraction, bottom_bar_cope_in, bottom_bar_custom_color, bottom_bar_finish, bottom_bar_ral_number, bottom_bar_type, curtain_custom_color, curtain_finish, curtain_ral_number, cut_length_fraction, cut_length_ft, cut_length_in, gauge, num_slats, slat_type, special_instructions, steel_ase, updated_dt, windlocks) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, now(), ? ) RETURNING id" with ParamValues: 1=undef, 2='1', 3=undef, 4='', 5='', 6='', 7='', 8='None', 9='', 10='Tan', 11='', 12='0', 13='8', 14='7', 15='20', 16='6', 17='F2', 18='', 19=undef, 20='No'] at /srv/trdc/MDW/www/bin/../lib/EDO/QM/TRDC/AssembledSlat.pm line 181 in /usr/local/perl-5.30.0/lib/site_perl/5.30.0/Dancer2/Core/App.pm l. 1477
+
+while (<>) {
+   chomp;
+   if ( /INSERT INTO \w+ \(\s*([^\)]+\s*).*ParamValues: (.*)] at/ ) {
+      my @names = split(/,\s*/, $1);
+      my @values = split(/,\s*/, $2);
+
+      foreach my $value ( @values ) {
+         $value =~ s/^\d+=//;
+         next if ( $value eq 'undef' );
+         $value =~ s/^'//;
+         $value =~ s/'$//;
+      }
+
+      my %map;
+      @map{@names} = @values;
+      print Dumper(\%map);
+   }
+}

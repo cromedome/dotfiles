@@ -1,0 +1,11 @@
+#!/bin/bash
+
+sudo port install \
+    z \
+    age 
+    libdvdcss \
+    msgpack \
+    reattach-to-user-namespace \
+    xz \
+    z \
+    zsh-autosuggestions

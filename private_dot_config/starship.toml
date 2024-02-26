@@ -1,0 +1,126 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$os\
+[](bold bg:color_blue fg:color_green)\
+$username$hostname\
+[](bold bg:color_dark_grey fg:color_blue)\
+$directory\
+[](bold fg:color_dark_grey bg:color_green)\
+$git_branch\
+$git_status\
+[](bold fg:color_green bg:color_dark_blue)\
+$perl\
+[](bold fg:color_dark_blue bg:color_black) """
+
+right_format = """
+[](bold fg:color_dark_grey bg:color_black)\
+$character\
+[](bold fg:color_white bg:color_dark_grey)\
+$time"""
+
+palette = 'nord'
+
+[palettes.nord]
+color_blue = '#819FC1'
+color_green = '#A4BE8F'
+color_white = '#E5E9F0'
+color_red = '#BF616A'
+color_dark_grey = '#585858'
+color_light_grey = '#BCBCBC'
+color_dark_blue = '#819FC1'
+color_black = '#2E3440'
+
+[os]
+disabled = false
+style = "bg:color_green fg:color_dark_grey"
+
+[os.symbols]
+Windows = "󰍲 "
+Ubuntu = "󰕈 "
+Mint = "󰣭 "
+Macos = "󰀵 "
+Linux = "󰌽 "
+Debian = "󰣚 "
+FreeBSD = " "
+NetBSD = "󰈿 "
+
+[username]
+show_always = true
+style_user = "bold bg:color_blue fg:color_white"
+style_root = "bold bg:color_blue fg:color_white"
+format = '[ $user]($style)'
+
+[hostname]
+ssh_only = false
+style = "bold bg:color_blue fg:color_white"
+format = '[@]($style)[$hostname ]($style)'
+disabled = false
+
+[directory]
+style = "fg:color_light_grey bg:color_dark_grey"
+read_only_style = "bg:color_dark_grey"
+format = "[ $read_only]($read_only_style)[$path ]($style)"
+truncation_length = 1
+truncation_symbol = "  …/"
+fish_style_pwd_dir_length = 1
+home_symbol = " "
+
+[directory.substitutions]
+#"Documents" = "󰈙 "
+#"Downloads" = " "
+#"Music" = "󰝚 "
+#"Pictures" = " "
+#"code" = "󰲋 "
+
+[git_branch]
+symbol = ""
+style = "bold bg:color_green"
+format = '[[ $symbol $branch ](bold fg:color_dark_grey bg:color_green)]($style)'
+
+[git_status]
+style = "bg:color_green"
+format = '[[($all_status$ahead_behind )](bold fg:color_dark_grey bg:color_green)]($style)'
+
+[perl]
+symbol = " "
+style = "bold fg:color_dark_grey bg:color_dark_blue"
+format = '([ $symbol ($version )]($style))'
+
+[time]
+disabled = false
+style = "bg:color_black"
+format = '[[ $time   ](fg:color_black bg:color_white)]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+format = "$symbol"
+success_symbol = '[   ](bold fg:green bg:color_dark_grey)'
+error_symbol = '[ ✗ ](bold fg:red bg:color_dark_grey)'
+#success_symbol = '[](bold bg:color_black fg:color_green)'
+#error_symbol = '[](bold bg:color_black fg:color_red)'
+vimcmd_symbol = '[](bold fg:color_green)'
+vimcmd_replace_one_symbol = '[](bold fg:color_purple)'
+vimcmd_replace_symbol = '[](bold fg:color_purple)'
+vimcmd_visual_symbol = '[](bold fg:color_yellow)'
+
+# 
+# Unused (for now)
+#
+[nodejs]
+symbol = ""
+style = "bold fg:color_dark_grey bg:color_dark_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[python]
+symbol = ""
+style = "bold fg:color_dark_grey bg:color_dark_blue"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:color_bg3"
+format = '[[ $symbol( $context) ](fg:#83a598 bg:color_bg3)]($style)'

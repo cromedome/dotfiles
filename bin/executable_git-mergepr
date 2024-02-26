@@ -1,0 +1,38 @@
+#!/bin/bash
+
+branchname=`git branch --show-current`
+
+git commit -m"reflect changes"
+if [ $? -eq 0 ]; then
+    git checkout main
+    if [ $? -eq 0 ]; then
+        git merge --no-ff $branchname
+        if [ $? -eq 0 ]; then
+            git push
+            if [ $? -eq 0 ]; then
+                git branch -D $branchname
+                if [ $? -eq 0 ]; then
+                    echo "$0: PR merged successfully."
+                else
+                    echo "$0: failed to delete local branch. Exiting."
+                    exit 1
+                fi
+            else
+                echo "$0: failed to push to origin. Exiting."
+                exit 1
+            fi
+        else
+            echo "$0: failed to merge PR to main. Exiting."
+            exit 1
+        fi
+    else
+        echo "$0: failed to checkout main. Exiting."
+        exit 1
+    fi
+else
+    echo "$0: failed to commit changes. Exiting."
+    exit 1
+fi
+
+exit 0;
+

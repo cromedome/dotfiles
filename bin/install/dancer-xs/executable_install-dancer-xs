@@ -1,0 +1,17 @@
+cpanm CBOR::XS
+cpanm YAML::XS
+cpanm CGI::Deurl::XS
+cpanm Class::XSAccessor
+cpanm Cpanel::JSON::XS
+cpanm Crypt::URandom
+cpanm HTTP::Parser::XS # Monoceros
+cpanm HTTP::XSCookies
+cpanm HTTP::XSHeaders
+cpanm Math::Random::ISAAC::XS
+cpanm MooX::TypeTiny
+cpanm Scope::Upper
+cpanm Type::Tiny::XS
+cpanm URL::Encode::XS
+cpanm Unicode::UTF8
+cpanm EV # AnyEvent-based servers
+

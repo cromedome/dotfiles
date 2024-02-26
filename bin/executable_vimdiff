@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [[ -f /opt/homebrew/bin/nvim ]]
+then
+    VIMPATH='/opt/homebrew/bin/nvim -d'
+elif [[ -f /usr/bin/nvim ]]
+then
+    VIMPATH='/usr/bin/nvim -d'
+elif [[ -f /Applications/MacVim.app/Contents/MacOS/Vim ]]
+then
+    VIMPATH='/Applications/MacVim.app/Contents/MacOS/Vim -g -dO -f'
+else
+    # fall back to original vim
+    VIMPATH='vimdiff'
+fi
+
+$VIMPATH $@

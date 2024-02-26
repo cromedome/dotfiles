@@ -1,0 +1,4 @@
+#!/bin/bash
+
+branch=$(git branch | grep \* | cut -d ' ' -f2-)
+git log $branch --not $(git for-each-ref --format='%(refname)' refs/heads/ | grep -v "refs/heads/$branch")

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+perlcode="print \"$1 version: \",\$$1::VERSION,\"\\n\""
+echo $perlcode | perl -M$1
+

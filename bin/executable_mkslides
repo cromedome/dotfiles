@@ -1,0 +1,8 @@
+#!/bin/bash
+
+git clone --depth 1 --branch master https://github.com/hakimel/reveal.js.git $1
+rm -rf $1/.git
+cd $1
+rm CONTRIBUTING.md .travis.yml
+mv README.md INSTRUCTIONS.md
+

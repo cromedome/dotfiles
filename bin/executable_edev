@@ -1,0 +1,4 @@
+#!/bin/sh
+
+/opt/microsoft/msedge-dev/microsoft-edge-dev --inprivate $1
+

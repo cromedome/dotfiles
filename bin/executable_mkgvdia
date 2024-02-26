@@ -1,0 +1,8 @@
+#!/bin/bash
+
+sqlt-graph \
+    --height 11 \
+    --width 8.5 \
+    --show-datatypes \
+    --show-sizes \
+    --from $1 $2 -o $3.png

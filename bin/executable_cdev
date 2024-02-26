@@ -1,0 +1,16 @@
+#!/bin/sh
+
+osname=$(uname)
+if [ "$osname" = "Darwin" ]; then
+    open /Applications/Google\ Chrome.app --args \
+        --incognito \
+        --auto-open-devtools-for-tabs \
+        --allow-insecure-localhost \
+        $1
+else
+    /opt/google/chrome/chrome \
+        --incognito \
+        --auto-open-devtools-for-tabs \
+        --allow-insecure-localhost \
+        $1
+fi

@@ -1,0 +1,374 @@
+#!/usr/bin/env bash
+
+#  +--------------------------------------------------------------------------------------+
+#  | Title        : ssh-certinfo                                                          |
+#  |                                                                                      |
+#  | Description  : shows validity and information of SSH certificates                    |
+#  |                                                                                      |
+#  | Author       : Sven Wick <sven.wick@gmx.de>                                          |
+#  | URL          : https://github.com/vaporup/ssh-tools                                  |
+#  +--------------------------------------------------------------------------------------+
+
+# shellcheck disable=SC2207
+
+#
+# Some colors for better output
+#
+
+     RED='\033[0;91m'
+   GREEN='\033[0;92m'
+  YELLOW='\033[0;93m'
+   RESET='\033[0m'
+
+#
+# Defaults
+#
+
+WARN=30             # days before cert expires
+
+#
+# Usage/Help message
+#
+
+function usage() {
+
+cat << EOF
+
+    Usage: ${0##*/} [OPTIONS] CERT-FILE [...]
+
+    OPTIONS:
+
+        -c             show colors
+        -h             Show this message
+        -w days        warning threshold (default: 30)
+        -v             Verbose output
+
+    Examples:
+
+        Default:
+
+            ${0##*/} ~/.ssh/id_rsa-cert.pub
+
+            ${0##*/} ~/.ssh/*.pub
+
+        Certificates which expire within the next 2 months (colored output):
+
+            ${0##*/} -c -w 60 ~/.ssh/id_rsa-cert.pub
+
+            ${0##*/} -c -w 60 ~/.ssh/*.pub
+
+EOF
+
+}
+
+if [[ -z $1 || $1 == "--help" ]]; then
+    usage
+    exit 1
+fi
+
+#
+# Command line Options
+#
+
+# shellcheck disable=SC2249
+while getopts ":chvw:" opt; do
+    case ${opt} in
+        c )
+            colors="yes"
+        ;;
+        h )
+            usage
+            exit 1
+        ;;
+        v )
+            verbose="yes"
+        ;;
+        w )
+            [[ ${OPTARG} =~ ^[0-9]+$ ]] && WARN=${OPTARG}
+        ;;
+        \? )
+            echo "Invalid option: ${OPTARG}" 1>&2
+            usage
+            exit 1
+        ;;
+    esac
+done
+
+function return_epoch_from_date_string() {
+
+    #
+    # date behaves differently on *BSD, Busybox, etc..
+    # Trying multiple variants and use first that succeeds
+    #
+
+    DATES=()
+
+    #
+    # GNU date
+    #
+
+    DATES+=( $( date -d "$1" +%s 2>/dev/null || echo NO_DATE ) )
+
+    #
+    # BSD date
+    #
+
+    DATES+=( $( date -j -f "%Y-%m-%dT%T" "$1" "+%s" 2>/dev/null || echo NO_DATE ) )
+
+    #
+    # BusyBox
+    #
+
+    DATES+=( $( date -d "${1//T/ }" +%s 2>/dev/null || echo NO_DATE ) )
+
+    for DATE in "${DATES[@]}"; do
+      if [[ ${DATE} -gt 0 ]]; then
+        echo "${DATE}"
+        break
+      fi
+    done
+
+}
+
+function print_cert() {
+
+    ssh-keygen -L -f "${cert}"
+    echo
+}
+
+function get_cert_data() {
+
+                valid_from=$(  echo "${valid}" | awk '{print $3}' )
+                  valid_to=$(  echo "${valid}" | awk '{print $5}' )
+          valid_from_epoch=$(  return_epoch_from_date_string "${valid_from}" )
+            valid_to_epoch=$(  return_epoch_from_date_string "${valid_to}"   )
+
+    valid_to_epoch_warning=$(( valid_to_epoch - WARN_SECONDS   ))
+           expires_in_days=$(( WARN - ( ( now - valid_to_epoch_warning ) / 60 / 60 / 24 ) -1 ))
+
+}
+
+function print_if_certs_were_found() {
+
+    if grep -q "yes" "${certs_found}"; then
+        echo
+    else
+        if [[ ${colors} == yes ]]; then
+            echo -e -n "${YELLOW}"
+            echo -e "No SSH certificates found.\n"
+            echo -e -n "${RESET}"
+        else
+            echo -e "No SSH certificates found.\n"
+        fi
+    fi
+}
+
+function cert_is_valid() {
+
+    if [[ ${now} -gt ${valid_from_epoch} && ${now} -lt ${valid_to_epoch} ]]; then
+        return 0
+    else
+        return 1
+    fi
+
+}
+
+function cert_is_invalid() {
+
+    if [[ ${now} -lt ${valid_from_epoch} ]]; then
+        return 0
+    else
+        return 1
+    fi
+
+}
+
+function cert_is_expired() {
+
+    if [[ ${now} -gt ${valid_to_epoch} ]]; then
+        return 0
+    else
+        return 1
+    fi
+
+}
+
+function cert_expires() {
+
+    if [[ ${now} -gt ${valid_to_epoch_warning} ]]; then
+        return 0
+    else
+        return 1
+    fi
+
+}
+
+WARN_SECONDS=$(( WARN * 24 * 60 * 60))
+CERTS=( "${@:${OPTIND}}"  )
+now=$(date +%s)
+certs_found="$(mktemp)"
+trap 'rm -f ${certs_found}' EXIT
+
+echo
+
+if [[ ${verbose} == yes ]]; then
+
+    for cert in "${CERTS[@]}"; do
+
+        valid=$( print_cert 2>/dev/null | grep -i valid)
+
+        if [[ -z ${valid} ]]; then
+            continue
+        else
+            echo "yes" > "${certs_found}"
+        fi
+
+        if [[ ${valid} == *"forever"* ]]; then
+                if [[ ${colors} == yes ]]; then
+                    echo -e -n "${GREEN}"
+                    print_cert
+                    echo -e -n "${RESET}"
+                    continue
+                else
+                    print_cert
+                    continue
+                fi
+        fi
+
+        get_cert_data
+
+        if cert_is_invalid; then
+
+            if [[ ${colors} == yes ]]; then
+                echo -e -n "${YELLOW}"
+                print_cert
+                echo -e -n "${RESET}"
+                continue
+            else
+                print_cert
+                continue
+            fi
+        fi
+
+        if cert_is_expired; then
+
+            if [[ ${colors} == yes ]]; then
+                echo -e -n "${RED}"
+                print_cert
+                echo -e -n "${RESET}"
+                continue
+            else
+                print_cert
+                continue
+            fi
+
+        fi
+
+        if cert_expires; then
+
+            if [[ ${colors} == yes ]]; then
+                echo -e -n "${YELLOW}"
+                print_cert
+                echo -e -n "${RESET}"
+                continue
+            else
+                print_cert
+                continue
+            fi
+
+        fi
+
+        if cert_is_valid; then
+
+            if [[ ${colors} == yes ]]; then
+                echo -e -n "${GREEN}"
+                print_cert
+                echo -e -n "${RESET}"
+                continue
+            else
+                print_cert
+                continue
+            fi
+
+        fi
+
+    done
+
+    print_if_certs_were_found
+
+else
+
+    for cert in "${CERTS[@]}"; do
+
+        valid=$( print_cert 2>/dev/null | grep -i valid)
+
+        if [[ -z ${valid} ]]; then
+            continue
+        else
+            echo "yes" > "${certs_found}"
+        fi
+
+        if [[ ${valid} == *"forever"* ]]; then
+            if [[ ${colors} == yes ]]; then
+                echo -e "${GREEN}${cert} SSH_CERT_VALID forever -> forever${RESET}"
+                continue
+            else
+                echo "${cert} SSH_CERT_VALID forever -> forever"
+                continue
+            fi
+        fi
+
+        get_cert_data
+
+        if cert_is_invalid; then
+
+            if [[ ${colors} == yes ]]; then
+                echo -e "${YELLOW}${cert} SSH_CERT_INVALID ${valid_from} -> ${valid_to}${RESET}"
+                continue
+            else
+                echo "${cert} SSH_CERT_INVALID ${valid_from} -> ${valid_to}"
+                continue
+            fi
+        fi
+
+        if cert_is_expired; then
+
+            if [[ ${colors} == yes ]]; then
+                echo -e "${RED}${cert} SSH_CERT_EXPIRED ${valid_from} -> ${valid_to}${RESET}"
+                continue
+            else
+                echo "${cert} SSH_CERT_EXPIRED ${valid_from} -> ${valid_to}"
+                continue
+            fi
+
+        fi
+
+        if cert_expires; then
+
+            if [[ ${colors} == yes ]]; then
+                echo -e "${YELLOW}${cert} SSH_CERT_EXPIRES_IN_${expires_in_days}_DAYS ${valid_from} -> ${valid_to} ${RESET}"
+                continue
+            else
+                echo "${cert} SSH_CERT_EXPIRES_IN_${expires_in_days}_DAYS ${valid_from} -> ${valid_to}"
+                continue
+            fi
+
+        fi
+
+        if cert_is_valid; then
+
+            if [[ ${colors} == yes ]]; then
+                echo -e "${GREEN}${cert} SSH_CERT_VALID ${valid_from} -> ${valid_to}${RESET}"
+                continue
+            else
+                echo "${cert} SSH_CERT_VALID ${valid_from} -> ${valid_to}"
+                continue
+            fi
+
+        fi
+
+    done | column -t
+
+    print_if_certs_were_found
+
+fi

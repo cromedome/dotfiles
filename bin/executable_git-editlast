@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# From https://stackoverflow.com/a/55665550/5764835
+nvim $( git diff-tree --no-commit-id --name-only -r HEAD )

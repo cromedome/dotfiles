@@ -1,0 +1,49 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+#
+# modlist - Show a list of all modules used in the current source tree.
+# Jason A. Crome (cromedome@gmail.com)
+# 
+# To-Do:
+# - account for eval'ing a use statement
+# - not all pragmas are accounted for.  Just included the ones I typically use.
+# - (optionally) include module version numbers
+# - formatting options 
+# - Create a bundle?
+#
+my @output = `ack '^\\s*(use|require) (.+)' -h -o --perl | sort -uib`;
+my %list;
+
+foreach my $line ( @output ) {
+    chomp $line;
+
+    $line =~ s/(\r\n|\n|\r)//;         # DOS line endings
+    $line =~ s/^(\s*(use|require) )//; # use statements
+    $line =~ s/;//;                    # Trailing ;
+
+    # Skip non-module directives
+    next if $line =~ /^(strict|warnings|lib|vars|constant)/;
+
+    # Cope with inheritance issues
+    $line =~ s/^base //;
+    $line =~ s/['"\(\)]//g;
+
+    if( $line =~ /,/ ) {
+        $line =~ s/\s+//g;
+        my @mods = split /,/, $line;
+        push @output, @mods;
+        next;
+    }
+
+    # Get rid of extra cruft after the module name
+    $line =~ s/^(.*?) .*$/$1/;
+
+    # Next, please!
+    $list{ $line } = $line;
+}
+
+print "Modules used in current source tree:\n";
+print "- $list{ $_ }\n" foreach sort keys %list;
+

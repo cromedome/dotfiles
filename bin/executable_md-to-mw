@@ -1,0 +1,3 @@
+#!/bin/bash
+
+pandoc --to mediawiki $1

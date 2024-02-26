@@ -1,0 +1,36 @@
+#!/usr/bin/env perl
+use v5.10;
+use strict;
+use warnings;
+use Path::Tiny;
+use Capture::Tiny qw/capture_stdout/;
+ 
+my ( $branch, $trunk ) = @ARGV;
+ 
+die "Usage: $0 <branch> [trunk]"
+  unless $branch;
+ 
+$trunk //= 'master';
+ 
+my $fork_point = qx{git merge-base --fork-point $trunk $branch};
+chomp $fork_point;
+ 
+die "Couldn't locate fork point for $branch from $trunk"
+  unless $fork_point;
+ 
+my @commits = map { chomp; $_ } qx/git rev-list $fork_point..$branch/;
+ 
+my $tempdir = Path::Tiny->tempdir;
+ 
+my @files;
+for my $c (@commits) {
+    push @files, my $file = $tempdir->child($c);
+    $file->spew( scalar capture_stdout { system( qw/git show -p --stat/, $c ) } );
+}
+ 
+my $index = $tempdir->child("log");
+$index->spew( scalar capture_stdout { system( qw/git log/, q[--pretty=%h %s%d], "$fork_point..$branch" ) } );
+$index->append( "\ngit diff --stat\n", scalar capture_stdout { system( 'git', 'diff', '--stat', "$fork_point..$branch" ) } );
+ 
+system( "vim", $index, reverse @files );
+

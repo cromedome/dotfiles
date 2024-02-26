@@ -1,0 +1,17 @@
+#!/usr/bin/env perl
+
+# Thanks yanick!
+# https://gist.github.com/yanick/2610ff333a4b60dde0d4fc12655d3448
+
+use strict;
+use warnings;
+use List::MoreUtils qw/ first_index /;
+
+my $index = first_index { $_ eq '--' } @ARGV;
+
+$index = 0 if $index== -1;
+
+push @ARGV, '--message', join " ", grep { $_ ne '--' } splice @ARGV, $index;
+
+exec 'git', 'commit', @ARGV;
+

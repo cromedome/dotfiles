@@ -1,0 +1,380 @@
+#!/usr/bin/env bash
+
+#  +--------------------------------------------------------------------------------------+
+#  | Title        : ssh-ping                                                              |
+#  |                                                                                      |
+#  | Description  : Check if host is reachable using ssh_config                           |
+#  |                                                                                      |
+#  |                Outputs 'Reply from' when server is reachable but login failed        |
+#  |                Outputs 'Pong from' when server is reachable and login was successful |
+#  |                                                                                      |
+#  | Author       : Sven Wick <sven.wick@gmx.de>                                          |
+#  | Contributors : Denis Meiswinkel                                                      |
+#  | URL          : https://github.com/vaporup/ssh-tools                                  |
+#  |                                                                                      |
+#  | Based On     : https://unix.stackexchange.com/a/30146/247383                         |
+#  |                https://stackoverflow.com/a/33277226                                  |
+#  +--------------------------------------------------------------------------------------+
+
+# trap CTRL-C and call print_statistics()
+trap print_statistics SIGINT
+
+#
+# Some colors for better output
+#
+
+     RED='\033[0;91m'
+   GREEN='\033[0;92m'
+  YELLOW='\033[0;93m'
+    BLUE='\033[0;94m'
+ MAGENTA='\033[0;95m'
+    CYAN='\033[0;96m'
+   WHITE='\033[0;97m'
+    BOLD='\033[1m'
+   RESET='\033[0m'
+
+#
+# Default SSH Options
+#
+
+SSH_OPTS=(
+    -o "BatchMode=yes"
+    -o "CheckHostIP=no"
+    -o "StrictHostKeyChecking=no"
+)
+
+#
+# SSH Flags which get populated later
+#
+
+SSH_FLAGS=()
+
+#
+# Defaults
+#
+
+ping_count=0           # How many requests to do
+ping_interval=1        # Seconds to wait between sending each request
+connect_timeout=16     # Seconds to wait for a response
+ssh_seq=1              # Request Counter
+requests_transmitted=0 # Count how often we sent a request
+requests_received=0    # Count how often we got an answer
+requests_lost=0        # Count how often we lost an answer
+quiet="no"             # Do not suppress output
+
+#
+# Usage/Help message
+#
+
+function usage() {
+
+cat << EOF
+
+    Usage: ${0##*/} [OPTIONS] [user@]hostname
+
+    OPTIONS:
+
+        -4             Use IPv4 only
+        -6             Use IPv6 only
+        -c count       Stop after sending <count> request packets
+        -C             Connect as soon as the host responds
+                       and try reconnecting after a SSH session ends (e.g. rebooting).
+                       Useful also for IDRAC, IPMI, ILO devices, Switches, etc...
+                       which don't have a full shell environment.
+                       CTRL+C stops reconnect attempts.
+        -F configfile  Specifies an alternative per-user configuration file.
+                       If a configuration file is given on the command line,
+                       the system-wide configuration file ( /etc/ssh/ssh_config ) will be ignored.
+                       The default for the per-user configuration file is ~/.ssh/config.
+        -h             Show this message
+        -i interval    Wait <interval> seconds between sending each request.
+                       The default is 1 second.
+        -l user        Try login with <user> as username. The default is the current value of \$USER.
+        -D             Print timestamp (unix time + microseconds as in gettimeofday) before each line
+        -H             Print timestamp (human readable) before each line
+        -W timeout     Time to wait for a response, in seconds
+        -p port        Port to connect to on the remote host.
+                       This can be specified on a per-host basis in the configuration file.
+        -q             Quiet output.
+                       Nothing is displayed except the summary lines at startup time and when finished
+        -n             No colors.
+                       (e.g. for black on white terminals)
+        -v             Verbose output
+
+    ENVIRONMENT_VARIABLES:
+
+        SSH_PING_NO_COLORS    if set, no colors are shown (like -n)
+
+        Example:      SSH_PING_NO_COLORS=true ${0##*/} -c 1 hostname
+
+    EXIT_CODES:
+
+        0             No requests lost
+        1             More than 1 request lost
+        2             All requests lost
+
+        Example:      ${0##*/} -q -c 1 hostname >/dev/null || ...
+
+
+EOF
+
+}
+
+if [[ -z $1 || $1 == "--help" ]]; then
+    usage
+    exit 1
+fi
+
+function command_exists() {
+
+    command -v "${1}" >/dev/null 2>&1
+
+}
+
+function get_timestamp() {
+
+    if [[ "${print_timestamp_human_readable}" == "yes" ]]; then
+      date
+    else
+      if [[ "${OSTYPE}" == "linux-gnu" ]] && command_exists date; then
+        date +%s.%6N
+      else
+        command_exists perl && perl -MTime::HiRes=time -e 'printf "%.6f", time'
+      fi
+    fi
+
+}
+
+function get_request_timestamp() {
+
+    if [[ "${OSTYPE}" == "linux-gnu" ]] && command_exists date; then
+        date +%s%3N
+    else
+        command_exists perl && perl -MTime::HiRes=time -e 'printf "%i", time * 1000'
+    fi
+
+}
+
+function print_statistics() {
+
+    [[ ${requests_transmitted} -eq 0 ]] && exit
+
+    requests_loss=$(( 100 * requests_lost / requests_transmitted ))
+
+    echo ""
+    echo -e "${WHITE}---${RESET} ${YELLOW}${host}${RESET} ${WHITE}ping statistics${RESET} ${WHITE}---${RESET}"
+
+    statistics_ok="${GREEN}${requests_transmitted}${RESET} ${WHITE}requests transmitted${RESET}, "
+    statistics_ok+="${GREEN}${requests_received}${RESET} ${WHITE}requests received${RESET}, "
+    statistics_ok+="${GREEN}${requests_loss}%${RESET} ${WHITE}request loss${RESET}"
+
+    statistics_warn="${YELLOW}${requests_transmitted}${RESET} ${WHITE}requests transmitted${RESET}, "
+    statistics_warn+="${YELLOW}${requests_received}${RESET} ${WHITE}requests received${RESET}, "
+    statistics_warn+="${YELLOW}${requests_loss}%${RESET} ${WHITE}request loss${RESET}"
+
+    statistics_crit="${RED}${requests_transmitted}${RESET} ${WHITE}requests transmitted${RESET}, "
+    statistics_crit+="${RED}${requests_received}${RESET} ${WHITE}requests received${RESET}, "
+    statistics_crit+="${RED}${requests_loss}%${RESET} ${WHITE}request loss${RESET}"
+
+    [[ ${requests_loss} -eq 100 ]] &&  echo -e "${statistics_crit}" && exit 2
+    [[ ${requests_loss} -gt   1 ]] &&  echo -e "${statistics_warn}" && exit 1
+    [[ ${requests_loss} -eq   0 ]] &&  echo -e "${statistics_ok}"   && exit
+
+}
+
+#
+# Command line Options
+#
+
+# shellcheck disable=SC2249
+while getopts ":46c:CF:hi:l:DHp:vW:qn" opt; do
+    case ${opt} in
+        4 )
+            SSH_FLAGS+=("-4")
+        ;;
+        6 )
+            SSH_FLAGS+=("-6")
+        ;;
+        c )
+            [[ ${OPTARG} =~ ^[0-9]+$ ]] && ping_count=${OPTARG}
+        ;;
+        C )
+            connect="yes"
+        ;;
+        F )
+            SSH_FLAGS+=("-F")
+            SSH_FLAGS+=("${OPTARG}")
+        ;;
+        h )
+            usage
+            exit 1
+        ;;
+        i )
+            ping_interval=${OPTARG}
+        ;;
+        l )
+            SSH_FLAGS+=("-l") && SSH_FLAGS+=("${OPTARG}")
+        ;;
+        D )
+            print_timestamp="yes"
+        ;;
+        H )
+            print_timestamp="yes"
+            print_timestamp_human_readable="yes"
+        ;;
+        p )
+            [[ ${OPTARG} =~ ^[0-9]+$ ]] && SSH_FLAGS+=("-p") && SSH_FLAGS+=("${OPTARG}")
+        ;;
+        v )
+            verbose="yes"
+        ;;
+        W )
+            [[ ${OPTARG} =~ ^[0-9]+$ ]] && connect_timeout=${OPTARG}
+        ;;
+        q )
+            quiet="yes"
+        ;;
+        n )
+            colors="no"
+        ;;
+        \? )
+            echo "Invalid option: ${OPTARG}" 1>&2
+            usage
+            exit 1
+        ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+SSH_OPTS+=( -o "ConnectTimeout=${connect_timeout}" )
+
+#
+# Getting username and host from command line without using grep and awk
+#
+# user@host -> user gets stored in $username
+#           -> host gets stored in $host
+#
+# If no user@ was given on the command line
+# we just store the last argument as hostname
+#
+
+if [[ $1 == *"@"* ]]; then
+    host="${1##*@}"
+    username="${1%%@*}"
+else
+    host=${1}
+fi
+
+#
+# Colors are counter productive
+# on black on white terminals
+#
+
+# shellcheck disable=SC2154
+if [[ -n "${SSH_PING_NO_COLORS}" ]]; then
+
+    colors="no"
+
+fi
+
+if [[ ${colors} == no ]]; then
+
+    unset -v RED GREEN YELLOW BLUE MAGENTA CYAN WHITE BOLD
+
+fi
+
+[[ -z "${host}" ]] && { echo -e "\n  ${RED}Error: No target host given${RESET}" ; usage; exit 1; }
+
+#
+# Output header with optional debugging output
+#
+
+echo -e "${BOLD}SSHPING${RESET} ${YELLOW}${host}${RESET}"
+
+if [[ ${verbose} == yes ]]; then
+    echo -e -n "${BLUE}"
+    echo "SSH_FLAGS:" "${SSH_FLAGS[@]}"
+    echo "SSH_OPTS:" "${SSH_OPTS[@]}"
+    echo -e -n "${RESET}"
+fi
+
+if [[ ! "${OSTYPE}" == "linux-gnu" ]]; then
+  command_exists perl || echo -e "${YELLOW}WARNING:${RESET} No perl found, time measure probably fails (${WHITE}time${RESET}=${RED}0${RESET} ms)" >&2
+fi
+
+while true; do
+
+    #
+    # ping only $count times or forever if $count = 0
+    #
+
+    [[ ${ping_count} -gt 0 ]] && [[ ${ssh_seq} -gt ${ping_count} ]] && break
+
+    #
+    # used for -D and or -H option
+    #
+
+    timestamp=$( get_timestamp )
+
+    #
+    # Doing the actual request and measure its execution time
+    #
+
+    start_request=$( get_request_timestamp )
+
+    if [[ -z "${username}" ]]; then
+        if [[ "${connect}" == "yes" ]]; then
+            status=$(ssh "${SSH_FLAGS[@]}" "${SSH_OPTS[@]}" "sshping@${host}" echo pong 2>&1 | grep -oE 'pong|denied|sftp')
+        else
+            status=$(ssh "${SSH_FLAGS[@]}" "${SSH_OPTS[@]}" "${host}" echo pong 2>&1 | grep -oE 'pong|denied|sftp')
+        fi
+    else
+        if [[ "${connect}" == "yes" ]]; then
+            status=$(ssh "${SSH_FLAGS[@]}" "${SSH_OPTS[@]}" "sshping@${host}" echo pong 2>&1 | grep -oE 'pong|denied|sftp')
+        else
+            status=$(ssh "${SSH_FLAGS[@]}" "${SSH_OPTS[@]}" "${username}@${host}" echo pong 2>&1 | grep -oE 'pong|denied|sftp')
+        fi
+    fi
+
+    end_request=$( get_request_timestamp )
+    time_request=$((end_request-start_request))
+
+    #
+    # Output "Pong"  if request succeeded by login in and echoing back our string
+    # Output "Reply" if the SSH server is at least talking to us but login was denied
+    #
+
+    if [[ ${status} == pong ]]; then
+        requests_received=$(( requests_received + 1 ))
+        [[ ${quiet} == no ]] && [[ ${print_timestamp} == yes ]] && echo -e -n "${WHITE}[${RESET}${MAGENTA}${timestamp}${RESET}${WHITE}]${RESET} "
+        [[ ${quiet} == no ]] && echo -e "${GREEN}Pong${RESET} ${WHITE}from${RESET} ${YELLOW}${host}${RESET}${WHITE}: ssh_seq${RESET}=${RED}${ssh_seq}${RESET} ${WHITE}time${RESET}=${RED}${time_request}${RESET} ms"
+    elif [[ ${status} == denied || ${status} == sftp ]]; then
+        requests_received=$(( requests_received + 1 ))
+        [[ ${quiet} == no ]] && [[ ${print_timestamp} == yes ]] && echo -e -n "${WHITE}[${RESET}${MAGENTA}${timestamp}${RESET}${WHITE}]${RESET} "
+        [[ ${quiet} == no ]] && echo -e "${CYAN}Reply${RESET} ${WHITE}from${RESET} ${YELLOW}${host}${RESET}${WHITE}: ssh_seq${RESET}=${RED}${ssh_seq}${RESET} ${WHITE}time${RESET}=${RED}${time_request}${RESET} ms"
+    else
+        requests_lost=$(( requests_lost + 1 ))
+    fi
+
+    requests_transmitted=${ssh_seq}
+    ssh_seq=$(( ssh_seq + 1 ))
+
+    if [[ "${connect}" == "yes" ]]; then
+        if [[ -z "${username}" ]]; then
+            ssh "${SSH_FLAGS[@]}" -o "BatchMode=no" "${SSH_OPTS[@]}" "${host}"
+        else
+            ssh "${SSH_FLAGS[@]}" -o "BatchMode=no" "${SSH_OPTS[@]}" "${username}@${host}"
+        fi
+        echo -e "Reconnecting... (Press CTRL+C to abort)"
+    fi
+
+    #
+    # Don't sleep if we do just 1 request
+    #
+
+    [[ ${ping_count} -eq 1 ]] || sleep "${ping_interval}"
+
+done
+
+print_statistics
