@@ -1,0 +1,310 @@
+--
+-- KEYBOARD SHORTCUTS (macOS):
+--
+-- CMD-C: Copy
+-- CMD-V: Paste
+--
+-- Splits:
+-- CTRL-A--: Split horizontal
+-- CTRL-A-\: Split vertical
+-- CTRL-A-H: Go to left split
+-- CTRL-A-L: Go to right split
+-- CTRL-A-J: Go to down split
+-- CTRL-A-K: Go to up split
+--
+-- Tab Navigation:
+-- CMD-T: New tab
+-- CMD 1-9: Go to tab #
+-- CMD-Right: Next tab
+-- CMD-Left: Previous tab
+-- CTRL-A-N: Next tab
+-- CTRL-A-P: Previous tab
+--
+-- Copy mode:
+-- CTRL-A-[: Start copy mode
+-- V: Start selection
+-- CTRL-C: Copy
+-- ESC: Cancel
+--
+local wezterm = require 'wezterm';
+
+function dump(o)
+    if type(o) == 'table' then
+        local s = '{ '
+        for k, v in pairs(o) do
+            if type(k) ~= 'number' then k = '"' .. k .. '"' end
+            s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
+        end
+        return s .. '} '
+    else
+        return tostring(o)
+    end
+end
+
+wezterm.on("toggle-leader", function(window, pane)
+    local overrides = window:get_config_overrides() or {}
+    if not overrides.leader then
+        overrides.leader = {key = "a", mods = "CTRL"}
+    else
+        overrides.leader = nil
+        overrides.font_size = nil
+    end
+    window:set_config_overrides(overrides)
+    local effective = window:effective_config()
+    wezterm.log_info("The leader is: " .. effective.leader.key.Char)
+    wezterm.log_info(dump(effective.leader))
+end)
+
+--
+-- Start from https://github.com/thanhvule0310/dotfiles/blob/main/config/wezterm/wezterm.lua
+--
+local function is_vi_process(pane)
+	return pane:get_foreground_process_name():find("n?vim") ~= nil
+end
+
+local function get_process(tab)
+	local process_icons = {
+		["docker"] = {
+			{ Foreground = { Color = colors.blue } },
+			{ Text = wezterm.nerdfonts.linux_docker },
+		},
+		["docker-compose"] = {
+			{ Foreground = { Color = colors.blue } },
+			{ Text = wezterm.nerdfonts.linux_docker },
+		},
+		["nvim"] = {
+			{ Foreground = { Color = colors.green } },
+			{ Text = wezterm.nerdfonts.custom_vim },
+		},
+		["vim"] = {
+			{ Foreground = { Color = colors.green } },
+			{ Text = wezterm.nerdfonts.dev_vim },
+		},
+		["node"] = {
+			{ Foreground = { Color = colors.green } },
+			{ Text = wezterm.nerdfonts.mdi_hexagon },
+		},
+		["zsh"] = {
+			{ Foreground = { Color = colors.peach } },
+			{ Text = wezterm.nerdfonts.dev_terminal },
+		},
+		["bash"] = {
+			{ Foreground = { Color = colors.subtext0 } },
+			{ Text = wezterm.nerdfonts.cod_terminal_bash },
+		},
+		["htop"] = {
+			{ Foreground = { Color = colors.yellow } },
+			{ Text = wezterm.nerdfonts.mdi_chart_donut_variant },
+		},
+		["cargo"] = {
+			{ Foreground = { Color = colors.peach } },
+			{ Text = wezterm.nerdfonts.dev_rust },
+		},
+		["go"] = {
+			{ Foreground = { Color = colors.sapphire } },
+			{ Text = wezterm.nerdfonts.mdi_language_go },
+		},
+		["lazydocker"] = {
+			{ Foreground = { Color = colors.blue } },
+			{ Text = wezterm.nerdfonts.linux_docker },
+		},
+		["git"] = {
+			{ Foreground = { Color = colors.peach } },
+			{ Text = wezterm.nerdfonts.dev_git },
+		},
+		["lazygit"] = {
+			{ Foreground = { Color = colors.peach } },
+			{ Text = wezterm.nerdfonts.dev_git },
+		},
+		["lua"] = {
+			{ Foreground = { Color = colors.blue } },
+			{ Text = wezterm.nerdfonts.seti_lua },
+		},
+		["wget"] = {
+			{ Foreground = { Color = colors.yellow } },
+			{ Text = wezterm.nerdfonts.mdi_arrow_down_box },
+		},
+		["curl"] = {
+			{ Foreground = { Color = colors.yellow } },
+			{ Text = wezterm.nerdfonts.mdi_flattr },
+		},
+		["gh"] = {
+			{ Foreground = { Color = colors.mauve } },
+			{ Text = wezterm.nerdfonts.dev_github_badge },
+		},
+	}
+
+	local process_name = string.gsub(tab.active_pane.foreground_process_name, "(.*[/\\])(.*)", "%2")
+
+	return wezterm.format(
+		process_icons[process_name]
+			or { { Foreground = { Color = colors.sky } }, { Text = string.format("[%s]", process_name) } }
+	)
+end
+
+local function get_current_working_dir(tab)
+	local current_dir = tab.active_pane.current_working_dir
+	local HOME_DIR = string.format("file://%s", os.getenv("HOME"))
+
+	return current_dir == HOME_DIR and "  ~"
+		or string.format("  %s", string.gsub(current_dir, "(.*[/\\])(.*)", "%2"))
+end
+
+wezterm.on("format-tab-title", function(tab)
+	return wezterm.format({
+		{ Attribute = { Intensity = "Half" } },
+		{ Text = string.format(" %s  ", tab.tab_index + 1) },
+		"ResetAttributes",
+		{ Text = get_process(tab) },
+		{ Text = " " },
+		{ Text = get_current_working_dir(tab) },
+		{ Foreground = { Color = colors.base } },
+		{ Text = "  ▕" },
+	})
+end)
+
+--wezterm.on("update-right-status", function(window)
+	--window:set_right_status(wezterm.format({
+		--{ Attribute = { Intensity = "Bold" } },
+		--{ Text = wezterm.strftime(" %A, %d %B %Y %I:%M %p ") },
+	--}))
+--end)
+--
+-- END
+--
+
+return {
+    harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
+    font_size = 14.0,
+    font = wezterm.font_with_fallback({
+        "FiraCode Nerd Font",
+	{family="Liga SFMono Nerd Font", weight="Regular", stretch="Normal", style="Normal"},
+    }),
+    allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
+    color_scheme = "nord",
+    initial_cols = 185,
+    initial_rows = 50,
+    enable_scroll_bar = true,
+    scrollback_lines = 10000,
+    window_frame = {
+        font_size = 12.0,
+        active_titlebar_bg = "#caccd0",
+        inactive_titlebar_bg = "#333333",
+    },
+    --tab_bar_at_bottom = true,
+    --use_fancy_tab_bar = false,
+    colors = {
+        tab_bar = {
+            inactive_tab_edge = "#DFE0E0",
+            active_tab = {
+                bg_color = "#DFE0E0",
+                fg_color = "#333333",
+            },
+            inactive_tab = {
+                bg_color = "#caccd0",
+                fg_color = "#333333",
+            },
+        },
+    },
+    window_padding = {bottom = 4, left = 2, right = 2},
+    window_decorations = "RESIZE",
+
+    leader = {key = "a", mods = "CTRL"},
+    keys = {
+        {
+            key = "t",
+            mods = "ALT",
+            action = wezterm.action {SpawnTab="CurrentPaneDomain"}
+        },
+        {key = "[", mods = "LEADER", action = "ActivateCopyMode"},
+        {
+            key = "-",
+            mods = "LEADER",
+            action = wezterm.action {
+                SplitVertical = {domain = "CurrentPaneDomain"},
+            },
+        },
+        {
+            key = "\\",
+            mods = "LEADER",
+            action = wezterm.action {
+                SplitHorizontal = {domain = "CurrentPaneDomain"},
+            },
+        },
+        {key = "z", mods = "LEADER", action = "TogglePaneZoomState"},
+        {
+            key = "c",
+            mods = "LEADER",
+            action = wezterm.action {SpawnTab = "CurrentPaneDomain"},
+        },
+        {
+            key = "n",
+            mods = "LEADER",
+            action = wezterm.action {ActivateTabRelative = 1},
+        },
+        {
+            key = "p",
+            mods = "LEADER",
+            action = wezterm.action {ActivateTabRelative = -1},
+        },
+        {
+            key = "RightArrow",
+            mods = "LEADER",
+            action = wezterm.action {ActivatePaneDirection = 'Right'},
+        },
+        {
+            key = "LeftArrow",
+            mods = "LEADER",
+            action = wezterm.action {ActivatePaneDirection = 'Left'},
+        },
+        {
+            key = "DownArrow",
+            mods = "LEADER",
+            action = wezterm.action {ActivatePaneDirection = 'Down'},
+        },
+        {
+            key = "UpArrow",
+            mods = "LEADER",
+            action = wezterm.action {ActivatePaneDirection = 'Up'},
+        },
+        {
+            key = "RightArrow",
+            mods = "CMD",
+            action = wezterm.action {ActivateTabRelative = 1},
+        },
+        {
+            key = "LeftArrow",
+            mods = "CMD",
+            action = wezterm.action {ActivateTabRelative = -1},
+        },
+        {
+            key = "h",
+            mods = "LEADER",
+            action = wezterm.action {ActivatePaneDirection = "Left"},
+        },
+        {
+            key = "l",
+            mods = "LEADER",
+            action = wezterm.action {ActivatePaneDirection = "Right"},
+        },
+        {
+            key = "j",
+            mods = "LEADER",
+            action = wezterm.action {ActivatePaneDirection = "Down"},
+        },
+        {
+            key = "k",
+            mods = "LEADER",
+            action = wezterm.action {ActivatePaneDirection = "Up"},
+        },
+        {key = "1", mods = "ALT", action = wezterm.action {ActivateTab = 0}},
+        {key = "2", mods = "ALT", action = wezterm.action {ActivateTab = 1}},
+        {key = "3", mods = "ALT", action = wezterm.action {ActivateTab = 2}},
+        {key = "4", mods = "ALT", action = wezterm.action {ActivateTab = 3}},
+        {key = "5", mods = "ALT", action = wezterm.action {ActivateTab = 4}},
+        {key = "6", mods = "ALT", action = wezterm.action {ActivateTab = 5}},
+        {key = "7", mods = "ALT", action = wezterm.action {ActivateTab = 6}},
+        {key = "8", mods = "ALT", action = wezterm.action {ActivateTab = 7}},
+        {key = "9", mods = "ALT", action = wezterm.action {ActivateTab = -1}},
+    },
+};
