@@ -1,0 +1,4 @@
+source ~/.shell/path.sh
+source ~/.shell/env.sh
+
+if [ -e /home/jason/.nix-profile/etc/profile.d/nix.sh ]; then . /home/jason/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

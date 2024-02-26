@@ -1,0 +1,83 @@
+# Path to your oh-my-zsh configuration.
+export ZSH=$HOME/.oh-my-zsh
+export TERM="xterm-256color"
+
+# Turn off auto updates
+DISABLE_AUTO_UPDATE=false
+
+# Disable auto correct
+DISABLE_CORRECTION=true
+
+# Time shell startup
+timezsh() {
+    shell=${1-$SHELL}
+    for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+}
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+osname=$(uname)
+if [ "$osname" = "Darwin" ] || [ "$osname" = 'Linux' ]; then
+    plugins=(git docker mosh cpanm github perl gitfast autojump)
+elif [ "$osname" != "OpenBSD" ] && [ "$osname" != "FreeBSD" ]; then
+    plugins=(git docker mosh cpanm github perl gitfast autojump ssh-agent)
+else
+    plugins=(git docker mosh cpanm github perl gitfast)
+fi
+
+export DISABLE_AUTO_UPDATE="true"
+source $ZSH/oh-my-zsh.sh
+source ~/.shell/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+if whence dircolors >/dev/null ; then
+    if [ -r "$HOME/.dir_colors" ]; then
+        eval $(dircolors $HOME/.dir_colors)
+    else
+        export LSCOLORS='ExGxFxdxCxDxDxBxBxExEx'
+    fi
+fi
+
+# History settings
+HISTFILE=~/.zhistory
+HISTSIZE=2000
+SAVEHIST=2000
+setopt appendhistory
+setopt histignoredups
+setopt incappendhistory
+
+# Language env manager setup, PATH mangling. Cribbed from rjbs.
+source ~/.shell/dev.sh
+
+# Everything above that might have stuck things into our $PATH is now complete,
+# so we can finally put ~/bin at the head of the path!
+source ~/.shell/env.sh
+source ~/.shell/path.sh
+source ~/.shell/aliases.sh
+
+# Devbox
+export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
+eval "$(devbox global shellenv)"
+
+# Z, not autojump
+if [ "$osname" = "OpenBSD" ] || [ "$osname" = 'FreeBSD' ]; then
+    eval $(ssh-agent)
+    ssh-add
+    . ~/.shell/z.sh
+fi
+
+# Enable direnv (if installed)
+eval "$(direnv hook zsh)"
+
+# Neofetch (if available)
+if [ -x "$(command -v neofetch)" ]; then neofetch; fi
+
+# Starship
+if [ "$TERM_PROGRAM" = "vscode" ]; then
+    export STARSHIP_CONFIG=$HOME/.config/starship-simple.toml
+fi
+eval "$(starship init zsh)"
+
+# fzf config
+source ~/.shell/fzf.zsh
+
+# Hishtory Config
+source ~/.shell/hishtory.zsh
