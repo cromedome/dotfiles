@@ -1,0 +1,59 @@
+{
+  "packages": [
+    "ripgrep@latest",
+    "bat@latest",
+    "fd@latest",
+    "jq@latest",
+    "jless@latest",
+    "tig@latest",
+    "neovim@latest",
+    "age@latest",
+    "passage@latest",
+    "moreutils@latest",
+    "delta@latest",
+    "tldr@latest",
+    "spacer@latest",
+    "direnv@latest",
+    "exa@latest",
+    "ncdu@latest",
+    "ctags@latest",
+    "colordiff@latest",
+    "diff-so-fancy@latest",
+    "sqlite@latest",
+    "pv@latest",
+    "siege@latest",
+    "nmap@latest",
+    "traceroute@latest",
+    "mosh@latest",
+    "ncftp@latest",
+    "lynx@latest",
+    "w3m@latest",
+    "tree@latest",
+    "lsof@latest",
+    "iotop@latest",
+    "htop@latest",
+    "unzip@latest",
+    "tmux@latest",
+    "autojump@latest",
+    "curl@latest",
+    "fzf@latest",
+    "neofetch@latest",
+    "restic@latest",
+    "pwgen@latest",
+    "rsync@latest",
+    "dos2unix@latest",
+    "wget@latest",
+    "starship@latest",
+    "hishtory@latest"
+  ],
+  "shell": {
+    "init_hook": [
+      "echo 'Welcome to devbox!' > /dev/null"
+    ],
+    "scripts": {
+      "test": [
+        "echo \"Error: no test specified\" && exit 1"
+      ]
+    }
+  }
+}
