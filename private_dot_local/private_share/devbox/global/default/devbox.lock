@@ -549,6 +549,26 @@
         }
       }
     },
+    "perl@latest": {
+      "last_modified": "2024-02-26T19:46:43Z",
+      "resolved": "github:NixOS/nixpkgs/548a86b335d7ecd8b57ec617781f5e652ab0c38e#perl",
+      "source": "devbox-search",
+      "version": "5.38.2",
+      "systems": {
+        "aarch64-darwin": {
+          "store_path": "/nix/store/mb50r9haqwpx352x916cfmalkhwjiqkc-perl-5.38.2"
+        },
+        "aarch64-linux": {
+          "store_path": "/nix/store/3jfbb9i9p3w4l706ifzdbx04lsdrhy96-perl-5.38.2"
+        },
+        "x86_64-darwin": {
+          "store_path": "/nix/store/vmy5f936yvdqb52nmykdimydpkd10daa-perl-5.38.2"
+        },
+        "x86_64-linux": {
+          "store_path": "/nix/store/jr2c1rk91nqlfz5a5lwfq2kyilxzj879-perl-5.38.2"
+        }
+      }
+    },
     "pv@latest": {
       "last_modified": "2023-12-13T22:54:10Z",
       "resolved": "github:NixOS/nixpkgs/fd04bea4cbf76f86f244b9e2549fca066db8ddff#pv",
