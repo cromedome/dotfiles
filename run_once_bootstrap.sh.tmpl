@@ -29,7 +29,7 @@ chsh -s /usr/local/bin/zsh
 {{ end -}}
 
 # Set up perl
-cpan App::cpanm
-cpanm App::cpm
-cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
-cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/dancer-xs/cpanfile
+sudo cpan App::cpanminus
+sudo cpanm App::cpm
+sudo cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
+sudo cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/dancer-xs/cpanfile
