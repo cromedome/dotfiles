@@ -1,0 +1,35 @@
+#!/bin/sh
+
+{{ if eq .chezmoi.os "linux" -}}
+~/bin/install/install-debian-base
+{{ else if eq .chezmoi.os "darwin" -}}
+sh ~/bin/install/install-macos-base
+{{ else if eq .chezmoi.os "freebsd" -}}
+sh ~/bin/install/install-freebsd-base
+{{ else if eq .chezmoi.os "netbsd" -}}
+sh ~/bin/install/install-netbsd-base
+{{ else if eq .chezmoi.os "openbsd" -}}
+sh ~/bin/install/install-openbsd-base
+{{ end -}}
+
+# Install devbox
+curl -fsSL https://get.jetpack.io/devbox | bash
+
+# Change shell
+{{ if eq .chezmoi.os "linux" -}}
+chsh -s /usr/bin/zsh
+{{ else if eq .chezmoi.os "darwin" -}}
+chsh -s /bin/zsh
+{{ else if eq .chezmoi.os "freebsd" -}}
+chsh -s /usr/local/bin/zsh
+{{ else if eq .chezmoi.os "netbsd" -}}
+chsh -s /usr/pkg/bin/zsh
+{{ else if eq .chezmoi.os "openbsd" -}}
+chsh -s /usr/local/bin/zsh
+{{ end -}}
+
+# Set up perl
+cpan App::cpanm
+cpanm App::cpm
+cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
+cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/dancer-xs/cpanfile
