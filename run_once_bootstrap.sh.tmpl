@@ -33,14 +33,3 @@ chsh -s /usr/pkg/bin/zsh
 chsh -s /usr/local/bin/zsh
 {{ end -}}
 
-# TODO: Move this to a post-install script. Include hishtory. Encrypt this.
-## Set up perl
-#echo "Installing Perl..."
-#sudo cpan App::cpanminus
-#sudo cpanm App::cpm
-#sudo cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
-#sudo cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/dancer-xs/cpanfile
-#
-#echo "Initializing devbox..."
-#eval "$(devbox global shellenv --recompute)"
-
