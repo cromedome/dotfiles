@@ -13,7 +13,12 @@ sh ~/bin/install/install-netbsd-base
 sh ~/bin/install/install-openbsd-base
 {{ end -}}
 
-# Change shell
+echo "Installing Starship..."
+curl -sS https://starship.rs/install.sh | sh
+
+echo "Installing hishtory..."
+curl https://hishtory.dev/install.py | python3 -
+
 echo "Setting shell to zsh..."
 {{ if eq .chezmoi.os "linux" -}}
 chsh -s /usr/bin/zsh
