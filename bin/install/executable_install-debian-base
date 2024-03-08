@@ -9,15 +9,40 @@ sudo apt install \
     ufw \
     age \
     python3-pip \
-    build-essential
-
-# Needed for dev:
-    #libpcre3-dev \
-    #zlib1g-dev \
-    #libxml2-dev \
-    #libexpat1-dev \
-    #libpng-dev \
-    #libjpeg-dev \
-    #libtiff-dev \
-    #libssl-dev \
-
+    build-essential \
+    nmap \
+    traceroute \
+    mosh \
+    pv \
+    ncftp \
+    lynx \
+    w3m \
+    tree \
+    lsof \
+    iotop \
+    htop \
+    unzip \
+    exuberant-ctags \
+    tmux \
+    autojump \
+    source-highlight \
+    tig \
+    tldr \
+    fd-find \
+    ncdu \
+    fzf \
+    bat \
+    exa \
+    neofetch \
+    direnv \
+    restic \
+    jq \
+    libpcre3-dev \
+    zlib1g-dev \
+    libxml2-dev \
+    libexpat1-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libtiff-dev \
+    libssl-dev \
+    colordiff

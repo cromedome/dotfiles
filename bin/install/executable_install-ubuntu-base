@@ -2,26 +2,50 @@
 
 sudo apt install \
     net-tools \
+    nmap \
+    traceroute \
     debsums \
     vim-nox \
+    neovim \
+    mosh \
+    stow \
+    pv \
     git \
-    age \
+    ncftp \
+    lynx \
+    w3m \
+    tree \
+    lsof \
+    iotop \
+    htop \
+    unzip \
+    exuberant-ctags \
+    tmux \
+    autojump \
+    source-highlight \
     zsh \
     ufw \
+    curl \
+    tig \
     python3-pip \
-    build-essential
-
-# Needed for dev:
-    #libpcre3-dev \
-    #zlib1g-dev \
-    #libxml2-dev \
-    #libexpat1-dev \
-    #libpng-dev \
-    #libjpeg-dev \
-    #libtiff-dev \
-    #libssl-dev \
-    #libbz2-dev \
-    #libreadline-dev \
-    #libncurses5-dev \
-    #libffi-dev \
-    #libsqlite3-dev
+    tldr \
+    fd-find \
+    ncdu \
+    fzf \
+    bat \
+    exa \
+    neofetch \
+    direnv \
+    libpcre3-dev \
+    zlib1g-dev \
+    libxml2-dev \
+    libexpat1-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libtiff-dev \
+    libssl-dev \
+    libbz2-dev \
+    libreadline-dev \
+    libncurses5-dev \
+    libffi-dev \
+    libsqlite3-dev
