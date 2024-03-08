@@ -1,5 +1,6 @@
 #!/bin/sh
 
+echo "Installing system packages..."
 {{ if eq .chezmoi.os "linux" -}}
 ~/bin/install/install-debian-base
 {{ else if eq .chezmoi.os "darwin" -}}
@@ -13,9 +14,11 @@ sh ~/bin/install/install-openbsd-base
 {{ end -}}
 
 # Install devbox
+echo "Installing devbox..."
 curl -fsSL https://get.jetpack.io/devbox | bash
 
 # Change shell
+echo "Setting shell to zsh..."
 {{ if eq .chezmoi.os "linux" -}}
 chsh -s /usr/bin/zsh
 {{ else if eq .chezmoi.os "darwin" -}}
@@ -28,8 +31,14 @@ chsh -s /usr/pkg/bin/zsh
 chsh -s /usr/local/bin/zsh
 {{ end -}}
 
-# Set up perl
-sudo cpan App::cpanminus
-sudo cpanm App::cpm
-sudo cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
-sudo cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/dancer-xs/cpanfile
+# TODO: Move this to a post-install script. Include hishtory. Encrypt this.
+## Set up perl
+#echo "Installing Perl..."
+#sudo cpan App::cpanminus
+#sudo cpanm App::cpm
+#sudo cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
+#sudo cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/dancer-xs/cpanfile
+#
+#echo "Initializing devbox..."
+#eval "$(devbox global shellenv --recompute)"
+
