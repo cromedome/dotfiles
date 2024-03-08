@@ -4,7 +4,6 @@ pkgin install \
     sudo \
     age \
     sysupgrade \
-    stow \
     vim \
     neovim \
     git \
@@ -37,7 +36,6 @@ pkgin install \
     libxml2 \
     png \
     tiff \
-    libjpeg-turbo \
     rsync \
     neofetch \
     alpine \
@@ -51,7 +49,6 @@ pkgin install \
     expat \
     pcre2 \
     lzlib \
-    libjpeg-turbo \
     tiff \
     ssh-copy-id \
     jq \
