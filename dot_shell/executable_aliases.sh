@@ -59,7 +59,7 @@ else
     fi
 fi
 
-batcat=$(which bat)
+batcat=$(which batcat)
 if [ -x "$batcat" ]; then
     alias cat="bat --theme Nord"
 fi
