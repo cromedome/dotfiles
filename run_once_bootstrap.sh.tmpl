@@ -13,8 +13,10 @@ sh ~/bin/install/install-netbsd-base
 sh ~/bin/install/install-openbsd-base
 {{ end -}}
 
+{{ if eq .chezmoi.os "linux" -}}
 echo "Installing Starship..."
 curl -sS https://starship.rs/install.sh | sh
+{{ end -}}
 
 echo "Installing hishtory..."
 curl https://hishtory.dev/install.py | python3 -
