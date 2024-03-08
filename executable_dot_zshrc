@@ -26,7 +26,7 @@ fi
 
 export DISABLE_AUTO_UPDATE="true"
 source $ZSH/oh-my-zsh.sh
-source ~/.shell/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.zsh-autosuggestions/zsh-autosuggestions.zsh
 
 if whence dircolors >/dev/null ; then
     if [ -r "$HOME/.dir_colors" ]; then
@@ -52,11 +52,6 @@ source ~/.shell/dev.sh
 source ~/.shell/env.sh
 source ~/.shell/path.sh
 source ~/.shell/aliases.sh
-
-# Devbox
-export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
-eval "$(devbox global shellenv)"
-
 # Z, not autojump
 if [ "$osname" = "OpenBSD" ] || [ "$osname" = 'FreeBSD' ]; then
     eval $(ssh-agent)
@@ -81,3 +76,8 @@ source ~/.shell/fzf.zsh
 
 # Hishtory Config
 source ~/.shell/hishtory.zsh
+
+# Devbox
+export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
+eval "$(devbox global shellenv)"
+
