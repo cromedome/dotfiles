@@ -13,12 +13,6 @@ sh ~/bin/install/install-netbsd-base
 sh ~/bin/install/install-openbsd-base
 {{ end -}}
 
-# Install devbox
-{{ if (and (ne .chezmoi.os "netbsd") (ne .chezmoi.os "openbsd")) }}
-echo "Installing devbox..."
-curl -fsSL https://get.jetpack.io/devbox | bash
-{{ end }}
-
 # Change shell
 echo "Setting shell to zsh..."
 {{ if eq .chezmoi.os "linux" -}}

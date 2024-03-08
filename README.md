@@ -15,3 +15,8 @@ chezmoi will automatically do the following:
 
 Init hishtory
 Update chezmoi config
+
+## TODO items
+macOS: Install MacPorts
+NetBSD: Install go, compile chezmoi
+Debian: Install starship

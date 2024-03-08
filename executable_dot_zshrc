@@ -53,10 +53,6 @@ source ~/.shell/env.sh
 source ~/.shell/path.sh
 source ~/.shell/aliases.sh
 
-# Devbox
-export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
-eval "$(devbox global shellenv)"
-
 # Z, not autojump
 if [ "$osname" = "OpenBSD" ] || [ "$osname" = 'FreeBSD' ]; then
     eval $(ssh-agent)
