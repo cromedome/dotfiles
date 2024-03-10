@@ -75,5 +75,4 @@ eval "$(starship init zsh)"
 # fzf config
 source ~/.shell/fzf.zsh
 
-# Hishtory Config
-source ~/.shell/hishtory.zsh
+eval "$(atuin init zsh)"
