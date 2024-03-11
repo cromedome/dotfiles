@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt install \
+sudo apt install -y \
     net-tools \
     debsums \
     vim-nox \
@@ -46,3 +46,6 @@ sudo apt install \
     libtiff-dev \
     libssl-dev \
     colordiff
+
+sudo ln -s /usr/bin/batcat /usr/bin/bat
+sudo ln -s /usr/bin/fdfind /usr/bin/fd
