@@ -65,7 +65,7 @@ return {
     --font = wezterm.font("FiraCode Nerd Font", {weight="Regular", stretch="Normal", style="Normal"}),
     harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
     allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
-    color_scheme = "nord",
+    color_scheme = "Tokyo Night Moon",
     initial_cols = 185,
     initial_rows = 50,
     enable_scroll_bar = true,
