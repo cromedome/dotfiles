@@ -37,4 +37,5 @@ chsh -s /usr/pkg/bin/zsh
 {{ else if eq .chezmoi.os "openbsd" -}}
 chsh -s /usr/local/bin/zsh
 {{ end -}}
+zsh ~/bin/install/post-chezmoi.sh
 zsh
