@@ -18,8 +18,12 @@ echo "Installing Starship..."
 curl -sS https://starship.rs/install.sh | sh
 {{ end -}}
 
-echo "Installing hishtory..."
-curl https://hishtory.dev/install.py | python3 -
+{{ if ne .chezmoi.os "darwin" -}}
+echo "Installing Atuin..."
+/bin/bash -c "$(curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh)"
+atuin login -u thecromedome
+atuin sync -f
+{{ end -}}
 
 echo "Setting shell to zsh..."
 {{ if eq .chezmoi.os "linux" -}}
