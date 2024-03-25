@@ -153,7 +153,7 @@ Plug 'folke/todo-comments.nvim'
 Plug 'w0rp/ale'
 Plug 'elzr/vim-json'
 Plug '~/.config/nvim/unplugged/sqlany'
-Plug '~/.config/nvim/unplugged/perl-local-lib-path.vim'
+"Plug '~/.config/nvim/unplugged/perl-local-lib-path.vim'
 Plug 'skaji/syntax-check-perl'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'motemen/xslate-vim'
@@ -626,8 +626,8 @@ EONT
 " }}}
 
 " Perl Settings {{{
-let g:perl_local_lib_path = "lib"
-autocmd FileType perl PerlLocalLibPath
+"let g:perl_local_lib_path = "lib"
+"autocmd FileType perl PerlLocalLibPath
 
 " Perl code folding options
 let perl_fold=1
