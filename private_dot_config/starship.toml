@@ -2,24 +2,40 @@
 
 format = """
 $os\
-[](bold bg:color_blue fg:color_green)\
+[](bold bg:color_host_bg fg:color_os_bg)\
 $username$hostname\
-[](bold bg:color_dark_grey fg:color_blue)\
+[](bold bg:color_dir_bg fg:color_host_bg)\
 $directory\
-[](bold fg:color_dark_grey bg:color_green)\
+[](bold fg:color_dir_bg bg:color_git_bg)\
 $git_branch\
 $git_status\
-[](bold fg:color_green bg:color_dark_blue)\
+[](bold fg:color_git_bg bg:color_lang_bg)\
 $perl\
-[](bold fg:color_dark_blue bg:color_black) """
+[](bold fg:color_lang_bg bg:color_term_bg) """
 
 right_format = """
-[](bold fg:color_dark_grey bg:color_black)\
+[](bold fg:color_status_bg bg:color_term_bg)\
 $character\
-[](bold fg:color_white bg:color_dark_grey)\
+[](bold fg:color_time_bg bg:color_status_bg)\
 $time"""
 
-palette = 'nord'
+palette = 'tokyonight'
+
+[palettes.tokyonight]
+color_term_bg = '#222436'
+color_status_bg = '#3B4261'
+color_os_bg = '#C1E68C'
+color_os_fg = '#222436'
+color_host_bg = '#82AAFF'
+color_host_fg = '#3B4261'
+color_git_bg = '#C1E68C'
+color_git_fg = '#3B4261'
+color_dir_bg = '#3B4261'
+color_dir_fg = '#C6D1F3'
+color_lang_bg = '#82AAFF'
+color_lang_fg = '#3B4261'
+color_time_bg = '#82AAFF'
+color_time_fg = '#3B4261'
 
 [palettes.nord]
 color_blue = '#819FC1'
@@ -33,7 +49,7 @@ color_black = '#2E3440'
 
 [os]
 disabled = false
-style = "bg:color_green fg:color_dark_grey"
+style = "bg:color_os_bg fg:color_os_fg"
 
 [os.symbols]
 Windows = "󰍲 "
@@ -47,19 +63,19 @@ NetBSD = "󰈿 "
 
 [username]
 show_always = true
-style_user = "bold bg:color_blue fg:color_white"
-style_root = "bold bg:color_blue fg:color_white"
+style_user = "bold bg:color_host_bg fg:color_host_fg"
+style_root = "bold bg:color_host_bg fg:color_host_fg"
 format = '[ $user]($style)'
 
 [hostname]
 ssh_only = false
-style = "bold bg:color_blue fg:color_white"
+style = "bold bg:color_host_bg fg:color_host_fg"
 format = '[@]($style)[$hostname ]($style)'
 disabled = false
 
 [directory]
-style = "fg:color_light_grey bg:color_dark_grey"
-read_only_style = "bg:color_dark_grey"
+style = "fg:color_dir_fg bg:color_dir_bg"
+read_only_style = "bg:color_dir_bg"
 format = "[ $read_only]($read_only_style)[$path ]($style)"
 truncation_length = 1
 truncation_symbol = "  …/"
@@ -75,22 +91,22 @@ home_symbol = " "
 
 [git_branch]
 symbol = ""
-style = "bold bg:color_green"
-format = '[[ $symbol $branch ](bold fg:color_dark_grey bg:color_green)]($style)'
+style = "bold bg:color_git_bg"
+format = '[[ $symbol $branch ](bold fg:color_git_fg bg:color_git_bg)]($style)'
 
 [git_status]
-style = "bg:color_green"
-format = '[[($all_status$ahead_behind )](bold fg:color_dark_grey bg:color_green)]($style)'
+style = "bg:color_git_bg"
+format = '[[($all_status$ahead_behind )](bold fg:color_git_fg bg:color_git_bg)]($style)'
 
 [perl]
 symbol = " "
-style = "bold fg:color_dark_grey bg:color_dark_blue"
+style = "bold fg:color_lang_fg bg:color_lang_bg"
 format = '([ $symbol ($version )]($style))'
 
 [time]
 disabled = false
-style = "bg:color_black"
-format = '[[ $time   ](fg:color_black bg:color_white)]($style)'
+style = "bg:color_time_bg"
+format = '[[ $time   ](fg:color_time_fg bg:color_time_bg)]($style)'
 
 [line_break]
 disabled = false
@@ -98,8 +114,8 @@ disabled = false
 [character]
 disabled = false
 format = "$symbol"
-success_symbol = '[   ](bold fg:green bg:color_dark_grey)'
-error_symbol = '[ ✗ ](bold fg:red bg:color_dark_grey)'
+success_symbol = '[   ](bold fg:green bg:color_status_bg)'
+error_symbol = '[ ✗ ](bold fg:red bg:color_status_bg)'
 #success_symbol = '[](bold bg:color_black fg:color_green)'
 #error_symbol = '[](bold bg:color_black fg:color_red)'
 vimcmd_symbol = '[](bold fg:color_green)'
