@@ -75,4 +75,5 @@ eval "$(starship init zsh)"
 # fzf config
 source ~/.shell/fzf.zsh
 
-eval "$(atuin init zsh)"
+# Synced shell history
+source ~/.shell/hishtory.zsh

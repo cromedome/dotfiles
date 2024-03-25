@@ -21,11 +21,9 @@ fi
 {{ end -}}
 
 {{ if ne .chezmoi.os "darwin" -}}
-if [[ ! "$(which atuin)" =~ "atuin" ]]; then
-    echo "Installing Atuin..."
-    /bin/bash -c "$(curl --proto '=https' --tlsv1.2 -sSf https://setup.atuin.sh)"
-    atuin login -u thecromedome
-    atuin sync -f
+if [[ ! "$(which hishtory)" =~ "hishtory" ]]; then
+    echo "Installing Hishtory..."
+    curl https://hishtory.dev/install.py | python3 -
 fi
 {{ end -}}
 
