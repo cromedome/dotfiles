@@ -25,9 +25,12 @@
     ack = grep --perl-regexp --break --heading --line-number
     # For adding changes onto a commit just made:
     amend = commit --amend -C HEAD
-    bd = branch-dates
+    ba = branch-dates
+    bd = branch -D
+    bda = "!git branch -D $1 && git push -d origin $1"
+    br = push -d origin
     bl = branch-log
-    bn = checkout -b
+    bn = switch -c
     br = branch
     co = checkout
     contains = branch -a --contains
@@ -54,10 +57,12 @@
     pe = patch-extract
     # For updating the wording on a just-made commit:
     reword = commit --amend
+    rx = restore
     st = status -s
     sb = status -sb
     sc = branch --show-current
     sm = submodule
+    sw = switch
     hist = log --all --graph --pretty='[%C(cyan)%h%Creset]%C(green)%d%Creset %s%Cblue [%cn]'
     uncommit = reset --soft HEAD^
     unstage = reset HEAD
