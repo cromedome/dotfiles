@@ -40,6 +40,11 @@ if [[ ! "$SHELL" =~ "zsh" ]]; then
     {{ else if eq .chezmoi.os "openbsd" -}}
     chsh -s /usr/local/bin/zsh
     {{ end -}}
+
+    nvim -c "PlugInstall|qa" > /dev/null
+    sudo pip3 install neovim --break-system-packages
+    nvim -c "UpdateRemotePlugins|qa" > /dev/null
+
     {{ if ne .chezmoi.os "darwin" -}}
     zsh ~/bin/install/post-chezmoi.sh
     {{ end -}}
