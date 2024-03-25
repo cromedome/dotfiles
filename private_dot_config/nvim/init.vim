@@ -132,8 +132,7 @@ Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-fugitive'
 
 " Color themes
-"Plug 'arcticicestudio/nord-vim'
-Plug 'shaunsingh/nord.nvim'
+Plug 'folke/tokyonight.nvim'
 
 " Telescope
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate' }
@@ -158,6 +157,7 @@ Plug '~/.config/nvim/unplugged/perl-local-lib-path.vim'
 Plug 'skaji/syntax-check-perl'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'motemen/xslate-vim'
+Plug 'aming/vim-mason'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'lewis6991/gitsigns.nvim'
 
@@ -178,7 +178,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'xolox/vim-misc'
-Plug 'aming/vim-mason'
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 Plug 'xolox/vim-session'
 Plug 'AndrewRadev/splitjoin.vim'
@@ -229,7 +228,7 @@ let g:nord_italic = v:false
 let g:nord_underline = 1
 let g:nord_italic_comments = 1
 set background=dark
-colorscheme nord
+colorscheme tokyonight-moon
 syntax enable
 set cursorline
 " }}}
