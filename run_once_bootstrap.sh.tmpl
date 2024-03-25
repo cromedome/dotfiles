@@ -42,6 +42,8 @@ if [[ ! "$SHELL" =~ "zsh" ]]; then
     {{ else if eq .chezmoi.os "openbsd" -}}
     chsh -s /usr/local/bin/zsh
     {{ end -}}
+    {{ if ne .chezmoi.os "darwin" -}}
     zsh ~/bin/install/post-chezmoi.sh
+    {{ end -}}
     zsh
 fi
