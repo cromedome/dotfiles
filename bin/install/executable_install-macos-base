@@ -1,11 +1,54 @@
 #!/bin/bash
 
 sudo port install \
-    z \
-    age 
+    autojump \
+    age \ 
+    bat \
+    cmake \
+    colordiff \
+    ctags \
+    diff-so-fancy \
+    direnv \
+    dos2unix \
+    exa \
+    expat \
+    fd \
+    fzf \
+    gnupg2 \
+    htop \
+    hugo \
+    jless \
+    jq \
+    libjpeg-turbo \
+    libpng \
+    mosh \
+    ncurses \
+    neofetch \
+    neovim \
+    nmap \
+    pwgen \
+    python311 \
+    pip_select \
+    pv \
+    redis \
+    restic \
+    ripgrep \
+    rsync \
+    source-highlight \
+    sqlite3 \
+    stow \
+    tiff \
+    tig \
+    tree \
+    tree-sitter \
+    unzip \
+    w3m \
+    wget \
+    zlib \
     libdvdcss \
     msgpack \
     reattach-to-user-namespace \
+    tmux \
     xz \
     z \
     zsh-autosuggestions
