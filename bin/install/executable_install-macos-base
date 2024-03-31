@@ -2,7 +2,7 @@
 
 sudo port install \
     autojump \
-    age \ 
+    age \
     bat \
     cmake \
     colordiff \
