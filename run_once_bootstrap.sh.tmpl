@@ -13,12 +13,10 @@ sh ~/bin/install/install-netbsd-base
 sh ~/bin/install/install-openbsd-base
 {{ end -}}
 
-{{ if eq .chezmoi.os "linux" -}}
 if [[ ! "$(which starship)" =~ "starship" ]]; then
     echo "Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh
 fi
-{{ end -}}
 
 {{ if ne .chezmoi.os "darwin" -}}
 if [[ ! "$(which hishtory)" =~ "hishtory" ]]; then

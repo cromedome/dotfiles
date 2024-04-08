@@ -49,6 +49,7 @@
     p = push
     # (p)ublish the current (b)ranch
     pb = push -u origin HEAD
+    pd = "!git remote set-url --push origin DISABLE"
     plog = log --pretty=fuller
     pu = pull
     # Patching made perfect
