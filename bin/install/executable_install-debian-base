@@ -35,6 +35,7 @@ sudo apt install -y \
     exa \
     neofetch \
     direnv \
+    ripgrep \
     restic \
     jq \
     libpcre3-dev \

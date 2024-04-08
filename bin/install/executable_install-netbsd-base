@@ -1,6 +1,6 @@
 #!/bin/sh
 
-pkgin install \
+pkgin install -y \
     sudo \
     age \
     sysupgrade \
@@ -52,4 +52,5 @@ pkgin install \
     tiff \
     ssh-copy-id \
     jq \
+    starship \
     mozilla-rootcerts
