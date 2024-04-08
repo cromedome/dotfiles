@@ -231,6 +231,7 @@ set background=dark
 colorscheme tokyonight-moon
 syntax enable
 set cursorline
+hi UnwantedTrailerTrash guibg=red ctermbg=red
 " }}}
 
 " Basic vim options (ported from .vimrc) {{{
