@@ -83,6 +83,12 @@ else
         fi
     fi
 fi
+# https://askubuntu.com/questions/522051/how-to-list-all-symbolic-links-in-a-directory/
+alias lsl="find . -maxdepth 1 -type l -ls"
+alias lsla="find . -type l -ls"
+
+# https://stackoverflow.com/questions/3886295/how-do-i-list-one-filename-per-output-line-in-linux
+alias lol="ls -1a"
 
 if [ -x "$exae" ]; then
     alias tree='exa --tree'
