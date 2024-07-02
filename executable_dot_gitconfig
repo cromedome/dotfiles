@@ -21,13 +21,12 @@
 
 [alias]
     a = add
-    # To search the current tree using regular expressions:
-    ack = grep --perl-regexp --break --heading --line-number
     # For adding changes onto a commit just made:
     amend = commit --amend -C HEAD
+    b = branch --show-current
     ba = branch-dates
     bd = branch -D
-    bda = "!git branch -D $1 && git push -d origin $1"
+    bda = "!git branch -D $1 && git push -d origin $1 #"
     br = push -d origin
     bl = branch-log
     bn = switch -c
@@ -44,11 +43,11 @@
     edit = !"nvim `git ls-files -m --other --exclude-standard` -p" # Edits dirty files, ie things in progress.
     fp = "fetch -p"
     has = branch -a --contains
+    # List aliases
+    la = "!git config -l | grep alias | cut -c 7-"
     mnoff = "merge --no-ff"
     mffo = "merge --ff-only"
     p = push
-    # (p)ublish the current (b)ranch
-    pb = push -u origin HEAD
     pd = "!git remote set-url --push origin DISABLE"
     plog = log --pretty=fuller
     pu = pull
@@ -56,47 +55,43 @@
     pa = apply
     pc = apply --check
     pe = patch-extract
-    # For updating the wording on a just-made commit:
-    reword = commit --amend
+    # To search the current tree using regular expressions:
+    res = grep --perl-regexp --break --heading --line-number
     rx = restore
     st = status -s
     sb = status -sb
-    sc = branch --show-current
+    search-commits = "!git log --all --grep=\"$1\" #"
+    sc = search-commits
+    search-commits-insensitive = "!git log --all -i --grep='$1' #"
+    sci = search-log-insensitive
+    search-files = "!git grep \"$1\" $(git rev-list --all) #"
+    sf = search-files
+    search-files-insensitive = "!git grep -i '$1' $(git rev-list --all) #"
+    sfi = search-files-insensitive
     sm = submodule
     sw = switch
-    hist = log --all --graph --pretty='[%C(cyan)%h%Creset]%C(green)%d%Creset %s%Cblue [%cn]'
     uncommit = reset --soft HEAD^
     unstage = reset HEAD
     up = fetch --all --prune
     standup = shortlog --since=yesterday
-    pulley = !git pull && git submodule foreach \"branch=$(git config -f $toplevel/.gitmodules submodule.$name.branch) && git checkout $branch && git pull \"
+    pulley = submodule update --init --recursive
     wip = "!git commit -a -m'WIP'"
 
-    # Deprecate?
-    follow = "!sh -c 'git blame -w -M -C -L $2,$3 -- $1'" -
-    forget = "!git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
-    done = "!f() { git branch | grep "$1" | cut -c 3- | grep -v done | xargs -I{} git branch -m {} done-{}; }; f"
+    ##
+    ## Graph commands
+    ##
 
-    # Graph commands
-    # Color graph
-    lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-    # Show a (g)raphic history, defaulting to from the current commit:
     g = log --abbrev-commit --graph --decorate --oneline
+    lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+    hist = log --all --graph --pretty='[%C(cyan)%h%Creset]%C(green)%d%Creset %s%Cblue [%cn]'
 
     # A (s)hort (g)raph, which only shows the most recent 10 lines:
     sg = !git --no-pager log --abbrev-commit --graph --decorate --oneline -n 10
 
-    # Also a short version, which shows all of the commits unique to this
-    # branch -- a (b)ranch (g)raph.  Requires that `git-which-branch` (from the `git-tools`
-    # repository) be in your path:
-    bg = !git --no-pager log --abbrev-commit --graph --decorate --oneline HEAD ^`git which-branch -q`
-
-    # As the previous command, but with gitk:
-    bgk = !gitk HEAD ^`git which-branch -q`
-
     # See http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/?utm_content=buffer99679&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer
     ls = log --pretty=format:"[%C(cyan)%h%Creset]%Cgreen%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
     ll = log --pretty=format:"%C(cyan)%h%Cgreen%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+
     # Last N commits
     logn = log --max-count
     lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
@@ -105,7 +100,6 @@
     fl = log -u
     dl = "!git ll -1"
     dlc = diff --cached HEAD^
-    la = "!git config -l | grep alias | cut -c 7-"
     lasttag = describe --tags --abbrev=0
     lt = describe --tags --abbrev=0
     ours = "!f() { git co --ours $@ && git add $@; }; f"
@@ -147,7 +141,7 @@
     ## GAMING GIT
     # Source: http://stackoverflow.com/questions/1486819/which-git-commit-stats-are-easy-to-pull
     # Show running total of number of commits per dev   ==
-    winning =   shortlog --summary --numbered --email
+    winning = shortlog --summary --numbered --email
     # Source: http://www.element84.com/using-git-log-to-show-last-months-commits.html
     commitslastmonth = !git log --author=\"`git config user.name`\" --before={`date "+%Y-%m-01"`} --after={`date --date=\"$(date +%Y-%m-1) -1 month\" \"+%Y-%m-01\"`} --reverse --pretty=format:\"%cd %h  %s\" --date=short
     commitsthismonth = !git log --author=\"`git config user.name`\" --before=now --after={`date "+%Y-%m-1"`} --reverse --pretty=format:\"%cd %h  %s\" --date=short
