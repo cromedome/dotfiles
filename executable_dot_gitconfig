@@ -16,8 +16,9 @@
 [core]
     excludesfile = ~/.gitignore_global
     ignorecase = false
-    editor = vim
+    editor = nvim
     ;pager = diff-so-fancy | less --tabs=4 -RFX
+    pager = delta
 
 [alias]
     a = add
@@ -172,15 +173,8 @@
     newHighlight = green bold 22
 
 [diff]
-    tool = vimdiff
-
-[difftool "sourcetree"]
-    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-    path =
-
-[difftool "vimdiff"]
-    cmd = ~/bin/vimdiff $LOCAL $REMOTE
-    prompt = false
+    ;tool = vimdiff
+    colorMoved = default
 
 [init]
     defaultBranch = main
@@ -197,8 +191,9 @@
     default = current
 
 [merge]
-    tool = splice
+    ;tool = splice
     ff=false
+    conflictstyle = diff3
 
 [filter "lfs"]
     clean = git-lfs clean %f
@@ -209,15 +204,12 @@
     enabled = true
     autoupdate = true
 
-[mergetool "sourcetree"]
-    cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-    trustExitCode = true
-
-[mergetool "splice"]
-    cmd = "nvim -f $BASE $LOCAL $REMOTE $MERGED -c 'SpliceInit'"
-    trustExitCode = true
-    keepBackup = false
-
 [rebase]
     #autosquash = true
 
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    line-numbers = true
