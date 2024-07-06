@@ -44,14 +44,14 @@ setopt appendhistory
 setopt histignoredups
 setopt incappendhistory
 
-# Language env manager setup, PATH mangling. Cribbed from rjbs.
-source ~/.shell/dev.sh
-
 # Everything above that might have stuck things into our $PATH is now complete,
 # so we can finally put ~/bin at the head of the path!
 source ~/.shell/env.sh
 source ~/.shell/path.sh
 source ~/.shell/aliases.sh
+
+# Language env manager setup, PATH mangling. Cribbed from rjbs.
+source ~/.shell/dev.sh
 
 # Z, not autojump
 if [ "$osname" = "OpenBSD" ] || [ "$osname" = 'FreeBSD' ]; then
