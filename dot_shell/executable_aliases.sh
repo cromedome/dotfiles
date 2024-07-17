@@ -4,6 +4,7 @@ alias bps='cd ~/code/BestPractical'
 alias cpmt='cpm install -w 8 -g --with-all --show-build-log-on-failure --test --cpanfile'
 alias cpmnot='cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile'
 alias d2='cd ~/code/PerlDancer/Dancer2-official'
+alias dirdiff="diff -rupN"
 alias dc=docker-compose
 alias du="ncdu --color dark -rr -x"
 alias c='chezmoi'
