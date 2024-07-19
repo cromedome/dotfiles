@@ -35,4 +35,15 @@ sudo pkg install \
     iftop \
     pwgen \
     doggo \
-    direnv
+    direnv \
+    git-delta
+    libxml2 \
+    expat \
+    pcre \
+    lzlib \
+    jpeg-turbo \
+    tiff \
+    jq
+
+    # TODO: Current pip3
+
