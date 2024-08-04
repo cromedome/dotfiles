@@ -556,7 +556,12 @@ map <F12> :Git<CR>:resize -10<CR>
 "}}}
 
 " gitsigns {{{
-call v:lua.require('gitsigns').setup()
+lua << EOGS
+    require('gitsigns').setup {
+      current_line_blame = true,
+      sign_priority = 15-- higher than diagnostic, todo signs; lower than dapui breakpoint sign.
+    }
+EOGS
 " }}}
 
 " lualine settings {{{
