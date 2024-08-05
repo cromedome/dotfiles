@@ -10,9 +10,6 @@
 " F6  - Toggle trouble
 " F7  - Toggle TODOs
 " F8  - Git diff (split)
-" F9  - Git log
-" F10 - Git blame
-" F12 - Git status
 "
 " (F11 is used by macOS to control Spaces)
 "
@@ -38,7 +35,6 @@
 " ,c        - Comment the current selection (\\ works too!)
 " ,f        - Find in files
 " ,g        - Live grep
-" ,h        - Find help
 " ,j        - Join statement on single line
 " ,jl       - Join lines
 " ,ls       - List current directory contents
@@ -85,15 +81,13 @@
 " --w       - Insert work email address
 "
 " Git specific commands:
-" :Git       - Run git status
-" :Gcommit   - git commit
-" :Git blame - git blame viewer
-" :Gmove     - git mv
-" :Gremove   - git rm (removes buffer too!)
-" :Git       - Run arbitrary git command
-" ,gb        - git blame
-" ,gd        - git diff
-" ,gs        - git status
+" ,gd - git diff
+" ,gm - Show git history under cursor
+" ,hp - Hunk preview
+" ,hr - Reset hunk (n,v)
+" ,hs - Stage hunk (n,v)
+" ,hu - Undo stage hunk
+" ,td - Toggle deleted hunk view
 "
 " Markdown specific commands:
 " ,ght - Generate GitHub-friendly table of contents
@@ -129,7 +123,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-fugitive'
 
 " Color themes
 Plug 'folke/tokyonight.nvim'
@@ -160,6 +153,7 @@ Plug 'motemen/xslate-vim'
 Plug 'aming/vim-mason'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'lewis6991/gitsigns.nvim'
+Plug 'rhysd/git-messenger.vim'
 
 " Other nvim
 Plug 'romgrk/barbar.nvim'
@@ -195,11 +189,6 @@ Plug 'Scuilion/markdown-drawer'
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'kristijanhusak/vim-carbon-now-sh'
 Plug 'will133/vim-dirdiff'
-
-" Displays git messages under the cursor for the highlighted
-" item. Requires 0.40 of Neovim that can be installed via:
-" brew install neovim --HEAD
-Plug 'rhysd/git-messenger.vim'
 
 call plug#end()
 " }}}
@@ -418,9 +407,6 @@ command Bd bp\|bd \#
 " Use the current word under the cursor in a substitution.
 nnoremap <Leader>S :%s/\<<C-r><C-w>\>//g<Left><Left>
 
-" Turn off highlighting
-noremap <leader>h   :nohl<cr>
-
 " Directory listing
 noremap <leader>ls  :!ls $(dirname %)<cr>
 noremap <leader>la  :!ls -al $(dirname %)<cr>
@@ -545,23 +531,59 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)<Paste>
 " }}}
 
-" Git settings {{{
-map <leader>gb :Git blame<CR>
-map <leader>gd :Git diff<CR>:resize -10<CR>
-map <leader>gs :Git<CR>:resize -10<CR>
-map <F8> :Gdiffsplit<CR>
-map <F9> :Git log<CR>:resize -10<CR>
-map <F10> :Git blame<CR>
-map <F12> :Git<CR>:resize -10<CR>
-"}}}
-
 " gitsigns {{{
 lua << EOGS
     require('gitsigns').setup {
+      on_attach = function(bufnr)
+        local gitsigns = require('gitsigns')
+
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
+
+        -- Navigation
+        map('n', ']c', function()
+          if vim.wo.diff then
+            vim.cmd.normal({']c', bang = true})
+          else
+            gitsigns.nav_hunk('next')
+          end
+        end)
+
+        map('n', '[c', function()
+          if vim.wo.diff then
+            vim.cmd.normal({'[c', bang = true})
+          else
+            gitsigns.nav_hunk('prev')
+          end
+        end)
+
+        -- Actions
+        map('n', '<leader>hs', gitsigns.stage_hunk)
+        map('n', '<leader>hr', gitsigns.reset_hunk)
+        map('v', '<leader>hs', function() gitsigns.stage_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+        map('v', '<leader>hr', function() gitsigns.reset_hunk {vim.fn.line('.'), vim.fn.line('v')} end)
+        map('n', '<leader>hS', gitsigns.stage_buffer)
+        map('n', '<leader>hu', gitsigns.undo_stage_hunk)
+        map('n', '<leader>hR', gitsigns.reset_buffer)
+        map('n', '<leader>hp', gitsigns.preview_hunk)
+        map('n', '<leader>hb', function() gitsigns.blame_line{full=true} end)
+        map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
+        map('n', '<leader>hd', gitsigns.diffthis)
+        map('n', '<leader>gd', gitsigns.diffthis)
+        map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
+        map('n', '<leader>td', gitsigns.toggle_deleted)
+
+        -- Text object
+        map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+      end,
       current_line_blame = true,
       sign_priority = 15-- higher than diagnostic, todo signs; lower than dapui breakpoint sign.
     }
 EOGS
+map <F8> :Gitsigns diffthis<CR>
 " }}}
 
 " lualine settings {{{
@@ -683,7 +705,6 @@ let g:tagbar_type_perl = {
 nnoremap <leader><space> <cmd>Telescope buffers<cr>
 nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>g <cmd>Telescope live_grep<cr>
-nnoremap <leader>h <cmd>Telescope help_tags<cr>
 nnoremap <C-f> <cmd>Telescope find_files<cr>
 nnoremap <C-g> <cmd>Telescope git_files<cr>
 " }}}
