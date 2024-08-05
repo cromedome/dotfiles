@@ -31,7 +31,6 @@
 " Bd        - Delete current buffer, but keep the split open
 " Y         - Yank to end of line
 " ,,        - Unhighlight search matches
-" ,a        - Search w/Ack
 " ,c        - Comment the current selection (\\ works too!)
 " ,f        - Find in files
 " ,g        - Live grep
@@ -47,7 +46,6 @@
 " ,rd       - Re-format/re-wrap entire document
 " ,rp       - Re-format/re-wrap current paragraph
 " ,s        - Split statement to multiple lines
-" ,sa       - Ack in a side window (with context!)
 " ,S        - Use the current word under the cursor in a substitution.
 " ,sf       - Format SQL to something readable
 " ,sl       - Swap letters
@@ -480,12 +478,6 @@ augroup END
 " }}}
 
 " Plugin configuration {{{
-
-" Ack settings {{{
-if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
-endif
-" }}}
 
 " aLE settings {{{
 let g:ale_linters = { 'perl': ['syntax-check'] }
