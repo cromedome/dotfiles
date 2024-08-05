@@ -39,9 +39,7 @@
 " ,jl       - Join lines
 " ,ls       - List current directory contents
 " ,la       - List current directory contents, including hidden files
-" ,m        - Show all files modified since my last commit
 " ,md       - Show the Markdown drawer
-" ,M        - Show all modified files on the current branch
 " ,nt       - Toggle nvim-tree
 " ,pb       - Copy current file into clipboard/paste buffer (macOS only)
 " ,pp       - Pretty-print with Carbon
