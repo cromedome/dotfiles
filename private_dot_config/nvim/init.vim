@@ -150,6 +150,7 @@ Plug 'aming/vim-mason'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'rhysd/git-messenger.vim'
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Other nvim
 Plug 'romgrk/barbar.nvim'
@@ -288,9 +289,9 @@ nnoremap <leader>sa :SideSearch
 " }}}
 
 " Laziness {{{
-iabbr --e cromedome@cpan.org
+iabbr --e cpan@jason.cromedome.dev
 iabbr --n Jason A. Crome
-iabbr --p cromedome@gmail.com
+iabbr --p jason@cromedome.dev
 iabbr --r -- Jason, <C-R>=strftime("%Y-%m-%d")<CR>
 iabbr --w jason@crome-plated.com
 " }}}
@@ -574,6 +575,10 @@ lua << EOGS
     }
 EOGS
 map <F8> :Gitsigns diffthis<CR>
+" }}}
+
+" indent-blankline {{{
+call v:lua.require('ibl').setup()
 " }}}
 
 " lualine settings {{{
