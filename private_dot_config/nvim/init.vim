@@ -9,7 +9,7 @@
 " F5  - Markdown drawer
 " F6  - Toggle trouble
 " F7  - Toggle TODOs
-" F8  - Git diff (split)
+" F8  - Git diff
 "
 " (F11 is used by macOS to control Spaces)
 "
@@ -78,7 +78,11 @@
 "
 " Git specific commands:
 " ,gd - git diff
+" ,gD - git diff master
+" ,gg - Toggle neogit
+" ,gl - git log
 " ,gm - Show git history under cursor
+" ,gp - git push
 " ,hp - Hunk preview
 " ,hr - Reset hunk (n,v)
 " ,hs - Stage hunk (n,v)
@@ -87,7 +91,6 @@
 "
 " Markdown specific commands:
 " ,ght - Generate GitHub-friendly table of contents
-" ,glt - Generate GitLab-friendly table of contents
 " ,uc  - Update table of contents
 " ,rc  - Remove table of contents
 "
@@ -150,6 +153,8 @@ Plug 'aming/vim-mason'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'rhysd/git-messenger.vim'
+Plug 'NeogitOrg/neogit'
+Plug 'sindrets/diffview.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 " Other nvim
@@ -157,10 +162,8 @@ Plug 'romgrk/barbar.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kylechui/nvim-surround'
-Plug 'sindrets/diffview.nvim'
 
 " All others
-Plug 'mileszs/ack.vim'
 Plug 'vim-scripts/Align'
 Plug 'hotwatermorning/auto-git-diff'
 Plug 'jiangmiao/auto-pairs'
@@ -563,7 +566,6 @@ lua << EOGS
         map('n', '<leader>hb', function() gitsigns.blame_line{full=true} end)
         map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
         map('n', '<leader>hd', gitsigns.diffthis)
-        map('n', '<leader>gd', gitsigns.diffthis)
         map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
         map('n', '<leader>td', gitsigns.toggle_deleted)
 
@@ -574,7 +576,6 @@ lua << EOGS
       sign_priority = 15-- higher than diagnostic, todo signs; lower than dapui breakpoint sign.
     }
 EOGS
-map <F8> :Gitsigns diffthis<CR>
 " }}}
 
 " indent-blankline {{{
@@ -598,7 +599,6 @@ map <F5> :MarkDrawer<cr>
 
 " Markdown TOC {{{
 nnoremap <Leader>ght :GenTocGFM<cr>
-nnoremap <Leader>glt :GenTocGitLab<cr>
 nnoremap <Leader>uc :UpdateToc<cr>
 nnoremap <Leader>rc :RemoveToc<cr>
 " }}}
@@ -615,6 +615,24 @@ map \\ <Plug>NERDCommenterToggle
 " Neoformat {{{
 nmap = :Neoformat<CR>
 vmap = :Neoformat<CR>
+" }}}
+
+" neogit and diffview {{{
+lua << EONG
+    require('neogit').setup {
+        disable_commit_confirmation = true,
+        integrations = {
+            diffview = true
+        }
+    }
+EONG
+
+map <F8> :DiffviewOpen<CR>
+nnoremap <leader>gg :Neogit<cr>
+nnoremap <leader>gd :DiffviewOpen<cr>
+nnoremap <leader>gD :DiffviewOpen master<cr>
+nnoremap <leader>gl :Neogit log<cr>
+nnoremap <leader>gp :Neogit push<cr>
 " }}}
 
 " nvim-surround {{{
