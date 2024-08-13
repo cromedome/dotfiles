@@ -26,8 +26,9 @@
     amend = commit --amend -C HEAD
     b = branch --show-current
     ba = branch-dates
-    bd = branch -D
     bda = "!git branch -D $1 && git push -d origin $1 #"
+    bdl = branch -D
+    bdr = "!git push -d origin $1 #"
     br = push -d origin
     bl = branch-log
     bn = switch -c
