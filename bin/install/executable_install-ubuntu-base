@@ -1,16 +1,18 @@
 #!/bin/bash
 
-sudo apt install \
+sudo apt install -y \
     net-tools \
+    debsums \
+    git \
+    zsh \
+    ufw \
+    age \
+    python3-pip \
+    build-essential \
     nmap \
     traceroute \
-    debsums \
-    vim-nox \
-    neovim \
     mosh \
-    stow \
     pv \
-    git \
     ncftp \
     lynx \
     w3m \
@@ -18,24 +20,23 @@ sudo apt install \
     lsof \
     iotop \
     htop \
+    btop \
     unzip \
     exuberant-ctags \
     tmux \
     autojump \
     source-highlight \
-    zsh \
-    ufw \
-    curl \
     tig \
-    python3-pip \
     tldr \
     fd-find \
     ncdu \
     fzf \
     bat \
-    exa \
-    neofetch \
+    eza \
     direnv \
+    ripgrep \
+    restic \
+    jq \
     libpcre3-dev \
     zlib1g-dev \
     libxml2-dev \
@@ -44,8 +45,10 @@ sudo apt install \
     libjpeg-dev \
     libtiff-dev \
     libssl-dev \
-    libbz2-dev \
-    libreadline-dev \
-    libncurses5-dev \
-    libffi-dev \
-    libsqlite3-dev
+    colordiff
+    libgit2-dev \
+    libsqlite3-dev \
+    git-delta
+
+sudo ln -s /usr/bin/batcat /usr/bin/bat
+sudo ln -s /usr/bin/fdfind /usr/bin/fd

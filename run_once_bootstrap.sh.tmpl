@@ -2,7 +2,11 @@
 
 echo "Installing system packages..."
 {{ if eq .chezmoi.os "linux" -}}
+{{   if eq .chezmoi.osRelease.id "debian" }}
 ~/bin/install/install-debian-base
+{{   else }}
+~/bin/install/install-ubuntu-base
+{{   end }}
 {{ else if eq .chezmoi.os "darwin" -}}
 sh ~/bin/install/install-macos-base
 {{ else if eq .chezmoi.os "freebsd" -}}
