@@ -45,7 +45,7 @@ sudo apt install -y \
     libjpeg-dev \
     libtiff-dev \
     libssl-dev \
-    colordiff
+    colordiff \
     libgit2-dev \
     libsqlite3-dev \
     git-delta
