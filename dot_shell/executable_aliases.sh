@@ -65,10 +65,10 @@ if [ -x "$batcat" ]; then
     alias cat="bat --theme Nord"
 fi
 
-exae=$(which exa)
-if [ -x "$exae" ]; then
+ezae=$(which eza)
+if [ -x "$ezae" ]; then
     alias ls='exa -aF'
-    alias ll='exa -aFlghb'
+    alias ll='eza -F -alghb'
 else
     cls=$(which colorls)
     if [ -x "$cls" ]; then
