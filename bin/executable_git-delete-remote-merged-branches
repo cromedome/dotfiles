@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+start_branch=$(git branch --show-current)
+if [ -n "$(git status -uno --porcelain)" ]; then
+    echo "$start_branch not clean, exiting"
+    exit
+fi
+
+git branch --merged "$1" --format="%(refname:short)" | while read branch; do
+    if [[ "$branch" == 'main' || "$branch" == 'master' || "$branch" == "$start_branch" || "$branch" == "$1" || "$branch" == "trunk" ]]; then
+        continue
+    fi
+    echo "git push origin --delete $branch"
+done
+
+git switch $start_branch --force >/dev/null 2>&1
+
+#
+# Assumes you have the following git aliases defined:
+#     contains = branch -a --contains
+#     latest   = rev-parse HEAD
+#     merged   = "!git contains $(git latest) | grep \"$1\"'$' #"
+#
+#git for-each-ref --format='%(refname:short)' refs/heads |
+    #while read branch; do
+        #if [[ "$branch" == 'main' || "$branch" == 'master' || "$branch" == "$start_branch" || "$branch" == "$1" || "$branch" == "trunk" ]]; then
+            #continue
+        #fi
+        #git checkout $branch >/dev/null 2>&1
+        #if [ $? -ne 0 ]; then
+            #if [ -z "$(git merged $1)" ]; then
+                #echo "git push origin --delete $branch"
+            #fi
+        #fi
+    #done
+
+
+#echo "Starting branch: $start_branch"
+# https://stackoverflow.com/questions/60090156/git-for-loop-on-local-branches
+# https://stackoverflow.com/questions/12137431/test-if-a-command-outputs-an-empty-string#12137504
+                #echo "Branch $branch merged, deleting..."
+                #if [ "$2" == 'for-reals' ]; then
+                    ##git push origin --delete $branch
+                    #echo " deleted"
+                #fi
+#echo "Done!"

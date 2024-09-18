@@ -29,15 +29,15 @@
     bda = "!git branch -D $1 && git push -d origin $1 #"
     bdl = branch -D
     bdr = "!git push -d origin $1 #"
-    br = push -d origin
+    bdrm = delete-remote-merged-branches
     bl = branch-log
     bn = switch -c
     br = branch
     co = checkout
-    contains = branch -a --contains
     ci = commit
     cia = commit -a
     cl = clone
+    cleanup = cleanup-local
     cp = cherry-pick
     cpn= cherry-pick -n
     conflicted = "diff --name-only --diff-filter=U"
@@ -45,7 +45,6 @@
     edit = !"nvim `git ls-files -m --other --exclude-standard` -p" # Edits dirty files, ie things in progress.
     fp = "fetch -p"
     has = branch -a --contains
-    # List aliases
     la = "!git config -l | grep alias | cut -c 7-"
     mnoff = "merge --no-ff"
     mffo = "merge --ff-only"
@@ -78,6 +77,12 @@
     standup = shortlog --since=yesterday
     pulley = submodule update --init --recursive
     wip = "!git commit -a -m'WIP'"
+
+    # Commit searching
+    contains = branch -a --contains
+    latest = rev-parse HEAD
+    merged = "!git contains $(git latest) | grep \"$1\"'$' #"
+    m = merged
 
     ##
     ## Graph commands
