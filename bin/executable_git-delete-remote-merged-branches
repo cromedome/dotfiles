@@ -10,7 +10,7 @@ git branch --merged "$1" --format="%(refname:short)" | while read branch; do
     if [[ "$branch" == 'main' || "$branch" == 'master' || "$branch" == "$start_branch" || "$branch" == "$1" || "$branch" == "trunk" ]]; then
         continue
     fi
-    echo "git push origin --delete $branch"
+    echo "git branch -D $branch && git push origin --delete $branch"
 done
 
 git switch $start_branch --force >/dev/null 2>&1
