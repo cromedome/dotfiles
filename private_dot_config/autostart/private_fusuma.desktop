@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=/home/jason/bin/fusuma.sh -d
+Icon=dialog-scripts
+Name=Fusuma
+Path=
+Type=Application
+X-KDE-AutostartScript=true
