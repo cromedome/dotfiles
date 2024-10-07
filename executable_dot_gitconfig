@@ -1,15 +1,11 @@
 ; help from https://blog.gitbutler.com/how-git-core-devs-configure-git/
 
 [user]
-    name = Jason A. Crome
-    email = jason@crome-plated.com
+    name = Jason Crome
+    email = jason.crome@foundant.com
 
 [github]
     user = cromedome
-
-;[includeIf "gitdir:~/code/PerlDancer/"]
-;    # path is relative to the file doing the include.
-;    path = ~/.gitconfig-cpan
 
 [core]
     excludesfile = ~/.gitignore_global

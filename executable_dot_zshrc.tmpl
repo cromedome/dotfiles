@@ -50,6 +50,8 @@ setopt incappendhistory
 source ~/.shell/env.sh
 source ~/.shell/path.sh
 source ~/.shell/aliases.sh
+
+# Language env manager setup, PATH mangling. Cribbed from rjbs.
 source ~/.shell/dev.sh
 
 {{- if eq .chezmoi.os "openbsd" -}}
