@@ -40,7 +40,8 @@ color_black = '#2E3440'
 [directory]
 style = "fg:color_dir_fg bg:color_dir_bg"
 read_only_style = "bg:color_dir_bg"
-format = "[ $read_only]($read_only_style)[$path ]($style)"
+#format = "[ $read_only]($read_only_style)[$path ]($style)"
+format = "[ $path ]($style)"
 truncation_length = 1
 truncation_symbol = "  …/"
 fish_style_pwd_dir_length = 1

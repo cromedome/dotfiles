@@ -1,13 +1,9 @@
 [user]
-    name = Jason A. Crome
-    email = jason@crome-plated.com
+    name = Jason Crome
+    email = jason.crome@foundant.com
 
 [github]
     user = cromedome
-
-[includeIf "gitdir:~/code/BestPractical/"]
-    # path is relative to the file doing the include.
-    path = ~/code/BestPractical/.gitconfig-bps
 
 [includeIf "gitdir:~/code/PerlDancer/"]
     # path is relative to the file doing the include.
