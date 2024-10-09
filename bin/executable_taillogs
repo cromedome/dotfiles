@@ -1,0 +1,13 @@
+#!/bin/bash
+
+CONTAINER=$1
+
+if [[ -z $CONTAINER ]]; then
+    echo 'container is required'
+    return 1
+fi
+
+cd ~/code/csuitetools/docker/compose/dev
+docker-compose logs -f --tail=20 $CONTAINER
+cd -
+
