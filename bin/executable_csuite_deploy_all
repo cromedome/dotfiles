@@ -1,0 +1,10 @@
+#! /bin/bash
+
+echo "bootstrap to launch_or"
+ssh jason.crome@launch_or.fcsuite.com sudo /code/csuitetools/aws/bin/bootstrap_csuitetools
+echo "bootstrap to launch_us"
+ssh jason.crome@launch_us.fcsuite.com sudo /code/csuitetools/aws/bin/bootstrap_csuitetools
+echo "bootstrap to launch_ca"
+ssh jason.crome@launch_ca.fcsuite.com sudo /code/csuitetools/aws/bin/bootstrap_csuitetools
+echo "bootstrap to launch_au"
+ssh jason.crome@launch_au.fcsuite.com sudo /code/csuitetools/aws/bin/bootstrap_csuitetools
