@@ -787,10 +787,10 @@ lua << EOF
   };
 EOF
 
-map <leader>xx :TroubleToggle<CR>:resize +10<CR>
+map <leader>xx :Trouble diagnostics toggle<CR>:resize +10<CR>
 map <leader>x :TodoTrouble<CR>:resize +10<CR>
 map <leader>xt :TodoTelescope<CR>
-nnoremap <F6> :TroubleToggle<CR>:resize +10<CR>
+nnoremap <F6> :Trouble diagnostics toggle<CR>:resize +10<CR>
 nnoremap <F7> :TodoTrouble<CR>:resize +10<CR>
 " }}}
 
