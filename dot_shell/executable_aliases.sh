@@ -21,6 +21,9 @@ alias pwgen='pwgen -cnyBs 20 1'
 alias tmlw='tmux list-windows -F "#{window_active} #{window_layout}" | grep "^1" | cut -d " " -f 2'
 alias tmux='tmux -2ulL'
 alias wic='wezterm imgcat'
+#alias wsr="wezterm cli split-pane --right --percent 33; wezterm cli activate-pane-direction right; source ~/.shell/smallprompt"
+alias wsr="wezterm cli split-pane --right --percent 33"
+alias smallprompt="source ~/.shell/smallprompt"
 
 # Prettier man, via markjgardner. Mac only.
 function pman {

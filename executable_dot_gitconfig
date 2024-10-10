@@ -14,7 +14,7 @@
     ignorecase = false
     editor = nvim
     ;pager = diff-so-fancy | less --tabs=4 -RFX
-    pager = delta
+    ;pager = delta
 
 [alias]
     a = add
@@ -176,7 +176,7 @@
 
 [diff]
     ;tool = vimdiff
-    colorMoved = default
+    ;colorMoved = default
 
 [init]
     defaultBranch = main
@@ -210,7 +210,7 @@
     #autosquash = true
 
 [interactive]
-    diffFilter = delta --color-only
+    ;diffFilter = delta --color-only
 
 [delta]
     navigate = true    # use n and N to move between diff sections
