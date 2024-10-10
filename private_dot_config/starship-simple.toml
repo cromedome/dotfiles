@@ -2,9 +2,7 @@
 
 format = """
 $os\
-[](bold bg:color_host_bg fg:color_os_bg)\
-$username$hostname\
-[](bold bg:color_dir_bg fg:color_host_bg)\
+[](bold bg:color_dir_bg fg:color_os_bg)\
 $directory\
 [](bold fg:color_dir_bg bg:color_git_bg)\
 $git_branch\
