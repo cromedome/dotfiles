@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -eu
+
+# get data either form stdin or from file
+buf=$(cat "$@") 
+
+# Get buffer length
+buflen=$( printf %s "$buf" | wc -c )
+maxlen=74994
+
+# warn if exceeds maxlen
+if [ "$buflen" -gt "$maxlen" ]; then
+    printf "input is %d bytes too long" 
+    "$(( buflen - maxlen ))" >&2
+fi
+

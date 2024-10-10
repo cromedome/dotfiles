@@ -1,0 +1,5 @@
+pane	waltz	1	:nvim	0	:-	1	:/home/jason/src/Waltz/app	1	nvim	:nvim lib/Waltz/Renderer.pm t/renderer.t
+pane	waltz	2	:nvim	1	:*	1	:/home/jason/src/Waltz/app	1	nvim	:nvim /home/jason/.tmux.conf
+window	waltz	1	0	:-	8c1d,235x102,0,0,0
+window	waltz	2	1	:*	8c1e,235x102,0,0,1
+state	waltz	
