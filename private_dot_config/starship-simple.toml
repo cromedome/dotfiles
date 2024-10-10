@@ -1,6 +1,10 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
+$os\
+[](bold bg:color_host_bg fg:color_os_bg)\
+$username$hostname\
+[](bold bg:color_dir_bg fg:color_host_bg)\
 $directory\
 [](bold fg:color_dir_bg bg:color_git_bg)\
 $git_branch\
@@ -36,6 +40,32 @@ color_dark_grey = '#585858'
 color_light_grey = '#BCBCBC'
 color_dark_blue = '#819FC1'
 color_black = '#2E3440'
+
+[os]
+disabled = false
+style = "bg:color_os_bg fg:color_os_fg"
+
+[os.symbols]
+Windows = "󰍲 "
+Ubuntu = "󰕈 "
+Mint = "󰣭 "
+Macos = "󰀵 "
+Linux = "󰌽 "
+Debian = "󰣚 "
+FreeBSD = " "
+NetBSD = "󰈿 "
+
+[username]
+show_always = true
+style_user = "bold bg:color_host_bg fg:color_host_fg"
+style_root = "bold bg:color_host_bg fg:color_host_fg"
+format = '[ $user]($style)'
+
+[hostname]
+ssh_only = false
+style = "bold bg:color_host_bg fg:color_host_fg"
+format = '[@]($style)[$hostname ]($style)'
+disabled = false
 
 [directory]
 style = "fg:color_dir_fg bg:color_dir_bg"
