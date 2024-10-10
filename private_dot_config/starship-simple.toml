@@ -1,15 +1,11 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
-$os\
-[](bold bg:color_dir_bg fg:color_os_bg)\
 $directory\
 [](bold fg:color_dir_bg bg:color_git_bg)\
 $git_branch\
 $git_status\
-[](bold fg:color_git_bg bg:color_lang_bg)\
-$perl\
-[](bold fg:color_lang_bg bg:color_term_bg) """
+[](bold fg:color_git_bg bg:color_term_bg) """
 
 palette = 'tokyonight'
 
