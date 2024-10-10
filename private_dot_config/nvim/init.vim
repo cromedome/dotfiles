@@ -172,6 +172,7 @@ Plug 'sindrets/diffview.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'FabijanZulj/blame.nvim'
 Plug 'FooSoft/vim-argwrap'
+Plug 'github/copilot.vim'
 
 " Other nvim
 Plug 'romgrk/barbar.nvim'
