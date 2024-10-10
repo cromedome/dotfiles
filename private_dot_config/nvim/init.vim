@@ -321,10 +321,19 @@ set number                     " actual number for the line you're on
 "inoremap  <esc>A;<cr>
 
 " 4 space indent, as God intended
+"set tabstop=4
+"set softtabstop=4
+"set shiftwidth=4
+"set expandtab
+
+" Tabs, not spaces, as Chris intended
+set autoindent
+set noexpandtab
 set tabstop=4
-set softtabstop=4
 set shiftwidth=4
-set expandtab
+set copyindent
+set preserveindent
+set softtabstop=0
 
 " Setup folding
 set foldmethod=syntax
