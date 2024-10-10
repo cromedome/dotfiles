@@ -1,0 +1,5 @@
+# from https://github.com/perlpunk/mydotfiles/blob/master/sqliterc
+.headers on
+.mode column
+
+PRAGMA foreign_keys = ON

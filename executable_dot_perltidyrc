@@ -1,0 +1,13 @@
+-nsbl # No opening sub brace on new line
+--indent-columns=4
+--maximum-line-length=100
+--continuation-indentation=4
+--opening-brace-always-on-right
+--stack-opening-tokens
+--stack-closing-tokens
+--paren-tightness=0
+--brace-tightness=0
+--square-bracket-tightness=0
+--nooutdent-long-quotes
+-mbl=2 # Max blank lines = 2
+--cuddled-else
