@@ -144,7 +144,7 @@ Plug 'folke/trouble.nvim'
 Plug 'folke/todo-comments.nvim'
 
 " Languages, code completion and linting
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'elzr/vim-json'
 Plug '~/.config/nvim/unplugged/sqlany'
 Plug 'skaji/syntax-check-perl'
@@ -493,7 +493,9 @@ augroup END
 " Plugin configuration {{{
 
 " aLE settings {{{
-let g:ale_linters = { 'perl': ['syntax-check'] }
+let g:ale_linters = { 'perl': ['perl'], 'css': ['stylelint'] }
+let g:ale_perl_perl_options = '-c'
+let g:ale_warn_about_trailing_whitespace = 1
 " }}}
 
 " Align settings {{{

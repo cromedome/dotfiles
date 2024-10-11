@@ -24,6 +24,10 @@ alias wic='wezterm imgcat'
 alias wsr="wezterm cli split-pane --right --percent 25"
 alias smallprompt="source ~/.shell/smallprompt"
 
+# Foundant
+alias dcd='docker-compose down'
+alias dcu='docker-compose up -d'
+
 # Prettier man, via markjgardner. Mac only.
 function pman {
     man -t ${@} | open -fa Preview
@@ -131,12 +135,6 @@ elif [ "$osname" = "Darwin" ]; then
     alias paco="ps aux | grep $USER"
     alias remount='sudo automount -vc'
 fi
-
-# Clearbuilt
-alias cbstart="VBoxManage startvm Clearbuilt --type headless"
-alias moshdev='mosh gate ssh aws-dev'
-alias moshdev2='mosh gate ssh aws-dev2'
-alias moshepwt='mosh gate ssh epwt1'
 
 # Functions
 f() {
