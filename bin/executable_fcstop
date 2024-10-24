@@ -1,0 +1,8 @@
+#!/bin/bash
+
+startdir=$(pwd)
+cd $HOME/code/csuitetools/docker/compose/dev
+docker-compose down
+docker stop base-rabbitmq-1
+cd $startdir
+
