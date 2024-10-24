@@ -2,6 +2,9 @@
 
 startdir=$(pwd)
 cd $HOME/code/csuitetools/docker/compose/dev
-docker-compose restart
+docker-compose restart $1
+if [ $# -lt 1 ]; then
+	docker restart base-rabbitmq-1
+fi
 cd $startdir
 
