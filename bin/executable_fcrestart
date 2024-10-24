@@ -1,0 +1,7 @@
+#!/bin/bash
+
+startdir=$(pwd)
+cd $HOME/code/csuitetools/docker/compose/dev
+docker-compose restart
+cd $startdir
+
