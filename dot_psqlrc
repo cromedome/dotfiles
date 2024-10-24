@@ -1,7 +1,7 @@
 -- Don't display the "helpful" message on startup.
 \set QUIET 1
 
-\pset null ¤
+\pset null NULL
 \pset border 2
 \pset linestyle unicode
 
