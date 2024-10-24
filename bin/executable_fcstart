@@ -1,0 +1,9 @@
+#!/bin/bash
+
+startdir=$(pwd)
+cd $HOME/code/csuitetools/docker/compose/dev
+docker-compose up -d
+cd $HOME/code/csuitetools/docker
+make rabbit
+cd $startdir
+
