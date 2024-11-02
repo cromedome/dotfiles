@@ -19,7 +19,7 @@ $character\
 [](bold fg:color_time_bg bg:color_status_bg)\
 $time"""
 
-palette = 'tokyonight'
+palette = 'nord'
 
 [palettes.tokyonight]
 color_term_bg = '#222436'
@@ -38,10 +38,25 @@ color_time_bg = '#82AAFF'
 color_time_fg = '#3B4261'
 
 [palettes.nord]
+color_term_bg = '#2E3440'
+color_status_bg = '#585858'
+color_os_bg = '#A4BE8F'
+color_os_fg = '#2E3440'
+color_host_bg = '#819FC1'
+color_host_fg = '#2E3440'
+color_git_bg = '#A4BE8F'
+color_git_fg = '#2E3440'
+color_dir_bg = '#585858'
+color_dir_fg = '#E5E9F0'
+color_lang_bg = '#819FC1'
+color_lang_fg = '#2E3440'
+color_time_bg = '#819FC1'
+color_time_fg = '#2E3440'
+
+color_red = '#BF616A'
 color_blue = '#819FC1'
 color_green = '#A4BE8F'
 color_white = '#E5E9F0'
-color_red = '#BF616A'
 color_dark_grey = '#585858'
 color_light_grey = '#BCBCBC'
 color_dark_blue = '#819FC1'
