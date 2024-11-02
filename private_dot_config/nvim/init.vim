@@ -125,6 +125,9 @@ Plug 'tpope/vim-vinegar'
 
 " Color themes
 Plug 'folke/tokyonight.nvim'
+Plug 'gbprod/nord.nvim'
+"Plug 'shaunsingh/nord.nvim'
+Plug 'rmehri01/onenord.nvim'
 
 " Telescope
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate' }
@@ -217,7 +220,8 @@ let g:nord_italic = v:false
 let g:nord_underline = 1
 let g:nord_italic_comments = 1
 set background=dark
-colorscheme tokyonight-moon
+"colorscheme tokyonight-moon
+colorscheme onenord
 syntax enable
 set cursorline
 hi UnwantedTrailerTrash guibg=red ctermbg=red
