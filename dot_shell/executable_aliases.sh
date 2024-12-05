@@ -1,6 +1,5 @@
 # Set some helpful aliases
 alias jhost='ssh jhost'
-alias bps='cd ~/code/BestPractical'
 alias cpmt='cpm install -w 8 -g --with-all --show-build-log-on-failure --test --cpanfile'
 alias cpmnot='cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile'
 alias d2='cd ~/code/PerlDancer/Dancer2'
@@ -147,4 +146,25 @@ h() {
 
 killpid() {
     sudo kill $( cat $1 );
+}
+
+# From https://www.reddit.com/r/Tailscale/comments/1gy3vm5/tssh_tailscale_ssh_manager/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+function tssh () {
+  #test -x "/Applications/Tailscale.app/Contents/MacOS/Tailscale" && alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+  h="$( \
+    (echo -e 'DNS\tHostName\tOnline\tTags\tUser'; \
+    tailscale status --json | \
+    jq -r '. as $root | .Peer[] | . as $peer | $root.User[] |
+      select(.ID == $peer.UserID) |
+      [ $peer.DNSName,
+        $peer.HostName,
+        $peer.Online,
+        ($peer.Tags // [] | join(",")),
+        .DisplayName] | @tsv' | \
+    sort -t $'\t' -k3,3r -k5,5 -k4,4) | \
+    gum table -s $'\t' \
+      --height=$(tailscale status --json | jq '.Peer | length +1') \
+      --widths=30,10,6,25,14 | \
+    awk '{print $1}')"
+  [ -n "$h" ] && ssh "$h"
 }
