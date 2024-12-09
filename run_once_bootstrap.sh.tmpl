@@ -17,10 +17,12 @@ sh ~/bin/install/install-netbsd-base
 sh ~/bin/install/install-openbsd-base
 {{ end -}}
 
+{{ if ne .chezmoi.os "openbsd" -}}
 if [[ ! "$(which starship)" =~ "starship" ]]; then
     echo "Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh
 fi
+{{ end -}}
 
 {{ if ne .chezmoi.os "darwin" -}}
 if [[ ! "$(which hishtory)" =~ "hishtory" ]]; then
@@ -48,7 +50,9 @@ if [[ ! "$SHELL" =~ "zsh" ]]; then
     nvim -c "UpdateRemotePlugins|qa" > /dev/null
 
     {{ if ne .chezmoi.os "darwin" -}}
+    {{ if ne .chezmoi.os "openbsd" -}}
     zsh ~/bin/install/post-chezmoi.sh
+    {{ end -}}
     {{ end -}}
     zsh
 fi
