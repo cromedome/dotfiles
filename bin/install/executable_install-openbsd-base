@@ -2,7 +2,7 @@
 
 doas pkg_add \
     ssh-copy-id \
-    exa \
+    eza \
     age \
     wget \
     tree \
@@ -18,7 +18,6 @@ doas pkg_add \
     unzip \
     bzip2 \
     bat \
-    neovim \
     ncdu \
     py3-pip \
     lzlib \

@@ -24,13 +24,25 @@ if [[ ! "$(which starship)" =~ "starship" ]]; then
 fi
 {{ end -}}
 
-{{ if ne .chezmoi.os "darwin" -}}
+{{ if ne .chezmoi.os "openbsd" -}}
 if [[ ! "$(which hishtory)" =~ "hishtory" ]]; then
     echo "Installing Hishtory..."
     curl https://hishtory.dev/install.py | python3 -
 fi
 {{ end -}}
 
+nvim -c "PlugInstall|qa" > /dev/null
+{{ if eq .chezmoi.os "openbsd" -}}
+doas pip3 install neovim --break-system-packages
+{{ else }}
+sudo pip3 install neovim --break-system-packages
+{{ end -}}
+nvim -c "UpdateRemotePlugins|qa" > /dev/null
+
+{{ if eq .chezmoi.os "openbsd" -}}
+echo "Setting shell to zsh..."
+chsh -s /usr/local/bin/zsh
+{{ else }}
 if [[ ! "$SHELL" =~ "zsh" ]]; then
     echo "Setting shell to zsh..."
     {{ if eq .chezmoi.os "linux" -}}
@@ -41,18 +53,12 @@ if [[ ! "$SHELL" =~ "zsh" ]]; then
     chsh -s /usr/local/bin/zsh
     {{ else if eq .chezmoi.os "netbsd" -}}
     chsh -s /usr/pkg/bin/zsh
-    {{ else if eq .chezmoi.os "openbsd" -}}
-    chsh -s /usr/local/bin/zsh
     {{ end -}}
 
-    nvim -c "PlugInstall|qa" > /dev/null
-    sudo pip3 install neovim --break-system-packages
-    nvim -c "UpdateRemotePlugins|qa" > /dev/null
-
-    {{ if ne .chezmoi.os "darwin" -}}
-    {{ if ne .chezmoi.os "openbsd" -}}
-    zsh ~/bin/install/post-chezmoi.sh
-    {{ end -}}
-    {{ end -}}
-    zsh
+    echo "Initializing Hishtory..."
+    hishtory init 34a04df9-a680-442c-81b2-93eb1c7b952d
 fi
+{{ end -}}
+
+zsh ~/bin/install/post-chezmoi.sh
+zsh
