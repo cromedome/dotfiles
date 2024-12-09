@@ -18,7 +18,6 @@ doas pkg_add \
     unzip \
     bzip2 \
     bat \
-    source-highlight \
     neovim \
     ncdu \
     py3-pip \
@@ -37,4 +36,5 @@ doas pkg_add \
     dog \
     direnv \
     jq \
-    mosh
+    mosh \
+    restic
