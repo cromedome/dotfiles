@@ -1,4 +1,8 @@
+{{ if eq .chezmoi.os "openbsd" -}}
 #!/bin/sh
+{{ else }}
+#!/usr/bin/env bash
+{{ end -}}
 
 echo "Installing system packages..."
 {{ if eq .chezmoi.os "linux" -}}
