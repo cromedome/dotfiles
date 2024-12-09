@@ -31,13 +31,15 @@ if [[ ! "$(which hishtory)" =~ "hishtory" ]]; then
 fi
 {{ end -}}
 
-nvim -c "PlugInstall|qa" > /dev/null
 {{ if eq .chezmoi.os "openbsd" -}}
 doas pip3 install neovim --break-system-packages
+nvim --headless +PlugInstall +qall 2>&1 > /dev/null
+nvim --headless +UpdateRemotePlugins +qall 2>&1 > /dev/null
 {{ else }}
 sudo pip3 install neovim --break-system-packages
-{{ end -}}
+nvim -c "PlugInstall|qa" > /dev/null
 nvim -c "UpdateRemotePlugins|qa" > /dev/null
+{{ end -}}
 
 {{ if eq .chezmoi.os "openbsd" -}}
 echo "Setting shell to zsh..."
