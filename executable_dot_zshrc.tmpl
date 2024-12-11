@@ -67,14 +67,16 @@ eval "$(direnv hook zsh)"
 # Neofetch (if available)
 if [ -x "$(command -v neofetch)" ]; then neofetch; fi
 
+{{ if ne .chezmoi.os "openbsd" -}}
 # Starship
 if [ "$TERM_PROGRAM" = "vscode" ]; then
     export STARSHIP_CONFIG=$HOME/.config/starship-simple.toml
 fi
 eval "$(starship init zsh)"
 
-# fzf config
-source ~/.shell/fzf.zsh
-
 # Synced shell history
 source ~/.shell/hishtory.zsh
+{{ end -}}
+
+# fzf config
+source ~/.shell/fzf.zsh

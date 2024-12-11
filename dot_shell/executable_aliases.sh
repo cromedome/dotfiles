@@ -66,7 +66,7 @@ fi
 
 ezae=$(which eza)
 if [ -x "$ezae" ]; then
-    alias ls='exa -aF'
+    alias ls='eza -aF'
     alias ll='eza -F -alghb'
 else
     cls=$(which colorls)
