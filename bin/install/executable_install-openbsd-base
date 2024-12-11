@@ -1,6 +1,6 @@
 #!/bin/sh
 
-doas pkg_add \
+doas pkg_add -I \
     ssh-copy-id \
     eza \
     age \
@@ -11,24 +11,21 @@ doas pkg_add \
     pv \
     tig \
     lynx \
-    w3m \
     ncftp \
     zsh \
-    ctags \
-    unzip \
+    universal-ctags \
+    delta \
     bzip2 \
     bat \
     ncdu \
     py3-pip \
     lzlib \
     fzf \
-    colordiff \
     ripgrep \
     libxml \
     png \
     tiff \
     jpeg \
-    rsync \
     pwgen \
     gmake \
     iftop \
