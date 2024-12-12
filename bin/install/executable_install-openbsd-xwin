@@ -1,0 +1,13 @@
+#!/bin/sh
+
+doas pkg_add -I \
+    firefox \
+    chromium \
+    iridium \
+    vlc \
+    libreoffice \
+    xclip \
+    xkbset \
+    xcape \
+    xsel \
+    kitty
