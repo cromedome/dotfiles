@@ -19,6 +19,7 @@ osname=$(uname)
 
 if [ "$osname" != "OpenBSD" ]; then
     export LESSOPEN="| bat %s"
+else
     export LC_ALL=en_US.UTF-8
 fi
 export LESS=' -R '

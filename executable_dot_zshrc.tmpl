@@ -76,6 +76,8 @@ eval "$(starship init zsh)"
 
 # Synced shell history
 source ~/.shell/hishtory.zsh
+{{ else }}
+eval "$(oh-my-posh init zsh --config ~/.shell/oh-my-posh/rudolfs-dark.omp.json)"
 {{ end -}}
 
 # fzf config
