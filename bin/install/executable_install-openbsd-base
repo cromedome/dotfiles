@@ -33,4 +33,5 @@ doas pkg_add -I \
     direnv \
     jq \
     mosh \
-    restic
+    restic \
+    fd
