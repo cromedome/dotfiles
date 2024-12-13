@@ -55,9 +55,11 @@ source ~/.shell/aliases.sh
 source ~/.shell/dev.sh
 
 # Z, not autojump
-if [ "$osname" = "OpenBSD" ] || [ "$osname" = 'FreeBSD' ]; then
+if [ "$osname" = 'FreeBSD' ]; then
     eval $(ssh-agent)
     ssh-add
+    . ~/.shell/z.sh
+elif [ "$osname" = "OpenBSD" ]; then
     . ~/.shell/z.sh
 fi
 
