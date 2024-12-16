@@ -32,44 +32,44 @@ osname=$(uname)
 
 # For these next aliases, check to see if a newer utility exists, then
 # gracefully degrade to standard utils
-htope=$(which htop)
+htope=$(whence htop)
 if [ -x "$htope" ]; then
     alias top=htop
 fi
 
-neovim=$(which nvim)
+neovim=$(whence nvim)
 if [ -x "$neovim" ]; then
     alias vim='nvim'
 fi
 alias v=vim
 alias vd=vimdiff
 
-dircol=$(which gdircolors)
+dircol=$(whence gdircolors)
 if [ -x "$dircol" ]; then
     alias dircolors=gdircolors
 fi
 
-digger=$(which doggo)
+digger=$(whence doggo)
 if [ -x "$digger" ]; then
     alias dig='doggo'
 else
-    digger=$(which dog)
+    digger=$(whence dog)
     if [ -x "$digger" ]; then
         alias dig='dog'
     fi
 fi
 
-batcat=$(which batcat)
+batcat=$(whence batcat)
 if [ -x "$batcat" ]; then
     alias cat="bat --theme Nord"
 fi
 
-ezae=$(which eza)
+ezae=$(whence eza)
 if [ -x "$ezae" ]; then
     alias ls='eza -aF'
     alias ll='eza -F -alghb'
 else
-    cls=$(which colorls)
+    cls=$(whence colorls)
     if [ -x "$cls" ]; then
         alias ls='colorls -aFG'
         alias ll='colorls -aFGl'
@@ -103,7 +103,7 @@ if [ "$osname" = "Linux" ]; then
     alias grep='grep --color=auto'
     alias tmux='tmux -2'
     alias paco="ps -u $USER f --no-header -o pid,ppid,time,cmd"
-    if which xclip > /dev/null; then
+    if whence xclip > /dev/null; then
         alias setclip='xclip -selection c'
         alias getclip='xclip -selection clipboard -o'
     fi
