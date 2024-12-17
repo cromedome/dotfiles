@@ -1,0 +1,37 @@
+#!/bin/sh
+
+sudo dnf install \
+	@development-tools \
+	net-tools \
+	zsh \
+	ufw \
+	age \
+	python3-pip \
+	nmap \
+	mosh \
+	pv \
+	ncftp \
+	w3m \
+	lynx \
+	htop \
+	iotop \
+	autojump \
+	delta \
+	tig \
+	tldr \
+	fd-find \
+	ncdu \
+	fzf \
+	bat \
+	eza \
+	neofetch \
+	direnv \
+	restic \
+	pcre-devel \
+	zlib-ng-devel \
+	libxml2-devel \
+	expat-devel \
+	libpng-devel \
+	libjpeg-turbo-devel \
+	libtiff-devel \
+	perl-CPAN

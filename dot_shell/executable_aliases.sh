@@ -61,7 +61,12 @@ fi
 
 batcat=$(whence batcat)
 if [ -x "$batcat" ]; then
-    alias cat="bat --theme Nord"
+    alias cat="batcat --theme Nord"
+else
+    bc=$(whence bat)
+    if [ -x "$bc" ]; then
+        alias cat="bat --theme Nord"
+    fi
 fi
 
 ezae=$(whence eza)

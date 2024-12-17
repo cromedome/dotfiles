@@ -4,8 +4,10 @@ echo "Installing system packages..."
 {{ if eq .chezmoi.os "linux" -}}
 {{   if eq .chezmoi.osRelease.id "debian" }}
 ~/bin/install/install-debian-base
-{{   else }}
+{{   else if eq .chezmoi.osRelease.id "ubuntu" }}
 ~/bin/install/install-ubuntu-base
+{{   else }}
+~/bin/install/install-fedora-base
 {{   end }}
 {{ else if eq .chezmoi.os "darwin" -}}
 sh ~/bin/install/install-macos-base
@@ -33,13 +35,11 @@ fi
 
 {{ if eq .chezmoi.os "openbsd" -}}
 doas pip3 install neovim --break-system-packages
-nvim --headless +PlugInstall +qall 2>&1 > /dev/null
-nvim --headless +UpdateRemotePlugins +qall 2>&1 > /dev/null
 {{ else }}
 sudo pip3 install neovim --break-system-packages
-nvim -c "PlugInstall|qa" > /dev/null
-nvim -c "UpdateRemotePlugins|qa" > /dev/null
 {{ end -}}
+nvim --headless +PlugInstall +qall 2>&1 > /dev/null
+nvim --headless +UpdateRemotePlugins +qall 2>&1 > /dev/null
 
 {{ if eq .chezmoi.os "openbsd" -}}
 echo "Setting shell to zsh..."
