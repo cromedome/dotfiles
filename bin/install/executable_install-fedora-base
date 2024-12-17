@@ -2,6 +2,8 @@
 
 sudo dnf install \
 	@development-tools \
+	neovim \
+	python3-neovim \
 	net-tools \
 	zsh \
 	ufw \
