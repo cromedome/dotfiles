@@ -23,6 +23,7 @@ sudo apt install -y \
     btop \
     unzip \
     exuberant-ctags \
+    pwgen \
     tmux \
     autojump \
     source-highlight \

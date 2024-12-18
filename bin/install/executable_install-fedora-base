@@ -8,6 +8,7 @@ sudo dnf install \
 	zsh \
 	ufw \
 	age \
+	pwgen \
 	python3-pip \
 	nmap \
 	mosh \
