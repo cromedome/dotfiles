@@ -31,4 +31,6 @@ sudo dnf install \
         libpng-devel \
         libjpeg-turbo-devel \
         libtiff-devel \
-        perl-CPAN
+        perl-CPAN \
+        rclone \
+        pwgen
