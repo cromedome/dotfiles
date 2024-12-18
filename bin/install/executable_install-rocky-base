@@ -1,0 +1,34 @@
+#!/bin/sh
+
+sudo dnf group install "Development Tools"
+
+sudo dnf install \
+        net-tools \
+        zsh \
+        ufw \
+        python3-pip \
+        nmap \
+        mosh \
+        pv \
+        ncftp \
+        w3m \
+        lynx \
+        htop \
+        iotop \
+        autojump \
+        tig \
+        tldr \
+        fd-find \
+        ncdu \
+        fzf \
+        bat \
+        eza \
+        restic \
+        pcre-devel \
+        zlib-ng-devel \
+        libxml2-devel \
+        expat-devel \
+        libpng-devel \
+        libjpeg-turbo-devel \
+        libtiff-devel \
+        perl-CPAN

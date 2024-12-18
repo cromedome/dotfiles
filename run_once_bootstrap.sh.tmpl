@@ -6,6 +6,8 @@ echo "Installing system packages..."
 ~/bin/install/install-debian-base
 {{   else if eq .chezmoi.osRelease.id "ubuntu" }}
 ~/bin/install/install-ubuntu-base
+{{   else if eq .chezmoi.osRelease.id "rocky" }}
+~/bin/install/install-rocky-base
 {{   else }}
 ~/bin/install/install-fedora-base
 {{   end }}
