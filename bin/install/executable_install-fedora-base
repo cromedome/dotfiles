@@ -4,9 +4,7 @@ sudo dnf install \
 	@development-tools \
 	neovim \
 	python3-neovim \
-	net-tools \
 	zsh \
-	ufw \
 	age \
 	pwgen \
 	python3-pip \
@@ -27,7 +25,6 @@ sudo dnf install \
 	fzf \
 	bat \
 	eza \
-	neofetch \
 	direnv \
 	restic \
 	pcre-devel \
