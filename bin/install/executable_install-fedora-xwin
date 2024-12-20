@@ -1,5 +1,5 @@
 #!/bin/sh
 
-sudo dnf install \
+sudo dnf install -y \
     xclip \
     xkbset

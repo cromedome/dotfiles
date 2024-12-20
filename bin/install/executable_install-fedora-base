@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sudo dnf install \
+sudo dnf install -y \
 	@development-tools \
 	neovim \
 	python3-neovim \
