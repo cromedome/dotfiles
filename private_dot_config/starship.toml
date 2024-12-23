@@ -19,7 +19,7 @@ $character\
 [](bold fg:color_time_bg bg:color_status_bg)\
 $time"""
 
-palette = 'nord'
+palette = 'tokyonight'
 
 [palettes.tokyonight]
 color_term_bg = '#222436'
