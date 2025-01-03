@@ -23,3 +23,4 @@ requires "Open::This";
 requires "Perl::MinimumVersion";
 requires "Net::API::CPAN";
 requires "App::perlimports"
+requires "WebService::SQLFormat";
