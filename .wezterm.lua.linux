@@ -90,7 +90,7 @@ return {
         },
     },
     window_padding = {bottom = 4, left = 2, right = 2},
-    window_decorations = "RESIZE",
+    -- window_decorations = "RESIZE",
     mouse_bindings = {
         -- Change the default click behavior so that it populates
         -- the Clipboard rather the PrimarySelection.
