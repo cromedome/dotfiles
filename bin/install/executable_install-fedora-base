@@ -16,7 +16,7 @@ sudo dnf install -y \
 	lynx \
 	htop \
 	iotop \
-	autojump \
+	autojump-zsh \
 	delta \
 	tig \
 	tldr \
