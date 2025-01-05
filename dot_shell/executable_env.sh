@@ -3,6 +3,7 @@ export EDITOR=nvim
 export GIT_EDITOR=nvim
 export VISUAL=nvim
 export PGHOST=localhost # Default when no nost specified
+export FPATH=$HOME/.shell/eza:$FPATH
 
 # SSH agent
 if [ ! -z "$SSH_AUTH_SOCK" ] \

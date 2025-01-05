@@ -71,8 +71,8 @@ fi
 
 ezae=$(whence eza)
 if [ -x "$ezae" ]; then
-    alias ls='eza -aF'
-    alias ll='eza -F -alghb'
+    alias ls="eza -a -F always $@"
+    alias ll="eza -lahgb -F always --git --icons=always $@"
 else
     cls=$(whence colorls)
     if [ -x "$cls" ]; then
