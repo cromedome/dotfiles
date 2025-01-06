@@ -125,8 +125,8 @@ Plug 'tpope/vim-vinegar'
 
 " Color themes
 Plug 'folke/tokyonight.nvim'
-Plug 'gbprod/nord.nvim'
-"Plug 'shaunsingh/nord.nvim'
+"Plug 'gbprod/nord.nvim'
+Plug 'shaunsingh/nord.nvim'
 Plug 'rmehri01/onenord.nvim'
 
 " Telescope
@@ -134,7 +134,6 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate' }
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
 
 " nvim-tree
 Plug 'nvim-tree/nvim-web-devicons'
@@ -163,7 +162,6 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 " Other nvim
 Plug 'romgrk/barbar.nvim'
 Plug 'nvim-lualine/lualine.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kylechui/nvim-surround'
 
 " All others
@@ -221,7 +219,8 @@ let g:nord_underline = 1
 let g:nord_italic_comments = 1
 set background=dark
 "colorscheme tokyonight-moon
-colorscheme onenord
+"colorscheme onenord
+colorscheme nord
 syntax enable
 set cursorline
 hi UnwantedTrailerTrash guibg=red ctermbg=red
