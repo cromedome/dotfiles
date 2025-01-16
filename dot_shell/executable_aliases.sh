@@ -27,6 +27,7 @@ alias smallprompt="source ~/.shell/smallprompt"
 # Foundant
 alias dcd='docker-compose down'
 alias dcu='docker-compose up -d'
+alias awslocal="aws --region=us-west-2 --endpoint-url=http://localhost.localstack.cloud:4566"
 
 # Prettier man, via markjgardner. Mac only.
 function pman {
