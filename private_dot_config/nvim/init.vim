@@ -173,7 +173,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'xolox/vim-misc'
-Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
+Plug 'vim-perl/vim-perl', { 'branch':  'dev', 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 Plug 'xolox/vim-session'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-scripts/SQLUtilities'
