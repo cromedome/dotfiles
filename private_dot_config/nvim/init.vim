@@ -158,6 +158,7 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'NeogitOrg/neogit'
 Plug 'sindrets/diffview.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'FabijanZulj/blame.nvim'
 
 " Other nvim
 Plug 'romgrk/barbar.nvim'
@@ -495,6 +496,37 @@ vmap a> :Align =><CR>
 vmap a: :Align :<CR>
 " }}}
 
+" Blame {{{
+lua << EOGB
+require("blame").setup {
+    --date_format = "%d.%m.%Y",
+    virtual_style = "left_align",
+    views = {
+        window = window_view,
+        virtual = virtual_view,
+        default = window_view,
+    },
+    --focus_blame = true,
+    --merge_consecutive = false,
+    --max_summary_width = 30,
+    --colors = nil,
+    --blame_options = nil,
+    --commit_detail_view = "vsplit",
+    --format_fn = formats.commit_date_author_fn,
+    mappings = {
+    --    commit_info = "i",
+    --    stack_push = "<TAB>",
+    --    stack_pop = "<BS>",
+    --    show_commit = "<CR>",
+    --    close = { "<esc>", "q" },
+    }
+};
+EOGB
+map <leader>gb <cmd>BlameToggle<cr>
+map <leader>tgb <cmd>BlameToggle virtual<cr>
+" }}}
+
+
 " CarbonNow {{{
 map <leader>pp :CarbonNowSh<CR>
 " }}}
@@ -565,8 +597,6 @@ lua << EOGS
         map('n', '<leader>hu', gitsigns.undo_stage_hunk)
         map('n', '<leader>hR', gitsigns.reset_buffer)
         map('n', '<leader>hp', gitsigns.preview_hunk)
-        map('n', '<leader>hb', function() gitsigns.blame_line{full=true} end)
-        map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
         map('n', '<leader>hd', gitsigns.diffthis)
         map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
         map('n', '<leader>td', gitsigns.toggle_deleted)
