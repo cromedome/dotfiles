@@ -726,7 +726,7 @@ nnoremap <C-g> <cmd>Telescope git_files<cr>
 
 " TrailerTrash {{{
 nnoremap <Leader>tr :TrailerTrim<cr>
-nnoremap <Leader>tg :TrailerToggle<cr>
+"nnoremap <Leader>tg :TrailerToggle<cr>
 " }}}
 
 " Trouble/TODO {{{
