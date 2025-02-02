@@ -31,6 +31,7 @@
 " Bd        - Delete current buffer, but keep the split open
 " Y         - Yank to end of line
 " ,,        - Unhighlight search matches
+" ,a        - Wrap/unwrap args
 " ,c        - Comment the current selection (\\ works too!)
 " ,f        - Find in files
 " ,g        - Live grep
@@ -159,6 +160,7 @@ Plug 'NeogitOrg/neogit'
 Plug 'sindrets/diffview.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'FabijanZulj/blame.nvim'
+Plug 'FooSoft/vim-argwrap'
 
 " Other nvim
 Plug 'romgrk/barbar.nvim'
@@ -496,6 +498,10 @@ vmap a> :Align =><CR>
 vmap a: :Align :<CR>
 " }}}
 
+" ArgWrap {{{
+nnoremap <silent> <leader>a :ArgWrap<CR>
+"}}}
+
 " Blame {{{
 lua << EOGB
 require("blame").setup {
@@ -525,7 +531,6 @@ EOGB
 map <leader>gb <cmd>BlameToggle<cr>
 map <leader>tgb <cmd>BlameToggle virtual<cr>
 " }}}
-
 
 " CarbonNow {{{
 map <leader>pp :CarbonNowSh<CR>
