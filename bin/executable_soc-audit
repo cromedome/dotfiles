@@ -1,0 +1,30 @@
+#!/bin/bash
+
+function echo_run {
+	echo "$USER@$HOSTNAME # " $1;
+	if [ $# -gt 1 ]; then
+		$1 | grep $2;
+	else
+		$1;
+	fi;
+}
+
+echo "##################################"
+echo "machine name, os and kernel version"
+echo "##################################"
+echo_run "uname -a"
+
+echo "##################################"
+echo "clamav antivirus updates"
+echo "##################################"
+echo_run "sigtool --info /var/lib/clamav/daily.cvd"
+
+echo "##################################"
+echo "drive encryption"
+echo "##################################"
+echo_run "blkid" "crypt"
+
+echo "##################################"
+echo "software updates"
+echo "##################################"
+echo_run "tail -10 /var/log/unattended-upgrades/unattended-upgrades.log"
