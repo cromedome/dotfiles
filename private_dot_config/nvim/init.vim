@@ -128,6 +128,7 @@ Plug 'folke/tokyonight.nvim'
 Plug 'shaunsingh/nord.nvim'
 Plug 'rmehri01/onenord.nvim'
 Plug '~/.config/nvim/unplugged/manxome.vim'
+Plug 'rjshkhr/shadow.nvim'
 
 " Telescope
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate' }
