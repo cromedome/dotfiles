@@ -51,9 +51,6 @@ source ~/.shell/env.sh
 source ~/.shell/path.sh
 source ~/.shell/aliases.sh
 
-# Language env manager setup, PATH mangling. Cribbed from rjbs.
-source ~/.shell/dev.sh
-
 # Z, not autojump
 if [ "$osname" = 'FreeBSD' ]; then
     eval $(ssh-agent)
@@ -84,3 +81,5 @@ eval "$(oh-my-posh init zsh --config ~/.shell/oh-my-posh/cromedome.omp.json)"
 
 # fzf config
 source ~/.shell/fzf.zsh
+
+eval "$(devbox global shellenv)"

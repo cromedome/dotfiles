@@ -3,7 +3,6 @@
 sudo apt install -y \
     net-tools \
     debsums \
-    git \
     zsh \
     ufw \
     age \
@@ -13,31 +12,17 @@ sudo apt install -y \
     traceroute \
     mosh \
     pv \
-    ncftp \
-    lynx \
-    w3m \
     tree \
     lsof \
     iotop \
     htop \
-    btop \
     unzip \
-    exuberant-ctags \
     pwgen \
     tmux \
-    autojump \
-    source-highlight \
-    tig \
-    tldr \
-    fd-find \
-    ncdu \
-    fzf \
-    bat \
-    eza \
-    direnv \
-    ripgrep \
     restic \
-    jq \
+    ncftp \
+    lynx \
+    w3m \
     libpcre3-dev \
     zlib1g-dev \
     libxml2-dev \
@@ -46,10 +31,5 @@ sudo apt install -y \
     libjpeg-dev \
     libtiff-dev \
     libssl-dev \
-    colordiff \
     libgit2-dev \
-    libsqlite3-dev \
-    git-delta
-
-sudo ln -s /usr/bin/batcat /usr/bin/bat
-sudo ln -s /usr/bin/fdfind /usr/bin/fd
+    libsqlite3-dev
