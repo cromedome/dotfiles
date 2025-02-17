@@ -14,6 +14,9 @@ timezsh() {
     for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
 }
 
+# Devbox goes first so packages found for remaining scripts
+eval "$(devbox global shellenv)"
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 osname=$(uname)
 if [ "$osname" = "Darwin" ] || [ "$osname" = 'Linux' ]; then
@@ -66,6 +69,9 @@ eval "$(direnv hook zsh)"
 # Neofetch (if available)
 if [ -x "$(command -v neofetch)" ]; then neofetch; fi
 
+# fzf config
+source ~/.shell/fzf.zsh
+
 {{ if ne .chezmoi.os "openbsd" -}}
 # Starship
 if [ "$TERM_PROGRAM" = "vscode" ]; then
@@ -77,9 +83,4 @@ eval "$(starship init zsh)"
 source ~/.shell/hishtory.zsh
 {{ else }}
 eval "$(oh-my-posh init zsh --config ~/.shell/oh-my-posh/cromedome.omp.json)"
-{{ end -}}
-
-# fzf config
-source ~/.shell/fzf.zsh
-
-eval "$(devbox global shellenv)"
+{{ end }}

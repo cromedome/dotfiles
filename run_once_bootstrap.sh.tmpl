@@ -66,5 +66,5 @@ echo "Installing devbox..."
 curl -fsSL https://get.jetify.com/devbox | bash
 
 zsh
-refresh-global
+eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
 {{ end -}}

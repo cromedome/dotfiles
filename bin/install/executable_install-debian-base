@@ -9,6 +9,7 @@ sudo apt install -y \
     python3-pip \
     build-essential \
     nmap \
+    autojump \
     traceroute \
     mosh \
     pv \
