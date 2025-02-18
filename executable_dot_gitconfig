@@ -197,9 +197,15 @@
     default = current
 
 [merge]
-    ;tool = splice
+    tool = nvimdiff
     ff=false
     conflictstyle = diff3
+
+[mergetool "meld"]
+    cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
+
+[mergetool "nvimdiff"]
+  layout = "LOCAL,BASE,REMOTE / MERGED"
 
 [filter "lfs"]
     clean = git-lfs clean %f
