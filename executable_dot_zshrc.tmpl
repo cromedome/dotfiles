@@ -8,21 +8,21 @@ DISABLE_AUTO_UPDATE=false
 # Disable auto correct
 DISABLE_CORRECTION=true
 
-# Time shell startup
-timezsh() {
-    shell=${1-$SHELL}
-    for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
-}
+# Devbox goes first so packages found for remaining scripts
+eval "$(devbox global shellenv)"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-osname=$(uname)
-if [ "$osname" = "Darwin" ] || [ "$osname" = 'Linux' ]; then
+{{ if eq .chezmoi.os "linux" -}}
     plugins=(git docker mosh cpanm github perl gitfast autojump)
-elif [ "$osname" != "OpenBSD" ] && [ "$osname" != "FreeBSD" ]; then
-    plugins=(git docker mosh cpanm github perl gitfast autojump ssh-agent)
-else
+{{ else if eq .chezmoi.os "openbsd" -}}
     plugins=(git docker mosh cpanm github perl gitfast)
-fi
+{{ else if eq .chezmoi.os "freebsd" -}}
+    plugins=(git docker mosh cpanm github perl gitfast)
+{{ else if eq .chezmoi.os "darwin" -}}
+    plugins=(git docker mosh cpanm github perl gitfast autojump)
+{{ else }}
+    plugins=(git docker mosh cpanm github perl gitfast autojump ssh-agent)
+{{ end -}}
 
 export DISABLE_AUTO_UPDATE="true"
 source $ZSH/oh-my-zsh.sh
@@ -39,8 +39,8 @@ fi
 
 # History settings
 HISTFILE=~/.zhistory
-HISTSIZE=2000
-SAVEHIST=2000
+HISTSIZE=10000
+SAVEHIST=10000
 setopt appendhistory
 setopt histignoredups
 setopt incappendhistory
@@ -51,23 +51,22 @@ source ~/.shell/env.sh
 source ~/.shell/path.sh
 source ~/.shell/aliases.sh
 
-# Language env manager setup, PATH mangling. Cribbed from rjbs.
-source ~/.shell/dev.sh
-
+{{- if eq .chezmoi.os "openbsd" -}}
 # Z, not autojump
-if [ "$osname" = 'FreeBSD' ]; then
-    eval $(ssh-agent)
-    ssh-add
-    . ~/.shell/z.sh
-elif [ "$osname" = "OpenBSD" ]; then
-    . ~/.shell/z.sh
-fi
+. ~/.shell/z.sh
+{{- else if eq .chezmoi.os "freebsd" -}}
+# Z, not autojump
+. ~/.shell/z.sh
+
+eval $(ssh-agent)
+ssh-add
+{{ end }}
 
 # Enable direnv (if installed)
 eval "$(direnv hook zsh)"
 
-# Neofetch (if available)
-if [ -x "$(command -v neofetch)" ]; then neofetch; fi
+# fzf config
+source ~/.shell/fzf.zsh
 
 {{ if ne .chezmoi.os "openbsd" -}}
 # Starship
@@ -80,7 +79,4 @@ eval "$(starship init zsh)"
 source ~/.shell/hishtory.zsh
 {{ else }}
 eval "$(oh-my-posh init zsh --config ~/.shell/oh-my-posh/cromedome.omp.json)"
-{{ end -}}
-
-# fzf config
-source ~/.shell/fzf.zsh
+{{ end }}

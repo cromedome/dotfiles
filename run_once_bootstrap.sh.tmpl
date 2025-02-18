@@ -58,13 +58,10 @@ if [[ ! "$SHELL" =~ "zsh" ]]; then
     {{ else if eq .chezmoi.os "netbsd" -}}
     chsh -s /usr/pkg/bin/zsh
     {{ end -}}
-
-    echo "Initializing Hishtory..."
-    hishtory init 34a04df9-a680-442c-81b2-93eb1c7b952d
 fi
-{{ end -}}
+echo "Installing devbox..."
+curl -fsSL https://get.jetify.com/devbox | bash
 
-zsh ~/bin/install/post-chezmoi.sh
-{{ if ne .chezmoi.os "openbsd" -}}
 zsh
+eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
 {{ end -}}
