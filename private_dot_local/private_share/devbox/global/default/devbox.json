@@ -15,7 +15,9 @@
     "delta@latest",
     "ctags@latest",
     "autojump@latest",
-    "ncdu@latest"
+    "ncdu@latest",
+    "gum@latest",
+    "tokei@latest"
   ],
   "shell": {
     "init_hook": [
