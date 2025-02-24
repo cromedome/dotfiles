@@ -1,8 +1,6 @@
 requires "Perl::Tidy" => "0";
-requires "Vi::QuickFix" => "0";
 requires "Perl::Critic" => "0";
 requires "Devel::NYTProf" => "0";
-requires "Modern::Perl" => "0";
 requires "Regexp::Common" => "0";
 requires "Test::Most" => "0";
 requires "Test::Vars" => "0";
@@ -11,7 +9,6 @@ requires "JSON" => "0";
 requires "DBD::CSV" => "0";
 requires "DBI::Shell" => "0";
 requires "App::Sqitch" => "0";
-requires "App::tldr" => "0";
 requires "Perl::LanguageServer" => "0";
 requires "Plack::App::DirectoryIndex";
 requires "List::MoreUtils" => "0";
@@ -20,7 +17,6 @@ requires "Dist::Zilla" => "0";
 requires "Cpanel::JSON::XS" => "0";
 requires "Test::Pod" => "0";
 requires "Open::This";
-requires "Perl::MinimumVersion";
-requires "Net::API::CPAN";
-requires "App::perlimports"
-requires "WebService::SQLFormat";
+requires "Image::ExifTool";
+requires "App::ModuleBuildTiny";
+requires "File::MimeInfo";
