@@ -17,7 +17,12 @@
     "autojump@latest",
     "ncdu@latest",
     "gum@latest",
-    "tokei@latest"
+    "tokei@latest",
+    "libtree@latest",
+    "github-cli@latest",
+    "_1password-cli@latest",
+    "posting@latest",
+    "inxi@latest"
   ],
   "shell": {
     "init_hook": [
