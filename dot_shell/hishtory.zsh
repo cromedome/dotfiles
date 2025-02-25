@@ -1,3 +1,3 @@
-export PATH="$PATH:/home/jason/.hishtory"
+export PATH="/home/jason/.hishtory:$PATH"
 source $HOME/.hishtory/config.zsh
 
