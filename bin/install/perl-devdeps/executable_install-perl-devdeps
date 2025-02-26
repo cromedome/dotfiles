@@ -1,25 +1,10 @@
-cpanm Vi::QuickFix
-cpanm Perl::Tidy
-cpanm Perl::Critic
-cpanm Devel::NYTProf
-cpanm Modern::Perl
-cpanm Regexp::Common
-cpanm Test::Most
-cpanm Test::Vars
-cpanm Term::ANSIColor
-cpanm JSON::XS
-cpanm DBD::CSV
-cpanm DBI::Shell
-cpanm App::Sqitch
-cpanm App::tldr
-cpanm Perl::LanguageServer
-cpanm Plack::App::DirectoryIndex
-cpanm List::MoreUtils
-cpanm Carton
-cpanm Dist::Zilla
-cpanm JSON
-cpanm Test::Pod
-cpanm Open::This
-cpanm Perl::MinimumVersion
-cpanm Net::API::CPAN
-cpanm App::perlimports
+#!/bin/bash
+
+\curl -L https://install.perlbrew.pl | bash
+perlbrew install 5.40.1 --as system-5.40.1 --sitecustomize /home/jason/bin/sitecustomize.pl -j8
+perlbrew switch system-5.40.1
+perlbrew install-cpanm
+perlbrew lib create systemtools
+perlbrew use system-5.40.1@systemtools
+cpanm Perl::Tidy Perl::Critic Devel::NYTProf App::Sqitch List::MoreUtils Carton Dist::Zilla Open::This App::ModuleBuildTiny File::MimeInfo Plack::App::DirectoryIndex
+
