@@ -2,7 +2,8 @@
 export EDITOR=nvim
 export GIT_EDITOR=nvim
 export VISUAL=nvim
-export PGHOST=localhost # Default when no nost specified
+export PGHOST=db # Default when no nost specified
+export PGUSER=postgres
 export FPATH=$HOME/.shell/eza:$FPATH
 
 # SSH agent
