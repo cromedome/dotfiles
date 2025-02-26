@@ -125,10 +125,10 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-vinegar'
 
 " Color themes
-Plug 'folke/tokyonight.nvim'
+"Plug 'folke/tokyonight.nvim'
 Plug 'shaunsingh/nord.nvim'
-Plug 'rmehri01/onenord.nvim'
-Plug '~/.config/nvim/unplugged/manxome.vim'
+"Plug 'rmehri01/onenord.nvim'
+"Plug '~/.config/nvim/unplugged/manxome.vim'
 
 " Telescope
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate' }
@@ -145,15 +145,26 @@ Plug 'folke/trouble.nvim'
 Plug 'folke/todo-comments.nvim'
 
 " Languages, code completion and linting
-Plug 'w0rp/ale'
-Plug 'elzr/vim-json'
-Plug '~/.config/nvim/unplugged/sqlany'
+" See https://github.com/hrsh7th/nvim-cmp
+Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'petertriho/cmp-git'
+
 "Plug '~/.config/nvim/unplugged/perl-local-lib-path.vim'
-Plug 'skaji/syntax-check-perl'
+"Plug 'vim-perl/vim-perl', { 'branch':  'dev', 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'motemen/xslate-vim'
 Plug 'aming/vim-mason'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+Plug 'elzr/vim-json'
+Plug '~/.config/nvim/unplugged/sqlany'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'rhysd/git-messenger.vim'
 Plug 'NeogitOrg/neogit'
@@ -176,7 +187,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'sbdchd/neoformat'
 Plug 'scrooloose/nerdcommenter'
 Plug 'xolox/vim-misc'
-Plug 'vim-perl/vim-perl', { 'branch':  'dev', 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 Plug 'xolox/vim-session'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'vim-scripts/SQLUtilities'
@@ -489,10 +499,6 @@ augroup END
 
 " Plugin configuration {{{
 
-" aLE settings {{{
-let g:ale_linters = { 'perl': ['syntax-check'] }
-" }}}
-
 " Align settings {{{
 vmap a= :Align =<CR>
 vmap a> :Align =><CR>
@@ -535,22 +541,6 @@ map <leader>tgb <cmd>BlameToggle virtual<cr>
 
 " CarbonNow {{{
 map <leader>pp :CarbonNowSh<CR>
-" }}}
-
-" deoplete {{{
- let g:deoplete#enable_at_startup = 1
-
- if g:os == "NetBSD"
-     let g:python3_host_prog = "/usr/pkg/bin/python3"
- elseif g:os == "OpenBSD"
-     let g:python3_host_prog = "/usr/local/bin/python3"
- elseif g:os == "FreeBSD"
-     let g:python3_host_prog = "/usr/local/bin/python3"
- elseif g:os == "Darwin"
-     let g:python3_host_prog = "/opt/local/bin/python3"
- else
-     let g:python3_host_prog = "/usr/bin/python3"
- endif
 " }}}
 
 " diffview {{{
@@ -787,10 +777,10 @@ lua << EOF
   };
 EOF
 
-map <leader>xx :TroubleToggle<CR>:resize +10<CR>
+map <leader>xx :Trouble diagnostics<CR>:resize +10<CR>
 map <leader>x :TodoTrouble<CR>:resize +10<CR>
 map <leader>xt :TodoTelescope<CR>
-nnoremap <F6> :TroubleToggle<CR>:resize +10<CR>
+nnoremap <F6> :Trouble diagnostics<CR>:resize +10<CR>
 nnoremap <F7> :TodoTrouble<CR>:resize +10<CR>
 " }}}
 
@@ -809,4 +799,97 @@ let g:undotree_WindowLayout = 4
 let g:session_autosave="no"
 let g:session_autoload='no'
 " }}}
+
+" PerlNavigator/LSP/Completion Config {{{
+lua << EOFLSP
+    --[[
+        "perlEnvAdd": false, // default: true
+        "perlEnv": {
+            "KOHA_CONF": "/home/user/git/KohaCommunity/t/data/koha-conf.xml",
+        },
+        "perlPath": "~/perl5/perlbrew/perls/perl-5.38.2/bin",
+        "perlcriticSeverity": 1,
+        "includePaths": [ "~/git/KohaCommunity", "~/git/KohaCommunity/lib" ],
+    ]]--
+
+    require'lspconfig'.perlnavigator.setup{
+        cmd = { "perlnavigator" },
+        settings = {
+            perlnavigator = {
+                perlPath = 'perl',
+                enableWarnings = true,
+                perltidyProfile = "~/.perltidyrc",
+                perlcriticProfile = "~/.perlcriticrc",
+                perlcriticEnabled = true,
+                perlcriticSeverity = 1
+            }
+        }
+    }
+
+    -- Set up nvim-cmp.
+    local cmp = require'cmp'
+
+    cmp.setup({
+        snippet = {
+            expand = function(args)
+                vim.fn["vsnip#anonymous"](args.body)
+            end,
+        },
+        window = {
+            -- completion = cmp.config.window.bordered(),
+            -- documentation = cmp.config.window.bordered(),
+        },
+        mapping = cmp.mapping.preset.insert({
+            ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+            ['<C-f>'] = cmp.mapping.scroll_docs(4),
+            ['<C-Space>'] = cmp.mapping.complete(),
+            ['<C-e>'] = cmp.mapping.abort(),
+            ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        }),
+        sources = cmp.config.sources({
+                { name = 'nvim_lsp' },
+                { name = 'vsnip' }, -- For vsnip users.
+            }, {
+                { name = 'buffer' },
+        })
+    })
+
+    -- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
+    -- Set configuration for specific filetype.
+    cmp.setup.filetype('gitcommit', {
+        sources = cmp.config.sources({
+            { name = 'git' },
+        }, {
+            { name = 'buffer' },
+        })
+    })
+    require("cmp_git").setup()
+
+    -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+    cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+            { name = 'buffer' }
+        }
+    })
+
+    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+    cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+            { name = 'path' }
+        }, {
+            { name = 'cmdline' }
+        }),
+        matching = { disallow_symbol_nonprefix_matching = false }
+    })
+
+    -- Set up lspconfig.
+    local capabilities = require('cmp_nvim_lsp').default_capabilities()
+    require('lspconfig')['perlnavigator'].setup {
+    capabilities = capabilities
+}
+EOFLSP
+"}}}
+
 "}}}
