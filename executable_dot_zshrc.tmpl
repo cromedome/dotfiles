@@ -8,9 +8,6 @@ DISABLE_AUTO_UPDATE=false
 # Disable auto correct
 DISABLE_CORRECTION=true
 
-# Devbox goes first so packages found for remaining scripts
-eval "$(devbox global shellenv)"
-
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 {{ if eq .chezmoi.os "linux" -}}
     plugins=(git docker mosh cpanm github perl gitfast autojump)
