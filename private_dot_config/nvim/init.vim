@@ -145,7 +145,6 @@ Plug 'folke/todo-comments.nvim'
 " Languages, code completion and linting
 " See https://github.com/hrsh7th/nvim-cmp
 Plug 'neovim/nvim-lspconfig'
-Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -753,6 +752,7 @@ let g:tagbar_type_perl = {
 nnoremap <leader><space> <cmd>Telescope buffers<cr>
 nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>g <cmd>Telescope live_grep<cr>
+nnoremap <leader>p <cmd>Telescope live_grep<cr>
 nnoremap <C-f> <cmd>Telescope find_files<cr>
 nnoremap <C-g> <cmd>Telescope git_files<cr>
 " }}}
@@ -846,9 +846,8 @@ lua << EOFLSP
                 perlPath = 'perl',
                 enableWarnings = true,
                 perltidyProfile = "~/.perltidyrc",
-                perlcriticProfile = "~/.perlcriticrc",
-                perlcriticEnabled = true,
-                perlcriticSeverity = 1
+                perlcriticProfile = "/code/erp/t/perlcriticrc",
+                perlcriticEnabled = true
             }
         }
     }
