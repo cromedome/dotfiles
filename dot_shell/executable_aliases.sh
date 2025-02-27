@@ -130,6 +130,19 @@ elif [ "$osname" = "Darwin" ]; then
     alias remount='sudo automount -vc'
 fi
 
+# Perlbrew-based aliases
+# See https://perlbrew.pl/Install-a-sitecustomize.pl-file-with-perlbrew.html
+#alias dzil=`which dzil`
+alias mimetype=`which mimetype`
+alias exiftool=`which exiftool`
+alias mbtiny=`which mbtiny`
+alias nytprofhtml=`which nytprofhtml`
+alias sqitch=`which sqitch`
+alias carton=`which carton`
+alias perltidy=`which perltidy`
+alias perlcritic=`which perlcritic`
+alias ot=`which ot`
+
 # Clearbuilt
 alias cbstart="VBoxManage startvm Clearbuilt --type headless"
 alias moshdev='mosh gate ssh aws-dev'

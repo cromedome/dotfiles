@@ -1,3 +1,5 @@
+; help from https://blog.gitbutler.com/how-git-core-devs-configure-git/
+
 [user]
     name = Jason A. Crome
     email = jason@crome-plated.com
@@ -5,19 +7,14 @@
 [github]
     user = cromedome
 
-[includeIf "gitdir:~/code/BestPractical/"]
-    # path is relative to the file doing the include.
-    path = ~/code/BestPractical/.gitconfig-bps
-
-[includeIf "gitdir:~/code/PerlDancer/"]
-    # path is relative to the file doing the include.
-    path = ~/.gitconfig-cpan
+;[includeIf "gitdir:~/code/PerlDancer/"]
+;    # path is relative to the file doing the include.
+;    path = ~/.gitconfig-cpan
 
 [core]
     excludesfile = ~/.gitignore_global
     ignorecase = false
     editor = nvim
-    ;pager = diff-so-fancy | less --tabs=4 -RFX
     pager = delta
 
 [alias]
@@ -158,6 +155,9 @@
 [branch "master"]
     merge = master
 
+[branch]
+    sort = -committerdate
+
 [color]
     diff = auto
     interactive = auto
@@ -178,28 +178,39 @@
     newNormal = green bold
     newHighlight = green bold 22
 
+[column]
+    ui = auto
+
+[commit]
+    verbose = true
+
+[delta]
+    navigate = true    # use n and N to move between diff sections
+    line-numbers = true
+    side-by-side = true
+
 [diff]
     ;tool = vimdiff
-    colorMoved = default
+    colorMoved = plain
+    algorithm = histogram
+    mnemonicPrefix = true
+    renames = true
+
+[filter "lfs"]
+    clean = git-lfs clean %f
+    smudge = git-lfs smudge %f
+    required = true
 
 [init]
     defaultBranch = main
 
-;[pager]
-    ;diff = diff-so-fancy | less --tabs=1,5 -RFX
-    ;show = diff-so-fancy | less --tabs=1,5 -RFX
-
-[pull]
-    #rebase = true
-    ff=yes
-
-[push]
-    default = current
+[interactive]
+    diffFilter = delta --color-only
 
 [merge]
     tool = nvimdiff
     ff=false
-    conflictstyle = diff3
+    conflictstyle = zdiff3
 
 [mergetool "meld"]
     cmd = meld "$LOCAL" "$MERGED" "$REMOTE" --output "$MERGED"
@@ -207,22 +218,23 @@
 [mergetool "nvimdiff"]
   layout = "LOCAL,BASE,REMOTE / MERGED"
 
-[filter "lfs"]
-    clean = git-lfs clean %f
-    smudge = git-lfs smudge %f
-    required = true
+[pull]
+    #rebase = true
+    ff=yes
+
+[push]
+    ;default = current
+    default = simple
+    autoSetupRemote = true
+    followTags = true
+
+[rebase]
+    #autosquash = true
 
 [rerere]
     enabled = true
     autoupdate = true
 
-[rebase]
-    #autosquash = true
+[tag]
+    sort = version:refname
 
-[interactive]
-    diffFilter = delta --color-only
-
-[delta]
-    navigate = true    # use n and N to move between diff sections
-    line-numbers = true
-    side-by-side = true
