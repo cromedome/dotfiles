@@ -757,31 +757,51 @@ nnoremap <Leader>tr :TrailerTrim<cr>
 
 " Trouble/TODO {{{
 lua << EOF
-  require("trouble").setup {};
-  require("todo-comments").setup {
-      keywords = {
-        FIX = {
-          icon = " ", -- icon used for the sign, and in search results
-          color = "error", -- can be a hex color, or a named color (see below)
-          alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-          -- signs = false, -- configure signs for some keywords individually
+    require("trouble").setup {
+        modes = {
+            mydiags = {
+                auto_open = true,
+                focus = true,
+                mode = "diagnostics", -- inherit from diagnostics mode
+                filter = {
+                    any = {
+                        buf = 0, -- current buffer
+                        {
+                            severity = vim.diagnostic.severity.ERROR, -- errors only
+                            -- limit to files in the current project
+                            function(item)
+                                return item.filename:find((vim.loop or vim.uv).cwd(), 1, true)
+                            end,
+                        },
+                    },
+                },
+            }
+        }
+    };
+    require("todo-comments").setup {
+        keywords = {
+            FIX = {
+                icon = " ", -- icon used for the sign, and in search results
+                color = "error", -- can be a hex color, or a named color (see below)
+                alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+                -- signs = false, -- configure signs for some keywords individually
+            },
+            TODO = { icon = " ", color = "info" },
+            XXX  = { icon = " ", color = "info" },
+            HACK = { icon = " ", color = "warning" },
+            WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
+            PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+            NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+            TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
         },
-        TODO = { icon = " ", color = "info" },
-        XXX  = { icon = " ", color = "info" },
-        HACK = { icon = " ", color = "warning" },
-        WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX" } },
-        PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-        NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
-        TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
-      },
-  };
+    };
 EOF
 
-map <leader>xx :Trouble diagnostics<CR>:resize +10<CR>
-map <leader>x :TodoTrouble<CR>:resize +10<CR>
+map <leader>xx :Trouble diagnostics<CR>
+map <leader>x :TodoTrouble<CR>
 map <leader>xt :TodoTelescope<CR>
-nnoremap <F6> :Trouble diagnostics<CR>:resize +10<CR>
-nnoremap <F7> :TodoTrouble<CR>:resize +10<CR>
+nnoremap <F6> :Trouble diagnostics<CR>
+nnoremap <F7> :TodoTrouble<CR>
 " }}}
 
 " Typescript {{{
