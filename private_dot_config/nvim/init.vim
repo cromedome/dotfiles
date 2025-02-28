@@ -18,7 +18,7 @@
 " Tab       - (visual mode) Indent selection
 " Shift-Tab - (visual mode) Outdent selection
 " Ctrl-A-#  - Switch to buffer #
-" Ctrl-F    - Find in files
+" Ctrl-F    - Find files
 " Ctrl-G    - Find files (in git)
 " Ctrl-R    - Redo
 " =         - Auto-format with neoformat
@@ -33,14 +33,15 @@
 " ,,        - Unhighlight search matches
 " ,a        - Wrap/unwrap args
 " ,c        - Comment the current selection (\\ works too!)
-" ,f        - Find in files
-" ,g        - Live grep
+" ,f        - Find files
+" ,g        - Find in files/live grep
 " ,j        - Join statement on single line
 " ,jl       - Join lines
 " ,ls       - List current directory contents
 " ,la       - List current directory contents, including hidden files
 " ,md       - Show the Markdown drawer
 " ,nt       - Toggle nvim-tree
+" ,p        - Find in files/live grep
 " ,pb       - Copy current file into clipboard/paste buffer (macOS only)
 " ,pp       - Pretty-print with Carbon
 " ,q        - Indent paragraph
@@ -146,7 +147,6 @@ Plug 'folke/todo-comments.nvim'
 
 " Languages, code completion and linting
 " See https://github.com/hrsh7th/nvim-cmp
-Plug 'neovim/nvim-lspconfig'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -746,6 +746,7 @@ let g:tagbar_type_perl = {
 nnoremap <leader><space> <cmd>Telescope buffers<cr>
 nnoremap <leader>f <cmd>Telescope find_files<cr>
 nnoremap <leader>g <cmd>Telescope live_grep<cr>
+nnoremap <leader>p <cmd>Telescope live_grep<cr>
 nnoremap <C-f> <cmd>Telescope find_files<cr>
 nnoremap <C-g> <cmd>Telescope git_files<cr>
 " }}}
