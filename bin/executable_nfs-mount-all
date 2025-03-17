@@ -1,6 +1,8 @@
 #!/bin/sh
 
-sudo mount -t nfs boxcar:/mnt/Data01/Videos /mnt/videos
-sudo mount -t nfs boxcar:/mnt/Data01/Music /mnt/music
-sudo mount -t nfs boxcar:/mnt/Data01/Pictures /mnt/pictures
+#sudo mount -t nfs boxcar:/mnt/Data01/Videos /mnt/videos
+#sudo mount -t nfs boxcar:/mnt/Data01/Pictures /mnt/pictures
 #sudo mount -t nfs boxcar:/mnt/Data01/Archive /mnt/backups
+sudo mount -t nfs boxcar:/mnt/Data01/Music /mnt/music
+sudo mount -t nfs boxcar:/mnt/Data01/crome-plated /mnt/crome-plated
+sudo mount -t nfs boxcar:/mnt/Data01/Documents /mnt/Shared-Documents
