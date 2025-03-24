@@ -1,0 +1,9 @@
+#!/usr/bin/zsh
+
+echo "Fetching updated database $1..."
+get_dbbackup $1
+
+echo "Restoring $1..."
+load_docker_db $1
+
+release_docker_db $1
