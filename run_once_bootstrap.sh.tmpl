@@ -37,25 +37,22 @@ fi
 
 nvim --headless +PlugInstall +qall 2>&1 > /dev/null
 
-{{ if eq .chezmoi.os "openbsd" -}}
 echo "Setting shell to zsh..."
+{{ if eq .chezmoi.os "openbsd" -}}
 chsh -s /usr/local/bin/zsh
-{{ else }}
-if [[ ! "$SHELL" =~ "zsh" ]]; then
-    echo "Setting shell to zsh..."
-    {{ if eq .chezmoi.os "linux" -}}
-    chsh -s /usr/bin/zsh
-    {{ else if eq .chezmoi.os "darwin" -}}
-    chsh -s /bin/zsh
-    {{ else if eq .chezmoi.os "freebsd" -}}
-    chsh -s /usr/local/bin/zsh
-    {{ else if eq .chezmoi.os "netbsd" -}}
-    chsh -s /usr/pkg/bin/zsh
-    {{ end -}}
-fi
+{{ else if eq .chezmoi.os "linux" -}}
+chsh -s /usr/bin/zsh
+{{ else if eq .chezmoi.os "darwin" -}}
+chsh -s /bin/zsh
+{{ else if eq .chezmoi.os "freebsd" -}}
+chsh -s /usr/local/bin/zsh
+{{ else if eq .chezmoi.os "netbsd" -}}
+chsh -s /usr/pkg/bin/zsh
+{{ end -}}
+
+{{ if eq .chezmoi.os "linux" -}}
 echo "Installing devbox..."
 curl -fsSL https://get.jetify.com/devbox | bash
-
 zsh
 eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
 {{ end -}}
