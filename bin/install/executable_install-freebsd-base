@@ -1,11 +1,10 @@
 #!/bin/sh
 
 sudo pkg install \
-    neovim \
     age \
     stow \
     zsh \
-    exa \
+    eza \
     pv \
     ncftp \
     lynx \
@@ -16,7 +15,6 @@ sudo pkg install \
     unzip \
     ctags \
     tmux \
-    source-highlight \
     tig \
     curl \
     wget \
@@ -26,7 +24,6 @@ sudo pkg install \
     fd-find \
     bat \
     ncdu \
-    diff-so-fancy \
     ripgrep \
     z \
     fzf \
@@ -36,14 +33,18 @@ sudo pkg install \
     pwgen \
     doggo \
     direnv \
-    git-delta
+    git-delta \
     libxml2 \
+    libgit2 \
     expat \
-    pcre \
+    pcre2 \
     lzlib \
     jpeg-turbo \
+    py311-pip \
     tiff \
-    jq
-
-    # TODO: Current pip3
-
+    restic \
+    jq \
+    xsel \
+    xclip \
+    xcape \
+    xkbset
