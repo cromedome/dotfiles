@@ -1,3 +1,10 @@
+// The `promptOnce` functions only ask for values the first time you run Chezmoi, storing your answers for future use.
+{{- $work_computer := promptBoolOnce . "work_computer" "Is this a work computer? (true/false)" -}}
+{{- $server := promptBoolOnce . "server" "Is this a server? (true/false)" -}}
+{{- $desktop := promptBoolOnce . "desktop" "Is this a desktop (not mutually exclusive with server)? (true/false)" -}}
+{{- $dev := promptBoolOnce . "dev" "Is this machine used for development? (true/false)" -}}
+{{- $x11 := promptBoolOnce . "x11" "Does this machine run X11? (true/false)" -}}
+
 encryption = "age"
 [age]
     identity = "~/.age/key.txt"
