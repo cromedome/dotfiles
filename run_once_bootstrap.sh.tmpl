@@ -48,11 +48,9 @@ fi
 {{ end -}}
 
 {{ if and (not (.work)) (ne .chezmoi.os "openbsd") -}}
-if [[ ! "$(which hishtory)" =~ "hishtory" ]]; then
-    echo "Installing Hishtory..."
-    curl https://hishtory.dev/install.py | python3 -
-    echo "Make sure to run 'hishtory init' with your key!"
-fi
+echo "Installing Hishtory..."
+curl https://hishtory.dev/install.py | python3 -
+echo "Make sure to run 'hishtory init' with your key!"
 {{ end -}}
 
 nvim --headless +PlugInstall +qall 2>&1 > /dev/null
@@ -69,7 +67,6 @@ chsh -s /usr/local/bin/zsh
 {{ else if eq .chezmoi.os "netbsd" -}}
 chsh -s /usr/pkg/bin/zsh
 {{ end -}}
-exec zsh --login
 
 {{ if and (.dev) (eq .chezmoi.os "linux") -}}
 echo "Installing devbox..."
@@ -87,3 +84,5 @@ rehash
 cpanm App::cpm
 cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
 {{ end -}}
+
+exec zsh --login
