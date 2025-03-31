@@ -15,21 +15,21 @@ echo "Installing system packages..."
 sh ~/bin/install/install-macos-base
 {{ else if eq .chezmoi.os "freebsd" -}}
     {{ range .packages.freebsd.all -}}
-    sudo pkg install {{ . | quote }}
+    sudo pkg install -y {{ . | quote }}
     {{ end -}}
     {{ if (.server) -}}
         {{ range .packages.freebsd.server -}}
-        sudo pkg install {{ . | quote }}
+        sudo pkg install -y {{ . | quote }}
         {{ end -}}
     {{ end -}}
     {{ if (.desktop) -}}
         {{ range .packages.freebsd.desktop -}}
-        sudo pkg install {{ . | quote }}
+        sudo pkg install -y {{ . | quote }}
         {{ end -}}
     {{ end -}}
     {{ if (.dev) -}}
         {{ range .packages.freebsd.dev -}}
-        sudo pkg install {{ . | quote }}
+        sudo pkg install -y {{ . | quote }}
         {{ end -}}
     {{ end -}}
 {{ else if eq .chezmoi.os "netbsd" -}}
