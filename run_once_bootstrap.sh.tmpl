@@ -14,7 +14,24 @@ echo "Installing system packages..."
 {{ else if eq .chezmoi.os "darwin" -}}
 sh ~/bin/install/install-macos-base
 {{ else if eq .chezmoi.os "freebsd" -}}
-sh ~/bin/install/install-freebsd-base
+    {{ range .packages.freebsd.all -}}
+    sudo pkg install {{ . | quote }}
+    {{ end -}}
+    {{ if (.server) -}}
+        {{ range .packages.freebsd.server -}}
+        sudo pkg install {{ . | quote }}
+        {{ end -}}
+    {{ end -}}
+    {{ if (.desktop) -}}
+        {{ range .packages.freebsd.desktop -}}
+        sudo pkg install {{ . | quote }}
+        {{ end -}}
+    {{ end -}}
+    {{ if (.dev) -}}
+        {{ range .packages.freebsd.dev -}}
+        sudo pkg install {{ . | quote }}
+        {{ end -}}
+    {{ end -}}
 {{ else if eq .chezmoi.os "netbsd" -}}
 sh ~/bin/install/install-netbsd-base
 {{ else if eq .chezmoi.os "openbsd" -}}
@@ -26,12 +43,15 @@ if [[ ! "$(which starship)" =~ "starship" ]]; then
     echo "Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh
 fi
+{{ else }}
+    echo "TODO: auto-install oh-my-posh"
 {{ end -}}
 
-{{ if ne .chezmoi.os "openbsd" -}}
+{{ if and (not (.work)) (ne .chezmoi.os "openbsd") -}}
 if [[ ! "$(which hishtory)" =~ "hishtory" ]]; then
     echo "Installing Hishtory..."
     curl https://hishtory.dev/install.py | python3 -
+    echo "Make sure to run 'hishtory init' with your key!"
 fi
 {{ end -}}
 
@@ -49,10 +69,11 @@ chsh -s /usr/local/bin/zsh
 {{ else if eq .chezmoi.os "netbsd" -}}
 chsh -s /usr/pkg/bin/zsh
 {{ end -}}
+exec zsh --login
 
-{{ if eq .chezmoi.os "linux" -}}
+{{ if and (.dev) (eq .chezmoi.os "linux") -}}
 echo "Installing devbox..."
 curl -fsSL https://get.jetify.com/devbox | bash
-zsh
 eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
 {{ end -}}
+

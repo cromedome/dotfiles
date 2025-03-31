@@ -1,0 +1,3 @@
+{{- if eq .chezmoi.os "freebsd" -}}
+exec ck-launch-session startplasma-x11
+{{- end -}}

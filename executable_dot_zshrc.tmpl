@@ -8,8 +8,10 @@ DISABLE_AUTO_UPDATE="true"
 # Disable auto correct
 DISABLE_CORRECTION=true
 
+{{ if and (.dev) (eq .chezmoi.os "linux") -}}
 # Devbox goes first so packages found for remaining scripts
 eval "$(devbox global shellenv)"
+{{ end -}}
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 {{ if eq .chezmoi.os "linux" -}}
@@ -58,8 +60,10 @@ source ~/.shell/dev.sh
 # Z, not autojump
 . ~/.shell/z.sh
 
+    {{ if (.server) -}}
 eval $(ssh-agent)
 ssh-add
+    {{ end -}}
 {{ end }}
 
 # Enable direnv (if installed)
@@ -74,9 +78,11 @@ if [ "$TERM_PROGRAM" = "vscode" ]; then
     export STARSHIP_CONFIG=$HOME/.config/starship-simple.toml
 fi
 eval "$(starship init zsh)"
-
-# Synced shell history
-source ~/.shell/hishtory.zsh
 {{ else }}
 eval "$(oh-my-posh init zsh --config ~/.shell/oh-my-posh/cromedome.omp.json)"
-{{ end }}
+{{ end -}}
+
+{{ if and (not (.work)) (ne .chezmoi.os "openbsd") -}}
+# Synced shell history
+source ~/.shell/hishtory.zsh
+{{ end -}}
