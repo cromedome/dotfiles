@@ -17,11 +17,12 @@ NetBSD, grab pkgsrc-wip and install chezmoi.
 
 chezmoi will automatically do the following:
 - Install packages appropriate to the OS
-- Install Starship prompt
-- Install Atuin (non-macOS boxes for $work reasons)
+- Install Starship prompt (oh-my-posh on OpenBSD)
+- Installs neovim extensions
+- Install hishtory on non-work boxes
 - Change shell to zsh
-
-Once installed, `~/bin/install/post-chezmoi.sh` runs automatically:
-- Installs Perl
+- Installs perlbrew
 - Installs my personal Perl toolchain
 
+This leans heavily on articles from [Nate Landau](https://natelandau.com/managing-dotfiles-with-chezmoi/)
+and [Alfonso Fortunato](https://alfonsofortunato.com/posts/dotfile/).
