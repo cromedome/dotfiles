@@ -77,3 +77,13 @@ curl -fsSL https://get.jetify.com/devbox | bash
 eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
 {{ end -}}
 
+{{ if (.dev) -}}
+curl -L https://install.perlbrew.pl | bash
+source ~/perl5/perlbrew/etc/bashrc
+perlbrew install 5.40.1 --as system-5.40.1 -j8
+perlbrew switch system-5.40.1
+perlbrew install-cpanm
+rehash
+cpanm App::cpm
+cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
+{{ end -}}
