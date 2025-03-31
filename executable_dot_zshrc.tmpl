@@ -53,18 +53,18 @@ source ~/.shell/path.sh
 source ~/.shell/aliases.sh
 source ~/.shell/dev.sh
 
-{{- if eq .chezmoi.os "openbsd" -}}
+{{ if eq .chezmoi.os "openbsd" }}
 # Z, not autojump
 . ~/.shell/z.sh
-{{- else if eq .chezmoi.os "freebsd" -}}
+{{ else if eq .chezmoi.os "freebsd" }}
 # Z, not autojump
 . ~/.shell/z.sh
 
-    {{ if (.server) -}}
+{{ if (.server) }}
 eval $(ssh-agent)
 ssh-add
-    {{ end -}}
-{{ end }}
+{{ end -}}
+{{ end -}}
 
 # Enable direnv (if installed)
 eval "$(direnv hook zsh)"
@@ -72,7 +72,7 @@ eval "$(direnv hook zsh)"
 # fzf config
 source ~/.shell/fzf.zsh
 
-{{ if ne .chezmoi.os "openbsd" -}}
+{{ if ne .chezmoi.os "openbsd" }}
 # Starship
 if [ "$TERM_PROGRAM" = "vscode" ]; then
     export STARSHIP_CONFIG=$HOME/.config/starship-simple.toml
@@ -82,7 +82,7 @@ eval "$(starship init zsh)"
 eval "$(oh-my-posh init zsh --config ~/.shell/oh-my-posh/cromedome.omp.json)"
 {{ end -}}
 
-{{ if and (not (.work)) (ne .chezmoi.os "openbsd") -}}
+{{ if and (not (.work)) (ne .chezmoi.os "openbsd") }}
 # Synced shell history
 source ~/.shell/hishtory.zsh
 {{ end -}}
