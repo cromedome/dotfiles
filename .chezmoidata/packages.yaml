@@ -31,6 +31,7 @@ packages:
       - "pwgen"
       - "doggo"
       - "direnv"
+      - "python3"
     server:
       - "postgresql17-server"
       - "postgresql17-contrib"
