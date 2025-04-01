@@ -82,7 +82,7 @@ eval "$(starship init zsh)"
 eval "$(oh-my-posh init zsh --config ~/.shell/oh-my-posh/cromedome.omp.json)"
 {{ end -}}
 
-{{ if and (not (.work)) (ne .chezmoi.os "openbsd") }}
+{{ if and (not (.work)) (ne .chezmoi.os "freebsd") (ne .chezmoi.os "openbsd") -}}
 # Synced shell history
 source ~/.shell/hishtory.zsh
 {{ end -}}

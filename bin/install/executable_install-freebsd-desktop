@@ -1,0 +1,15 @@
+#!/bin/sh
+
+sudo pkg install \
+    wezterm \
+    xsel \
+    xclip \
+    xcape \
+    xkbset \
+    firefox \
+    iridium-browser \
+    tailscale \
+    signal-desktop \
+    ulauncher \
+    strawberry \
+    libreoffice
