@@ -1,0 +1,37 @@
+#!/bin/sh
+
+sudo pkg install \
+    neovim \
+    bash \
+    postfix \
+    restic \
+    age \
+    zsh \
+    eza \
+    pv \
+    ncftp \
+    lynx \
+    w3m \
+    tree \
+    htop \
+    bzip \
+    unzip \
+    tmux \
+    curl \
+    wget \
+    nmap \
+    lsof \
+    mosh \
+    fd-find \
+    bat \
+    ncdu \
+    ripgrep \
+    z \
+    fzf \
+    gmake \
+    iftop \
+    pwgen \
+    doggo \
+    direnv \
+    python3
+

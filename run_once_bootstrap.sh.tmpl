@@ -1,43 +1,5 @@
 #!/usr/bin/env bash
 
-echo "Installing system packages..."
-{{ if eq .chezmoi.os "linux" -}}
-{{   if eq .chezmoi.osRelease.id "debian" }}
-~/bin/install/install-debian-base
-{{   else if eq .chezmoi.osRelease.id "ubuntu" }}
-~/bin/install/install-ubuntu-base
-{{   else if eq .chezmoi.osRelease.id "rocky" }}
-~/bin/install/install-rocky-base
-{{   else }}
-~/bin/install/install-fedora-base
-{{   end }}
-{{ else if eq .chezmoi.os "darwin" -}}
-sh ~/bin/install/install-macos-base
-{{ else if eq .chezmoi.os "freebsd" -}}
-    {{ range .packages.freebsd.all -}}
-    sudo pkg install -y {{ . | quote }}
-    {{ end -}}
-    {{ if (.server) -}}
-        {{ range .packages.freebsd.server -}}
-        sudo pkg install -y {{ . | quote }}
-        {{ end -}}
-    {{ end -}}
-    {{ if (.desktop) -}}
-        {{ range .packages.freebsd.desktop -}}
-        sudo pkg install -y {{ . | quote }}
-        {{ end -}}
-    {{ end -}}
-    {{ if (.dev) -}}
-        {{ range .packages.freebsd.dev -}}
-        sudo pkg install -y {{ . | quote }}
-        {{ end -}}
-    {{ end -}}
-{{ else if eq .chezmoi.os "netbsd" -}}
-sh ~/bin/install/install-netbsd-base
-{{ else if eq .chezmoi.os "openbsd" -}}
-sh ~/bin/install/install-openbsd-base
-{{ end -}}
-
 {{ if ne .chezmoi.os "openbsd" -}}
 if [[ ! "$(which starship)" =~ "starship" ]]; then
     echo "Installing Starship..."
@@ -47,7 +9,7 @@ fi
     echo "TODO: auto-install oh-my-posh"
 {{ end -}}
 
-{{ if and (not (.work)) (ne .chezmoi.os "openbsd") -}}
+{{ if and (not (.work)) (ne .chezmoi.os "freebsd") (ne .chezmoi.os "openbsd") -}}
 echo "Installing Hishtory..."
 curl https://hishtory.dev/install.py | python3 -
 echo "Make sure to run 'hishtory init' with your key!"
@@ -56,6 +18,7 @@ echo "Make sure to run 'hishtory init' with your key!"
 nvim --headless +PlugInstall +qall 2>&1 > /dev/null
 
 echo "Setting shell to zsh..."
+if [[ "$SHELL" !~ "zsh$" ]]; then
 {{ if eq .chezmoi.os "openbsd" -}}
 chsh -s /usr/local/bin/zsh
 {{ else if eq .chezmoi.os "linux" -}}
@@ -67,6 +30,7 @@ chsh -s /usr/local/bin/zsh
 {{ else if eq .chezmoi.os "netbsd" -}}
 chsh -s /usr/pkg/bin/zsh
 {{ end -}}
+fi
 
 {{ if and (.dev) (eq .chezmoi.os "linux") -}}
 echo "Installing devbox..."

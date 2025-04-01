@@ -1,0 +1,22 @@
+#!/bin/sh
+
+sudo pkg install \
+    pdftk \
+    imagemagick7 \
+    postgresql17-client \
+    postgresql-libpqxx \
+    mailpit \
+    podman \
+    git-delta \
+    tig \
+    ctags \
+    libxml2 \
+    libgit2 \
+    expat \
+    pcre2 \
+    lzlib \
+    jpeg-turbo \
+    py311-pip \
+    tiff \
+    restic \
+    jq
