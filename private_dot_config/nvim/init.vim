@@ -2,7 +2,6 @@
 " To make my own life easier, here's the list of keymappings provided by my
 " setup:
 "
-" F1  - Toggle pastemode
 " F2  - Toggle nvim-tree
 " F3  - Toggle Tagbar
 " F4  - Toggle undo buffer navigator
@@ -245,7 +244,7 @@ set hidden                     " Allow unsaved buffers to be put in the backgrou
 set more                       " page on extended output
 set novb                       " disable visual bell
 set nowrap                     " don't wrap long lines
-set pastetoggle=<F1>           " F1 to toggle paste
+"set pastetoggle=<F1>           " F1 to toggle paste
 set ruler                      " display cursor position
 set scrolloff=3                " always have three lines of context
 set showcmd                    " show command-in-progress
