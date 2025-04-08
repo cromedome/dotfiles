@@ -837,6 +837,7 @@ lua << EOFLSP
         settings = {
             perlnavigator = {
                 perlPath = 'perl',
+                includePaths = { 'local/lib/perl5' },
                 enableWarnings = true,
                 perltidyProfile = "~/.perltidyrc",
                 perlcriticProfile = "~/.perlcriticrc",
