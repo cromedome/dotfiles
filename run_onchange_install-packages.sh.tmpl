@@ -13,7 +13,6 @@ echo "Installing system packages..."
 sh ~/bin/install/install-macos-base
 {{ else if eq .chezmoi.os "freebsd" -}}
     ~/bin/install/install-freebsd-base
-    {{ end -}}
     {{ if (.server) -}}
         ~/bin/install/install-freebsd-server
     {{ end -}}
