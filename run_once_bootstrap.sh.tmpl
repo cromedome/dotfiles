@@ -12,13 +12,18 @@ fi
 {{ if and (not (.work)) (ne .chezmoi.os "freebsd") (ne .chezmoi.os "openbsd") -}}
 echo "Installing Hishtory..."
 curl https://hishtory.dev/install.py | python3 -
-echo "Make sure to run 'hishtory init' with your key!"
+echo "Make sure to run 'hishtory init' with your key"
+{{ end -}}
+
+{{ if and (.dev) (eq .chezmoi.os "linux") -}}
+echo "Installing devbox..."
+curl -fsSL https://get.jetify.com/devbox | bash
+eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
 {{ end -}}
 
 nvim --headless +PlugInstall +qall 2>&1 > /dev/null
 
 echo "Setting shell to zsh..."
-if [[ "$SHELL" !~ "zsh$" ]]; then
 {{ if eq .chezmoi.os "openbsd" -}}
 chsh -s /usr/local/bin/zsh
 {{ else if eq .chezmoi.os "linux" -}}
@@ -29,13 +34,6 @@ chsh -s /bin/zsh
 chsh -s /usr/local/bin/zsh
 {{ else if eq .chezmoi.os "netbsd" -}}
 chsh -s /usr/pkg/bin/zsh
-{{ end -}}
-fi
-
-{{ if and (.dev) (eq .chezmoi.os "linux") -}}
-echo "Installing devbox..."
-curl -fsSL https://get.jetify.com/devbox | bash
-eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
 {{ end -}}
 
 {{ if (.dev) -}}
