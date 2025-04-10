@@ -1,5 +1,7 @@
+#!/bin/sh
+
 echo "Installing system packages..."
-{{ if eq .chezmoi.os "linux" -}}
+{{ if eq .chezmoi.os "linux" }}
 {{   if eq .chezmoi.osRelease.id "debian" }}
 ~/bin/install/install-debian-base
 {{   else if eq .chezmoi.osRelease.id "ubuntu" }}
@@ -9,23 +11,22 @@ echo "Installing system packages..."
 {{   else }}
 ~/bin/install/install-fedora-base
 {{   end }}
-{{ else if eq .chezmoi.os "darwin" -}}
+{{ else if eq .chezmoi.os "darwin" }}
 sh ~/bin/install/install-macos-base
-{{ else if eq .chezmoi.os "freebsd" -}}
+{{ else if eq .chezmoi.os "freebsd" }}
     ~/bin/install/install-freebsd-base
-    {{ if (.server) -}}
+    {{ if (.server) }}
         ~/bin/install/install-freebsd-server
-    {{ end -}}
-    {{ if (.desktop) -}}
+    {{ end }}
+    {{ if (.desktop) }}
         ~/bin/install/install-freebsd-desktop
-    {{ end -}}
-    {{ if (.dev) -}}
+    {{ end }}
+    {{ if (.dev) }}
         ~/bin/install/install-freebsd-dev
-    {{ end -}}
-{{ else if eq .chezmoi.os "netbsd" -}}
+    {{ end }}
+{{ else if eq .chezmoi.os "netbsd" }}
 sh ~/bin/install/install-netbsd-base
-{{ else if eq .chezmoi.os "openbsd" -}}
+{{ else if eq .chezmoi.os "openbsd" }}
 sh ~/bin/install/install-openbsd-base
-{{ end -}}
-
+{{ end }}
 
