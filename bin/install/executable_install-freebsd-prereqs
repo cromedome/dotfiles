@@ -1,0 +1,6 @@
+#!/bin/sh
+
+sudo pkg install \
+    vim \
+    curl \
+    age

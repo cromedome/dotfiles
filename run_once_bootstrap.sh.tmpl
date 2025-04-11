@@ -1,61 +1,50 @@
 #!/usr/bin/env bash
 
-echo "Installing system packages..."
-{{ if eq .chezmoi.os "linux" -}}
-{{   if eq .chezmoi.osRelease.id "debian" }}
-~/bin/install/install-debian-base
-{{   else if eq .chezmoi.osRelease.id "ubuntu" }}
-~/bin/install/install-ubuntu-base
-{{   else if eq .chezmoi.osRelease.id "rocky" }}
-~/bin/install/install-rocky-base
-{{   else }}
-~/bin/install/install-fedora-base
-{{   end }}
-{{ else if eq .chezmoi.os "darwin" -}}
-sh ~/bin/install/install-macos-base
-{{ else if eq .chezmoi.os "freebsd" -}}
-sh ~/bin/install/install-freebsd-base
-{{ else if eq .chezmoi.os "netbsd" -}}
-sh ~/bin/install/install-netbsd-base
-{{ else if eq .chezmoi.os "openbsd" -}}
-sh ~/bin/install/install-openbsd-base
-{{ end -}}
-
 {{ if ne .chezmoi.os "openbsd" -}}
 if [[ ! "$(which starship)" =~ "starship" ]]; then
     echo "Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh
 fi
+{{ else }}
+    echo "TODO: auto-install oh-my-posh"
 {{ end -}}
 
-{{ if ne .chezmoi.os "openbsd" -}}
-if [[ ! "$(which hishtory)" =~ "hishtory" ]]; then
-    echo "Installing Hishtory..."
-    curl https://hishtory.dev/install.py | python3 -
-fi
+{{ if and (not (.work)) (ne .chezmoi.os "freebsd") (ne .chezmoi.os "openbsd") -}}
+echo "Installing Hishtory..."
+curl https://hishtory.dev/install.py | python3 -
+echo "Make sure to run 'hishtory init' with your key"
+{{ end -}}
+
+{{ if and (.dev) (eq .chezmoi.os "linux") -}}
+echo "Installing devbox..."
+curl -fsSL https://get.jetify.com/devbox | bash
+eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
 {{ end -}}
 
 nvim --headless +PlugInstall +qall 2>&1 > /dev/null
 
-{{ if eq .chezmoi.os "openbsd" -}}
 echo "Setting shell to zsh..."
+{{ if eq .chezmoi.os "openbsd" -}}
 chsh -s /usr/local/bin/zsh
-{{ else }}
-if [[ ! "$SHELL" =~ "zsh" ]]; then
-    echo "Setting shell to zsh..."
-    {{ if eq .chezmoi.os "linux" -}}
-    chsh -s /usr/bin/zsh
-    {{ else if eq .chezmoi.os "darwin" -}}
-    chsh -s /bin/zsh
-    {{ else if eq .chezmoi.os "freebsd" -}}
-    chsh -s /usr/local/bin/zsh
-    {{ else if eq .chezmoi.os "netbsd" -}}
-    chsh -s /usr/pkg/bin/zsh
-    {{ end -}}
-fi
-echo "Installing devbox..."
-curl -fsSL https://get.jetify.com/devbox | bash
-
-zsh
-eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
+{{ else if eq .chezmoi.os "linux" -}}
+chsh -s /usr/bin/zsh
+{{ else if eq .chezmoi.os "darwin" -}}
+chsh -s /bin/zsh
+{{ else if eq .chezmoi.os "freebsd" -}}
+chsh -s /usr/local/bin/zsh
+{{ else if eq .chezmoi.os "netbsd" -}}
+chsh -s /usr/pkg/bin/zsh
 {{ end -}}
+
+{{ if (.dev) -}}
+curl -L https://install.perlbrew.pl | bash
+source ~/perl5/perlbrew/etc/bashrc
+perlbrew install 5.40.1 --as system-5.40.1 -j8
+perlbrew switch system-5.40.1
+perlbrew install-cpanm
+rehash
+cpanm App::cpm
+cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
+{{ end -}}
+
+exec zsh --login

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+sudo pkg install \
+    postgresql17-server \
+    postgresql17-contrib \
+    nginx \
+    modsecurity3-nginx

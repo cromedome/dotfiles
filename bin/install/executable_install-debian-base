@@ -23,15 +23,4 @@ sudo apt install -y \
     restic \
     ncftp \
     lynx \
-    w3m \
-    libpcre3-dev \
-    zlib1g-dev \
-    libxml2-dev \
-    libexpat1-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libtiff-dev \
-    libssl-dev \
-    libgit2-dev \
-    libsqlite3-dev
-
+    w3m

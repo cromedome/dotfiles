@@ -2,10 +2,12 @@
 
 sudo pkg install \
     neovim \
+    bash \
+    postfix \
+    restic \
     age \
-    stow \
     zsh \
-    exa \
+    eza \
     pv \
     ncftp \
     lynx \
@@ -14,10 +16,7 @@ sudo pkg install \
     htop \
     bzip \
     unzip \
-    ctags \
     tmux \
-    source-highlight \
-    tig \
     curl \
     wget \
     nmap \
@@ -26,24 +25,13 @@ sudo pkg install \
     fd-find \
     bat \
     ncdu \
-    diff-so-fancy \
     ripgrep \
     z \
     fzf \
-    colordiff \
     gmake \
     iftop \
     pwgen \
     doggo \
     direnv \
-    git-delta
-    libxml2 \
-    expat \
-    pcre \
-    lzlib \
-    jpeg-turbo \
-    tiff \
-    jq
-
-    # TODO: Current pip3
+    python3
 
