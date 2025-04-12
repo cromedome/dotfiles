@@ -3,13 +3,14 @@
 {{- $desktop := promptBoolOnce . "desktop" "Is this a desktop (not mutually exclusive with server)? (true/false)" -}}
 {{- $dev := promptBoolOnce . "dev" "Is this machine used for development? (true/false)" -}}
 
+encryption = "age"
+
 [data]
     work    = {{ $work }}
     server  = {{ $server }}
     desktop = {{ $desktop }}
     dev     = {{ $dev }}
 
-encryption = "age"
 [age]
     identity = "~/.age/key.txt"
     recipient = "age1sc2q37desa0h7hdwll0l7wmxyvwc7wzk30262573w22z2euc7qmqq7k8kz"
