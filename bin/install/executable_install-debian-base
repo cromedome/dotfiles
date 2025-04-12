@@ -23,4 +23,5 @@ sudo apt install -y \
     restic \
     ncftp \
     lynx \
+    libssl-dev \
     w3m
