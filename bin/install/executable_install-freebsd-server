@@ -1,6 +1,6 @@
 #!/bin/sh
 
-sudo pkg install \
+doas pkg install \
     postgresql17-server \
     postgresql17-contrib \
     nginx \
