@@ -2,7 +2,6 @@
 
 doas pkg install \
     wezterm \
-    xsel \
     xclip \
     xcape \
     xkbset \
