@@ -13,21 +13,21 @@ DISABLE_CORRECTION=true
 eval "$(devbox global shellenv)"
 {{ end -}}
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Which plugins would you like to load?
+# (plugins can be found in ~/.oh-my-zsh/plugins/ or ~/.oh-my-zsh/custom/plugins/)
 {{ if eq .chezmoi.os "linux" -}}
-    plugins=(git docker mosh cpanm github perl gitfast autojump)
+    plugins=(git docker mosh cpanm github perl gitfast autojump zsh-autosuggestions)
 {{ else if eq .chezmoi.os "openbsd" -}}
-    plugins=(git docker mosh cpanm github perl gitfast)
+    plugins=(git docker mosh cpanm github perl gitfast zsh-autosuggestions)
 {{ else if eq .chezmoi.os "freebsd" -}}
-    plugins=(git docker mosh cpanm github perl gitfast)
+    plugins=(git docker mosh cpanm github perl gitfast zsh-autosuggestions)
 {{ else if eq .chezmoi.os "darwin" -}}
-    plugins=(git docker mosh cpanm github perl gitfast autojump)
+    plugins=(git docker mosh cpanm github perl gitfast autojump zsh-autosuggestions)
 {{ else }}
-    plugins=(git docker mosh cpanm github perl gitfast autojump ssh-agent)
+    plugins=(git docker mosh cpanm github perl gitfast autojump ssh-agent zsh-autosuggestions)
 {{ end -}}
 
 source $ZSH/oh-my-zsh.sh
-source ~/.zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.shell/gum.zsh
 
 if whence dircolors >/dev/null ; then
@@ -80,9 +80,4 @@ fi
 eval "$(starship init zsh)"
 {{ else }}
 eval "$(oh-my-posh init zsh --config ~/.shell/oh-my-posh/cromedome.omp.json)"
-{{ end -}}
-
-{{ if and (not (.work)) (ne .chezmoi.os "freebsd") (ne .chezmoi.os "openbsd") -}}
-# Synced shell history
-source ~/.shell/hishtory.zsh
 {{ end -}}

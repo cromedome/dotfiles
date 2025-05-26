@@ -30,19 +30,25 @@ fi
     echo "TODO: auto-install oh-my-posh"
 {{ end -}}
 
-{{ if and (not (.work)) (ne .chezmoi.os "freebsd") (ne .chezmoi.os "openbsd") -}}
-echo "Installing Hishtory..."
-curl https://hishtory.dev/install.py | python3 -
-echo "Make sure to run 'hishtory init' with your key"
-{{ end -}}
-
+# Disable auto-install of nvim modules, it gets wonky
 {{ if and (.dev) (eq .chezmoi.os "linux") -}}
 echo "Installing devbox..."
 curl -fsSL https://get.jetify.com/devbox | bash
-eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
+#eval "$(devbox global shellenv --preserve-path-stack -r)" && hash -r
 {{ end -}}
 
-nvim --headless +PlugInstall +qall 2>&1 > /dev/null
+#nvim --headless +PlugInstall +qall 2>&1 > /dev/null
+
+{{ if (.dev) -}}
+curl -L https://install.perlbrew.pl | bash
+source ~/perl5/perlbrew/etc/bashrc
+perlbrew install 5.40.2 --as system-5.40.2 -j8
+perlbrew switch system-5.40.1
+perlbrew install-cpanm
+rehash
+cpanm App::cpm
+cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
+{{ end -}}
 
 echo "Setting shell to zsh..."
 {{ if eq .chezmoi.os "openbsd" -}}
@@ -57,13 +63,3 @@ chsh -s /usr/local/bin/zsh
 chsh -s /usr/pkg/bin/zsh
 {{ end -}}
 
-{{ if (.dev) -}}
-curl -L https://install.perlbrew.pl | bash
-source ~/perl5/perlbrew/etc/bashrc
-perlbrew install 5.40.1 --as system-5.40.1 -j8
-perlbrew switch system-5.40.1
-perlbrew install-cpanm
-rehash
-cpanm App::cpm
-cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
-{{ end -}}
