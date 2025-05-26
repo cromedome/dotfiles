@@ -269,9 +269,9 @@ set writeany                   " avoid constant ! to overwrite. . .
 let g:loaded_netrw = 1
 let g:loaded_netrwPlugin = 1
 
-" Use a comma as our command leader
-let mapleader = ","
-let g:mapleader = ","
+" Use a space as our command leader
+let mapleader = " "
+let g:mapleader = " "
 " }}}
 
 " OS-specific stuff {{{
