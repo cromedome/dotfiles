@@ -127,8 +127,6 @@ Plug 'tpope/vim-vinegar'
 " Color themes
 "Plug 'folke/tokyonight.nvim'
 Plug 'shaunsingh/nord.nvim'
-"Plug 'rmehri01/onenord.nvim'
-"Plug '~/.config/nvim/unplugged/manxome.vim'
 
 " Telescope
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate' }
@@ -169,7 +167,6 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'NeogitOrg/neogit'
 Plug 'sindrets/diffview.nvim'
 Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'FabijanZulj/blame.nvim'
 Plug 'FooSoft/vim-argwrap'
 
 " Other nvim
@@ -508,36 +505,6 @@ vmap a: :Align :<CR>
 nnoremap <silent> <leader>a :ArgWrap<CR>
 "}}}
 
-" Blame {{{
-lua << EOGB
-require("blame").setup {
-    --date_format = "%d.%m.%Y",
-    virtual_style = "left_align",
-    views = {
-        window = window_view,
-        virtual = virtual_view,
-        default = window_view,
-    },
-    --focus_blame = true,
-    --merge_consecutive = false,
-    --max_summary_width = 30,
-    --colors = nil,
-    --blame_options = nil,
-    --commit_detail_view = "vsplit",
-    --format_fn = formats.commit_date_author_fn,
-    mappings = {
-    --    commit_info = "i",
-    --    stack_push = "<TAB>",
-    --    stack_pop = "<BS>",
-    --    show_commit = "<CR>",
-    --    close = { "<esc>", "q" },
-    }
-};
-EOGB
-map <leader>gb <cmd>BlameToggle<cr>
-map <leader>tgb <cmd>BlameToggle virtual<cr>
-" }}}
-
 " CarbonNow {{{
 map <leader>pp :CarbonNowSh<CR>
 " }}}
@@ -694,16 +661,11 @@ EONT
 " }}}
 
 " Perl Settings {{{
-"let g:perl_local_lib_path = "lib"
-"autocmd FileType perl PerlLocalLibPath
-
-" Perl code folding options
 let perl_fold=1
 let perl_include_pod=1
 let perl_sub_signatures = 1
 let perl_extended_vars = 1
 
-" perltidy settings
 nnoremap <silent> <leader>pt :%!perltidy -q<Enter>
 vnoremap <silent> <leader>pt :!perltidy -q<Enter>
 " }}}
@@ -802,11 +764,6 @@ map <leader>x :TodoTrouble<CR>
 map <leader>xt :TodoTelescope<CR>
 nnoremap <F6> :Trouble diagnostics<CR>
 nnoremap <F7> :TodoTrouble<CR>
-" }}}
-
-" Typescript {{{
-"autocmd QuickFixCmdPost [^l]* nested cwindow
-"autocmd QuickFixCmdPost    l* nested lwindow
 " }}}
 
 " undotree {{{
