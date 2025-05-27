@@ -21,6 +21,10 @@ sh ~/bin/install/install-netbsd-base
 sh ~/bin/install/install-openbsd-base
 {{ end }}
 
+{{ if (.desktop) -}}
+sh ~/bin/install/install-xwin-base
+{{ end -}}
+
 {{ if ne .chezmoi.os "openbsd" -}}
 if [[ ! "$(which starship)" =~ "starship" ]]; then
     echo "Installing Starship..."
