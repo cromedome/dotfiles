@@ -8,6 +8,8 @@ if [[ -z $CONTAINER ]]; then
 fi
 
 cd ~/code/csuitetools/docker/compose/dev
-docker-compose logs -f --tail=20 $CONTAINER
+#docker-compose logs -f --tail=20 $CONTAINER
+#docker-compose logs -f --tail=20 $CONTAINER | cut -d'|' -f2- | jq -R 'fromjson? | select(.host != "content-local.fcsuite.com")'
+docker-compose logs -f --tail=20 $CONTAINER | cut -d'|' -f2- | jq -R 'fromjson? | select(.log_type == "csuite")'
 cd -
 
