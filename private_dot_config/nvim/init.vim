@@ -847,7 +847,8 @@ lua << EOFLSP
                 enableWarnings = true,
                 perltidyProfile = "~/.perltidyrc",
                 perlcriticProfile = "/code/erp/t/perlcriticrc",
-                perlcriticEnabled = true
+                perlcriticEnabled = true,
+                perlcriticSeverity = 4
             }
         }
     }
