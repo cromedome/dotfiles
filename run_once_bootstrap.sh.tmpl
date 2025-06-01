@@ -25,12 +25,12 @@ sh ~/bin/install/install-openbsd-base
 sh ~/bin/install/install-xwin-base
 {{ end -}}
 
-{{ if ne .chezmoi.os "openbsd" -}}
+{{ if and (ne .chezmoi.os "openbsd") (ne .chezmoi.os "netbsd") -}}
 if [[ ! "$(which starship)" =~ "starship" ]]; then
     echo "Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh
 fi
-{{ else }}
+{{ else if eq .chezmoi.os "openbsd" -}}
     echo "TODO: auto-install oh-my-posh"
 {{ end -}}
 
@@ -43,7 +43,7 @@ curl -fsSL https://get.jetify.com/devbox | bash
 
 #nvim --headless +PlugInstall +qall 2>&1 > /dev/null
 
-{{ if (.dev) -}}
+{{ if and (.dev) (ne .chezmoi.os "netbsd") -}}
 curl -L https://install.perlbrew.pl | bash
 source ~/perl5/perlbrew/etc/bashrc
 perlbrew install 5.40.2 --as system-5.40.2 -j8

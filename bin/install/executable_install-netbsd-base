@@ -1,13 +1,9 @@
 #!/bin/sh
 
 pkgin install -y \
-    sudo \
     age \
-    sysupgrade \
     vim \
     neovim \
-    git \
-    colorls \
     wget \
     tree \
     htop \
@@ -26,7 +22,7 @@ pkgin install -y \
     pwgen \
     bash \
     bat \
-    exa \
+    eza \
     fd \
     source-highlight \
     ncdu \
@@ -37,13 +33,8 @@ pkgin install -y \
     png \
     tiff \
     rsync \
-    neofetch \
-    alpine \
-    exa \
     direnv \
-    gitui \
     bzip2 \
-    curl \
     iftop \
     dog \
     expat \
@@ -53,4 +44,6 @@ pkgin install -y \
     ssh-copy-id \
     jq \
     starship \
-    mozilla-rootcerts
+    mozilla-rootcerts \
+    perlbrew \
+    tailscale
