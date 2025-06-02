@@ -74,7 +74,11 @@ source ~/.shell/fzf.zsh
 source ~/.shell/fzf-git.sh
 source <(fzf --zsh)
 
-{{ if ne .chezmoi.os "openbsd" }}
+{{ if eq .chezmoi.os "netbsd" }}
+# Starship
+export STARSHIP_CONFIG=$HOME/.config/starship-simple.toml
+eval "$(starship init zsh)"
+{{ else if ne .chezmoi.os "openbsd" }}
 # Starship
 if [ "$TERM_PROGRAM" = "vscode" ]; then
     export STARSHIP_CONFIG=$HOME/.config/starship-simple.toml
