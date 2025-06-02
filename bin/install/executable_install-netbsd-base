@@ -1,6 +1,6 @@
 #!/bin/sh
 
-pkgin install -y \
+doas pkgin install \
     age \
     vim \
     neovim \
@@ -41,9 +41,8 @@ pkgin install -y \
     pcre2 \
     lzlib \
     tiff \
-    ssh-copy-id \
     jq \
     starship \
     mozilla-rootcerts \
-    perlbrew \
+    p5-App-perlbrew \
     tailscale
