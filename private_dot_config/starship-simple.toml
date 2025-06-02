@@ -1,6 +1,8 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
+$os\
+[](bold bg:color_dir_bg fg:color_os_bg)\
 $directory\
 [](bold fg:color_dir_bg bg:color_git_bg)\
 $git_branch\
@@ -59,3 +61,17 @@ format = '[[($all_status$ahead_behind )](bold fg:color_git_fg bg:color_git_bg)](
 symbol = " "
 style = "bold fg:color_lang_fg bg:color_lang_bg"
 format = '([ $symbol ($version )]($style))'
+
+[os]
+disabled = false
+style = "bg:color_os_bg fg:color_os_fg"
+
+[os.symbols]
+Windows = "󰍲 "
+Ubuntu = "󰕈 "
+Mint = "󰣭 "
+Macos = "󰀵 "
+Linux = "󰌽 "
+Debian = "󰣚 "
+FreeBSD = " "
+NetBSD = " 󰈿 "
