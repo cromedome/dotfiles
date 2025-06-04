@@ -185,3 +185,7 @@ function tssh() {
   )"
   [ -n "$h" ] && ssh "$h"
 }
+
+opp() {
+    op item get $1 --format json --fields password | jq .value
+}
