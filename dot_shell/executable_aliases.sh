@@ -114,6 +114,10 @@ elif [ "$osname" = "NetBSD" ]; then
 elif [ "$osname" = "OpenBSD" ]; then
   alias j='z'
   alias paco="ps aux | grep $USER"
+  if whence xclip >/dev/null; then
+    alias setclip='xclip -selection c'
+    alias getclip='xclip -selection clipboard -o'
+  fi
 elif [ "$osname" = "FreeBSD" ]; then
   alias j='z'
   alias paco="ps aux | grep $USER"
