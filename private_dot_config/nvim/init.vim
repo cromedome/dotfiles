@@ -126,7 +126,7 @@ Plug 'tpope/vim-vinegar'
 
 " Color themes
 "Plug 'folke/tokyonight.nvim'
-Plug 'shaunsingh/nord.nvim'
+Plug 'cromedome/nordtheme-vim'
 
 " Telescope
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate' }
