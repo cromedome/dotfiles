@@ -1,9 +1,12 @@
+encryption = "age"
+[age]
+    identity = "~/.age/key.txt"
+    recipient = "age1sc2q37desa0h7hdwll0l7wmxyvwc7wzk30262573w22z2euc7qmqq7k8kz"
+
 {{- $work := promptBoolOnce . "work" "Is this a work computer? (true/false)" -}}
 {{- $server := promptBoolOnce . "server" "Is this a server? (true/false)" -}}
 {{- $desktop := promptBoolOnce . "desktop" "Is this a desktop (not mutually exclusive with server)? (true/false)" -}}
 {{- $dev := promptBoolOnce . "dev" "Is this machine used for development? (true/false)" -}}
-
-encryption = "age"
 
 [data]
     work    = {{ $work }}
@@ -11,6 +14,3 @@ encryption = "age"
     desktop = {{ $desktop }}
     dev     = {{ $dev }}
 
-[age]
-    identity = "~/.age/key.txt"
-    recipient = "age1sc2q37desa0h7hdwll0l7wmxyvwc7wzk30262573w22z2euc7qmqq7k8kz"
