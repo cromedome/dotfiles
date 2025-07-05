@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# TODO: posting, github CLI
 sudo port install \
     autojump \
     age \
@@ -12,8 +13,6 @@ sudo port install \
     ncurses \
     nmap \
     pwgen \
-    python311 \
-    pip_select \
     pv \
     restic \
     rsync \
@@ -30,7 +29,23 @@ sudo port install \
     reattach-to-user-namespace \
     tmux \
     xz \
-    z
+    z \
+    neovim \
+    git-delta \
+    jq \
+    ripgrep \
+    ripgrep-all \
+    fd \
+    tig \
+    gum \
+    eza \
+    bat \
+    fzf \
+    direnv \
+    ctags \
+    ncdu \
+    tokei \
+    1password-cli
 
 #brew install \
     #autojump \

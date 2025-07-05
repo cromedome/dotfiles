@@ -1,13 +1,16 @@
 #!/bin/bash
 
+# TODO: gum, 1password CLI, github, ripgrep-all, tokei, posting
 sudo apt install -y \
+    git \
+    build-essential \
     net-tools \
     debsums \
     zsh \
+    vim \
+    neovim \
     ufw \
     age \
-    python3-pip \
-    build-essential \
     nmap \
     autojump \
     traceroute \
@@ -24,4 +27,17 @@ sudo apt install -y \
     ncftp \
     lynx \
     libssl-dev \
-    w3m
+    w3m \
+    jq \
+    inxi \
+    ripgrep \
+    fd-find \
+    tig \
+    eza \
+    bat \
+    fzf \
+    tldr \
+    direnv \
+    exuberant-ctags \
+    ncdu \
+    libtree
