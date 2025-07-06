@@ -46,8 +46,8 @@ curl -fsSL https://get.jetify.com/devbox | bash
 {{ if and (.dev) (ne .chezmoi.os "netbsd") -}}
 curl -L https://install.perlbrew.pl | bash
 source ~/perl5/perlbrew/etc/bashrc
-perlbrew install 5.40.2 --as system-5.40.2 -j8
-perlbrew switch system-5.40.2
+perlbrew install 5.42.0 --as system-5.42.0 -j8
+perlbrew switch system-5.42.0
 perlbrew install-cpanm
 cpanm App::cpm
 cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
