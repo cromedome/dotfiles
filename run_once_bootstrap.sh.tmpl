@@ -25,7 +25,7 @@ sh ~/bin/install/install-openbsd-base
 sh ~/bin/install/install-xwin-base
 {{ end -}}
 
-{{ if and (ne .chezmoi.os "openbsd") (ne .chezmoi.os "netbsd") -}}
+{{ if and (ne .chezmoi.os "openbsd") (ne .chezmoi.os "netbsd") (ne .chezmoi.os "darwin") -}}
 if [[ ! "$(which starship)" =~ "starship" ]]; then
     echo "Installing Starship..."
     curl -sS https://starship.rs/install.sh | sh
