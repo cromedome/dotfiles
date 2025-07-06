@@ -11,6 +11,10 @@
 -- CTRL-A-L: Go to right split
 -- CTRL-A-J: Go to down split
 -- CTRL-A-K: Go to up split
+-- CMD-Left: Go to left split
+-- CMD-Right: Go to right split
+-- CMD-Down: Go to down split
+-- CMD-Up: Go to up split
 --
 -- Tab Navigation:
 -- CMD-T: New tab
@@ -175,25 +179,22 @@ end)
 
 return {
     harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
-    font_size = 14.0,
-    font = wezterm.font_with_fallback({
-        "FiraCode Nerd Font",
-	{family="Liga SFMono Nerd Font", weight="Regular", stretch="Normal", style="Normal"},
-    }),
+    font_size = 15.0,
+    --font = wezterm.font_with_fallback({
+    --    "FiraCode Nerd Font",
+    --	{family="Liga SFMono Nerd Font", weight="Regular", stretch="Normal", style="Normal"},
+    --}),
     allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace",
-    --color_scheme = "nord",
-    color_scheme = "Tokyo Night Moon",
+    color_scheme = "nord",
     initial_cols = 185,
     initial_rows = 50,
     enable_scroll_bar = true,
     scrollback_lines = 10000,
     window_frame = {
-        font_size = 12.0,
+        font_size = 13.0,
         active_titlebar_bg = "#caccd0",
         inactive_titlebar_bg = "#333333",
     },
-    --tab_bar_at_bottom = true,
-    --use_fancy_tab_bar = false,
     colors = {
         tab_bar = {
             inactive_tab_edge = "#DFE0E0",
@@ -208,7 +209,7 @@ return {
         },
     },
     window_padding = {bottom = 4, left = 2, right = 2},
-    window_decorations = "RESIZE",
+    window_decorations = "INTEGRATED_BUTTONS|RESIZE",
 
     leader = {key = "a", mods = "CTRL"},
     keys = {
