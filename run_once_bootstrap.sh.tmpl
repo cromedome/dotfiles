@@ -43,12 +43,23 @@ curl -fsSL https://get.jetify.com/devbox | bash
 
 #nvim --headless +PlugInstall +qall 2>&1 > /dev/null
 
-{{ if and (.dev) (ne .chezmoi.os "netbsd") -}}
+{{ if and (.dev) (ne .chezmoi.os "netbsd") (ne .chezmoi.os "darwin") -}}
 curl -L https://install.perlbrew.pl | bash
 source ~/perl5/perlbrew/etc/bashrc
 perlbrew install 5.42.0 --as system-5.42.0 -j8
 perlbrew switch system-5.42.0
 perlbrew install-cpanm
+cpanm App::cpm
+cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
+{{ end -}}
+
+{{ if and (.dev) (eq .chezmoi.os "darwin") -}}
+git clone https://github.com/tokuhirom/plenv.git ~/.plenv
+git clone https://github.com/tokuhirom/Perl-Build.git ~/.plenv/plugins/perl-build/
+eval "$(plenv init -)"
+plenv install 5.42.0 --as system-5.42.0 -j8
+plenv global system-5.42.0
+plenv install-cpanm
 cpanm App::cpm
 cpm install -w 8 -g --with-all --show-build-log-on-failure --cpanfile ~/bin/install/perl-devdeps/cpanfile
 {{ end -}}
